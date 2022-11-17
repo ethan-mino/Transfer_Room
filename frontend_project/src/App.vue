@@ -1,32 +1,34 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <HeaderVue></HeaderVue>
+    <router-view></router-view>
+    <FooterVue></FooterVue>
   </div>
 </template>
+<script>
+import HeaderVue from "@/components/common/HeaderVue";
+import FooterVue from "@/components/common/FooterVue";
+
+export default {
+  components: {
+    HeaderVue,
+    FooterVue,
+  },
+};
+</script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height: 100%;
+  width: 100%;
 }
 
-nav {
-  padding: 30px;
-}
+@import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css";
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css";
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+@import "assets/css/common/common.css";
+@import "assets/css/common/nav.css";
+@import "assets/css/common/footer.css";
+@import "assets/css/map.css";
 </style>
