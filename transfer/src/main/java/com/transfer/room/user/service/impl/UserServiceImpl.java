@@ -62,7 +62,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = UserEntity.toUserDto(userDto);
         userMapper.insertUser(userEntity);
 
+        // TODO : 유저 이메일 중복 검사 필요
         // TODO : ROLE_USER에 해당하는 ROLE의 id를 매번 조회해야 함
+
         UserRoleDto userRoleDto = userMapper.selectRoleByRoleName(UserRole.ROLE_USER);
         UserRoleEntity userRoleEntity = UserRoleEntity.builder()
                 .userId(userEntity.getUserId())

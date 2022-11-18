@@ -1,30 +1,31 @@
 package com.transfer.room.config.security;
 
-import com.transfer.room.config.security.filter.JwtAuthenticationFilter;
-import com.transfer.room.config.security.filter.JwtAuthorizationFilter;
 import com.transfer.room.user.service.CustomUserDetailsService;
-import com.transfer.room.user.service.UserService;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableConfigurationProperties(value = {SecurityProperties.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
-    private final UserService userService;
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, UserService userService){
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService,
+                          JwtTokenProvider jwtTokenProvider){
         this.customUserDetailsService = customUserDetailsService;
-        this.userService = userService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -33,25 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/uploads/**", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-                "/configuration/security", "/swagger-ui.html", "/webjars/**");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        AuthenticationManager authenticationManager = authenticationManager();
-
         http
-                .csrf().disable()   // csrf와 session은 JWT 기반 Security에서는 사용하지 않으므로 disable 처리 (remove csrf and state in session because in jwt we do not need them)
+                .csrf().disable()   // csrf와 session은 JWT 기반 Security에서는 사용하지 않으므로 disable 처리
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager)) // jwt filters 추가
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, this.userService))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "").permitAll()
-//                .antMatchers(HttpMethod.POST, "").permitAll()
+                .antMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
                 .anyRequest().authenticated();
     }
 

@@ -1,0 +1,42 @@
+server:
+  error:
+    include-exception: false
+    include-stacktrace: never
+  port: 8080
+
+security:
+  jwt:
+    secret: asdawqelkajsldakxqkuhweoihkdajnskajhdoas
+
+---
+
+spring:
+  profiles:
+    active: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/transfer_dev?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: transfer_dev_user
+    password: transfer_dev_user
+
+---
+
+spring:
+  profiles:
+    active: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/transfer_dev?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: transfer_dev_user
+    password: transfer_dev_user
+
+---
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/transfer_dev?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: transfer_dev_user
+    password: transfer_dev_user
