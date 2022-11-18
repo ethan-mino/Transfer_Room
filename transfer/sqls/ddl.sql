@@ -39,7 +39,8 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`roles` (
     `role_id` INT NOT NULL,
     `role_name` VARCHAR(20) NOT NULL,
-    PRIMARY KEY (`role_id`))
+    PRIMARY KEY (`role_id`),
+    UNIQUE INDEX `role_name_UNIQUE` (`role_name` ASC) VISIBLE)
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
