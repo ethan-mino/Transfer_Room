@@ -1,4 +1,4 @@
-package com.transfer.home.transfer;
+package com.transfer.room;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class TransferApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void contextㅂoads() {
 	}
 
 }

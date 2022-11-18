@@ -1,4 +1,4 @@
-package com.transfer.home.transfer;
+package com.transfer.room;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
