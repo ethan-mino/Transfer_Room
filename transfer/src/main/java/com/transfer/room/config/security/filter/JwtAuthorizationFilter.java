@@ -63,7 +63,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             String userEmail = getSubject(token);
 
             if(userEmail != null) {
-                UserDto user = userService.findUser(userEmail);
+                UserDto user = userService.findUserByUserEmail(userEmail);
 
                 if (user == null)
                     throw new UsernameNotFoundException("JWT Token Error");
