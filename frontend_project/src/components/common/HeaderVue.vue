@@ -14,7 +14,13 @@
             class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 li-margin"
           >
             <li></li>
-            <li><a href="#" class="nav-link px-1 text-white">양도</a></li>
+            <li>
+              <router-link
+                :to="{ name: 'transferPage' }"
+                class="nav-link px-1 text-white"
+                >양도</router-link
+              >
+            </li>
             <li>
               <a href="#" class="nav-link px-1 text-white">커뮤니티</a>
             </li>
