@@ -7,6 +7,12 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="selectUserByUserEmail" resultType="com.transfer.room.user.dto.UserDto">
+        SELECT user_id, user_name, user_email, user_password, user_address
+        FROM user
+        WHERE user_id = #{userEmail}
+    </select>
+
     <update id="updateUser" parameterType="com.transfer.room.user.entity.UserEntity">
         UPDATE user
         SET user_name = #{userName},
@@ -36,4 +42,10 @@
         DELETE FROM user_role
         WHERE user_id = #{userId} AND role_id = #{roleId}
     </delete>
+
+    <select id = "selectRoleByRoleName" resultType="com.transfer.room.user.dto.UserRoleDto">
+        SELECT role_id, role_name
+        FROM role
+        WHERE role_name = #{roleName}
+    </select>
 </mapper>
