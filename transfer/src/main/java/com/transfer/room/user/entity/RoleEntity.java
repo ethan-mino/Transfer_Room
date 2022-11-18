@@ -1,13 +1,13 @@
 package com.transfer.room.user.entity;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
-public class UserRoleEntity {
-    private String userId;
+@ToString
+public class RoleEntity {
     private String roleId;
+    private String roleName;
 }

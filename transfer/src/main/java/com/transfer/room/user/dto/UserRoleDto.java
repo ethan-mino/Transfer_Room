@@ -8,12 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserRoleDto {
-    private int id;
-    private String userId;
+    private int roleId;
+    private int userId;
     private String roleName;
-
-    public UserRoleDto(String userId, String roleName) {
-        this.userId = userId;
-        this.roleName = roleName;
-    }
 }
