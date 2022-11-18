@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MainView from "@/views/MainView";
-import LoginView from "@/views/LoginView";
-import SignupView from "@/views/SignupView";
-import TransferView from "@/views/TransferView";
+import LoginView from "@/views/user/LoginView";
+import SignupView from "@/views/user/SignupView";
+import TransferView from "@/views/transfer/TransferView";
+import TransferAddView from "@/views/transfer/TransferAddView";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/transferPage",
     name: "transferPage",
     component: TransferView,
+  },
+  {
+    path: "/transferAdd",
+    name: "transferAdd",
+    component: TransferAddView,
   },
 ];
 

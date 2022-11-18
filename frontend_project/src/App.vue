@@ -21,6 +21,7 @@ export default {
 #app {
   height: 100%;
   width: 100%;
+  text-align: center;
 }
 
 @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";

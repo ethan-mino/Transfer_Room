@@ -87,14 +87,16 @@
               </div>
 
               <div class="form-group col-md-2">
-                <button
-                  type="button"
-                  id="add-interesting-btn"
-                  class="search btn btn-info"
-                  style="color: #ffffff"
-                >
-                  등록
-                </button>
+                <router-link :to="{ name: 'transferAdd' }">
+                  <button
+                    type="button"
+                    id="add-interesting-btn"
+                    class="search btn btn-info"
+                    style="color: #ffffff"
+                  >
+                    등록
+                  </button>
+                </router-link>
               </div>
               <!-- </c:if> -->
             </div>

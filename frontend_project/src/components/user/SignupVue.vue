@@ -51,7 +51,7 @@
               <span class="input-wrap__input-focus"></span>
             </div>
             <!-- <span v-show="signup_fail_msg" class="login-form__fail-msg p-b-15"
-              >이미 가입된 아이디입니다.</span
+              >이미 가입된 이메일입니다.</span
             > -->
             <button class="login-form__login-btn m-t-30">Sign up</button>
           </form>
