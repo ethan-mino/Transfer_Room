@@ -41,20 +41,16 @@
 
             <!-- <template v-else> -->
             <div class="authOff">
-              <button
-                type="button"
-                class="btn btn-outline-light me-2"
-                onclick="location.href = '#'"
-              >
-                Login
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-light me-2"
-                onclick="location.href = '#'"
-              >
-                SignUp
-              </button>
+              <router-link :to="{ name: 'loginPage' }">
+                <button type="button" class="btn btn-outline-light me-2">
+                  Login
+                </button>
+              </router-link>
+              <router-link :to="{ name: 'signupPage' }">
+                <button type="button" class="btn btn-outline-light me-2">
+                  SignUp
+                </button>
+              </router-link>
             </div>
             <!-- </template> -->
           </div>
