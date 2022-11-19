@@ -11,39 +11,37 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema transfer_dev
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema transfer_dev
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8 ;
-USE `transfer_dev` ;
+CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 
 -- CREATE USER 'transfer_dev_user' identified by 'transfer_dev_user';
 -- GRANT ALL PRIVILEGES ON transfer_dev.* to 'transfer_dev_user'@'%';
+
+USE `transfer_dev` ;
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`users` (
-  `user_id` INT NOT NULL,
+  `user_id` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(255) NOT NULL,
   `user_email` VARCHAR(255) NOT NULL,
   `user_password` VARCHAR(255) NOT NULL,
   `user_address` VARCHAR(255) NOT NULL,
+  `user_create_time` TIMESTAMP NOT NULL,
+  `user_update_time` TIMESTAMP NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`roles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`roles` (
-  `role_id` INT NOT NULL,
+  `role_id` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE INDEX `role_name_UNIQUE` (`role_name` ASC) VISIBLE)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`role_id`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -64,14 +62,14 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`user_roles` (
     REFERENCES `transfer_dev`.`roles` (`role_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`notices`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`notices` (
-  `notice_no` INT NOT NULL,
+  `notice_no` INT NOT NULL AUTO_INCREMENT,
   `notice_title` VARCHAR(255) NOT NULL,
   `notice_content` TEXT NOT NULL,
   `notice_critical` INT NOT NULL,
@@ -85,24 +83,24 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`notices` (
     REFERENCES `transfer_dev`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`community_categories`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`community_categories` (
-  `cc_id` INT NOT NULL,
+  `cc_id` INT NOT NULL AUTO_INCREMENT,
   `cc_name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`cc_id`))
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`community_boards`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`community_boards` (
-  `cb_no` INT NOT NULL,
+  `cb_no` INT NOT NULL AUTO_INCREMENT,
   `cb_title` VARCHAR(255) NOT NULL,
   `cb_content` TEXT NOT NULL,
   `cb_create_time` TIMESTAMP NOT NULL,
@@ -122,14 +120,14 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`community_boards` (
     REFERENCES `transfer_dev`.`community_categories` (`cc_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`comments`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`comments` (
-  `comment_id` INT NOT NULL,
+  `comment_id` INT NOT NULL AUTO_INCREMENT,
   `comment_content` TEXT NOT NULL,
   `comment_create_time` TIMESTAMP NOT NULL,
   `comment_update_time` TIMESTAMP NOT NULL,
@@ -141,26 +139,26 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`comments` (
     REFERENCES `transfer_dev`.`community_boards` (`cb_no`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `transfer_dev`.`dongcode`
+-- Table `transfer_dev`.`regions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `transfer_dev`.`dongcode` (
+CREATE TABLE IF NOT EXISTS `transfer_dev`.`regions` (
   `dongCode` VARCHAR(10) NOT NULL,
   `sidoName` VARCHAR(30) NULL,
   `gugunName` VARCHAR(30) NULL,
   `dongName` VARCHAR(30) NULL,
   PRIMARY KEY (`dongCode`))
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`transfer_boards`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_boards` (
-  `tb_id` INT NOT NULL,
+  `tb_id` INT NOT NULL AUTO_INCREMENT,
   `transfer_status` INT NOT NULL,
   `tb_title` VARCHAR(255) NOT NULL,
   `tb_content` TEXT NOT NULL,
@@ -174,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_boards` (
   `contract_type` VARCHAR(255) NOT NULL,
   `contract_end_time` DATE NOT NULL,
   `transferer_id` INT NOT NULL,
-  `transferee_id` INT NOT NULL,
+  `transferee_id` INT NULL,
   `dongCode` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`tb_id`),
   INDEX `fk_transfer_boards_users1_idx` (`transferer_id` ASC) VISIBLE,
@@ -192,44 +190,28 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_boards` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_transfer_boards_dongcode1`
     FOREIGN KEY (`dongCode`)
-    REFERENCES `transfer_dev`.`dongcode` (`dongCode`)
+    REFERENCES `transfer_dev`.`regions` (`dongCode`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`files`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`files` (
-  `file_id` INT NOT NULL,
   `file_path` VARCHAR(500) NOT NULL,
   `file_content_type` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`file_id`))
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `transfer_dev`.`transfer_board_image`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_image` (
-  `tb_id` INT NOT NULL,
-  `file_id` INT NOT NULL,
-  PRIMARY KEY (`tb_id`, `file_id`),
-  INDEX `fk_transfer_board_image_files1_idx` (`file_id` ASC) VISIBLE,
-  CONSTRAINT `fk_transfer_board_image_transfer_boards1`
+  `tb_id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`tb_id`),
+  CONSTRAINT `fk_files_transfer_boards1`
     FOREIGN KEY (`tb_id`)
     REFERENCES `transfer_dev`.`transfer_boards` (`tb_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_transfer_board_image_files1`
-    FOREIGN KEY (`file_id`)
-    REFERENCES `transfer_dev`.`files` (`file_id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ENGINE = InnoDB;
 
-
+USE `transfer_dev` ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
