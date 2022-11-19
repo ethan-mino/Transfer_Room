@@ -2,8 +2,13 @@ header{
   background-color: transparent;
 }
 
+header .logo {
+  width : 100px;
+}
+
 header *{
-  color : black !important;
+  color : #ffffff !important;
+  z-index: 100;
 }
 
 header a{

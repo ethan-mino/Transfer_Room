@@ -13,8 +13,8 @@
 }
 
 footer {
-  background-color: #c1beba; /* footer의 배경색 */
-  height: 80px;
+  background-color: #414141; /* footer의 배경색 */
+  height: 300px;
   width: 100%;
   line-height: 18px;
 }
@@ -23,7 +23,7 @@ footer #footer_box {
   /* footer 내부의 이미지와 텍스트를 감싸는 div 태그 */
   margin-left: auto; /* left right는 가운데 정렬 */
   margin-right: auto;
-  width: 550px; /* 크기를 잘 조정해서 내부에 있는 이미지와 텍스트가 중앙정렬 되도록 해야함.*/
+  width: 800px; /* 크기를 잘 조정해서 내부에 있는 이미지와 텍스트가 중앙정렬 되도록 해야함.*/
   height: 100%;
 
   /* 이미지와 텍스트의 수직 중앙 정렬을 위한 속성 */
@@ -39,11 +39,17 @@ footer #footer_box {
 
 footer #footer_text {
   /* 사이트 정보 텍스트 */
-  text-align: center; /* 텍스트 가운데 정렬 */
+  text-align: left; /* 텍스트 가운데 정렬 */
   overflow: hidden; /* 스크롤 제거 */
   margin-bottom: 0px; /* 왜 그런지 모르겠는데 margin-bottom을 0px로 지정하지 않으면 1rem으로 지정되어 있어서 footer 하단에 공백이 생김 */
-  width: 480px; /* 텍스트 영역의 width를 늘려주면 img와 텍스트 사이의 간격이 넓어짐. */
+  width: 100%; /* 텍스트 영역의 width를 늘려주면 img와 텍스트 사이의 간격이 넓어짐. */
   height: 65%; /* height 속성을 주지 않으면 footer 하단에 공백이 생겨서 height를 지정해줌. */
   font-size: 12px;
-  color: white !important;
+}
+
+#footer_box span,
+#footer_box h5{
+  margin-bottom : 15px;
+  color : #ffffff;
+  line-height: 30px;
 }

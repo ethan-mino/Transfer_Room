@@ -68,8 +68,7 @@
                 <button
                   type="button"
                   id="list-btn"
-                  class="search btn btn-primary"
-                >
+                  class="search btn btn-primary">
                   검색
                 </button>
               </div>
@@ -80,8 +79,7 @@
                   type="button"
                   id="add-interesting-btn"
                   class="search btn btn-info"
-                  style="color: #ffffff"
-                >
+                  style="color: #ffffff">
                   관심지역 등록하기
                 </button>
               </div>
@@ -92,8 +90,7 @@
                     type="button"
                     id="add-interesting-btn"
                     class="search btn btn-info"
-                    style="color: #ffffff"
-                  >
+                    style="color: #ffffff">
                     등록
                   </button>
                 </router-link>

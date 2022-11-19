@@ -1,83 +1,121 @@
 <template>
   <div>
-    <div style="height: 70px"></div>
     <div class="content-container">
       <div class="contain">
-        <div
-          class="p-0 mb-5 bg-light justify-content-center rounded-3"
-          style="display: flex; margin-top: 30px">
-          <img
-            src="https://cdn.pixabay.com/photo/2022/07/01/04/42/beach-house-7294928_960_720.png"
-            alt=""
-          />
-        </div>
+        
+        <div class = "background-input">
+          <h2 id = "background-input__title">어떤 집으로 환승하시겠어요?</h2>
 
-        <div class="row align-items-md-stretch">
-          <div class="col-md-6" style="margin-bottom: 20px">
-            <div class="h-100 p-5 bg-light border rounded-3">
-              <h2>공지사항</h2>
-              <ul>
-                <li class="nav-item">
-                  <a class="nav-link" href="news.do?arti_id=6"
-                    ><i class="fa fa-won"></i> 가용자금 확인 및 대출 계획</a
+          <div id="deal-input">
+            <div class="row col-md-12 justify-content-center mb-2">
+              <div class="form-group col-md-2">
+                <!-- <select
+                  class="form-select"
+                  id="sido"
+                  v-model="sidoCode"
+                  @change="gugunList"
+                >
+                  <option
+                    v-for="(item, index) in sidoOption"
+                    :value="item.value"
+                    :key="index"
                   >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="news.do?arti_id=7"
-                    ><i class="fa fa-home"></i> 집 종류 및 지역 선택</a
+                    {{ item.text }}
+                  </option>
+                </select> -->
+                <select class="form-select" id="sido">
+                  <option value="">시도선택</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <!-- <select
+                  class="form-select"
+                  id="gugun"
+                  v-model="gugunCode"
+                  @change="dongList"
+                >
+                  <option
+                    v-for="(item, index) in gugunOption"
+                    :value="item.value"
+                    :key="index"
                   >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="news.do?arti_id=8"
-                    ><i class="fa fa-line-chart"></i>정보수집 & 시세파악</a
+                    {{ item.text }}
+                  </option>
+                </select> -->
+                <select class="form-select" id="gugun">
+                  <option value="">구군선택</option>
+                </select>
+              </div>
+              <!-- <div class="form-group col-md-2">
+                <select class="form-select" id="dong" v-model="dongCode">
+                  <option
+                    v-for="(item, index) in dongOption"
+                    :value="item.value"
+                    :key="index"
                   >
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-6 m-b-20" style="margin-bottom: 20px">
-            <div class="h-100 p-5 bg-light border rounded-3">
-              <h2>오늘의 뉴스</h2>
-              <ul>
-                <li class="nav-item">
-                  <a
-                    href="news.do?arti_id=5"
-                    class="NPI=a:title,i:0004615690"
-                    title="서울 아파트, 매매·전세 다른 양상…상승둔화vs상승확대"
-                    >서울 아파트, 매매·전세 다른 양상…상승..</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-md-6 m-b-20" style="margin-bottom: 20px">
-            <div class="h-100 p-5 bg-light border rounded-3">
-              <h2>게시판</h2>
-              <ul></ul>
-            </div>
-          </div>
-
-          <div class="col-md-6 m-b-20" style="margin-bottom: 20px">
-            <div class="h-100 p-5 bg-light border rounded-3">
-              <h2>최근 아파트 매매 내역</h2>
-              <ul></ul>
-            </div>
-          </div>
-
-          <div class="col-md-6 m-b-20" style="margin-bottom: 20px">
-            <div class="h-100 p-5 bg-light border rounded-3">
-              <h2>관심지역 상가</h2>
-              <ul></ul>
-            </div>
-          </div>
-          <div class="col-md-6 m-b-20" style="margin-bottom: 20px">
-            <div class="h-100 p-5 bg-light border rounded-3">
-              <h2>관심지역 대기 오염</h2>
-              <ul></ul>
+                    {{ item.text }}
+                  </option>
+                </select>
+              </div> -->
+              <div class="form-group col-md-2">
+                <select class="form-select" id="dong">
+                  <option value="">동선택</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2" style="display: contents">
+                <button
+                  type="button"
+                  id="list-btn"
+                  class="search btn btn-light">
+                  검색
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        <section class = "board-section">
+          <h5 class = "title">좋아요 많이 받은 양도 게시물</h5>  
+          <div class = "cards">
+            <div class="card">
+              <img class="card-img-top" src="@/assets/img/temp.jpg" alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">서율툭별시 종로구 청운동</p>
+                
+                <h5 class="card-title">세종하우스 105호</h5>
+                <p class="card-text">6층, 원룸, 월세 10만원, 관리비 5만원</p>
+                <p class="card-text">2022.06.10까지 계약</p>
+              </div>
+            </div>
+  
+            <div class="card">
+              <img class="card-img-top" src="@/assets/img/temp.jpg" alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">서율툭별시 종로구 청운동</p>
+                
+                <h5 class="card-title">세종하우스 105호</h5>
+                <p class="card-text">6층, 원룸, 월세 10만원, 관리비 5만원</p>
+                <p class="card-text">2022.06.10까지 계약</p>
+              </div>
+            </div>
+          </div>
+        </section> 
+
+        <section class = "board-section">
+          <h5 class = "title">최근 올라온 양도 게시물</h5>  
+          <div class = "cards">
+            <div class="card">
+              <img class="card-img-top" src="@/assets/img/temp.jpg" alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">서율툭별시 종로구 청운동</p>
+                
+                <h5 class="card-title">세종하우스 105호</h5>
+                <p class="card-text">6층, 원룸, 월세 10만원, 관리비 5만원</p>
+                <p class="card-text">2022.06.10까지 계약</p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -89,4 +127,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@import "@/assets/css/home/home.css";
+</style>

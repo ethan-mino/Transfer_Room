@@ -3,15 +3,13 @@
     <header class="p-3">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <h2>
-            <router-link to="/" class="nav-link px-6 text-secondary">
-              <img
-                  src="@/assets/img/logo.png"
-                  alt="rlfalsgh95"
-                  style = "width : 100px;"
-                />
-            </router-link>
-          </h2>
+          <router-link to="/" class="nav-link px-6 text-secondary">
+            <img
+                src="@/assets/img/white_logo.png"
+                alt="rlfalsgh95"
+                class = "logo"
+              />
+          </router-link>
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 li-margin">
             <li></li>
             <li>
