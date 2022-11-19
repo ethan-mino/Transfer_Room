@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transfer.room.transferboard.mapper.TransferBoardFilesMapper">
+
+    <resultMap id="TransferBoardFilesEntityMap" type="com.transfer.room.transferboard.entity.TransferBoardFilesEntity">
+        <id property="fileId" column="file_id"/>
+        <result property="tbId" column="tb_id"/>
+        <result property="filePath" column="file_path"/>
+        <result property="fileContentType" column="file_content_type"/>
+        <result property="fileStatus" column="file_status"/>
+    </resultMap>
+
+    <select id="selectTransferBoardFilesByArticleId"
+            parameterType="int"
+            resultMap="TransferBoardFilesEntityMap">
+        SELECT file_id, tb_id, file_path, file_content_type, is_attachment
+        FROM transfer_board_files
+        WHERE tb_id=#{articleId}
+    </select>
+
+
+</mapper>
+

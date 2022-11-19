@@ -10,3 +10,49 @@ INSERT INTO `regions` VALUES ('4773037043','경상북도','의성군','금성면
 UNLOCK TABLES;
 
 
+select * from regions;
+select dongCode, sidoName from regions where sidoName='서울특별시';
+select count(*) from regions;
+
+
+INSERT INTO users(user_name,user_email, user_password, user_address, user_create_time, user_update_time)
+VALUE ('이상현','lsh80165@gmail.com','1234', '대전', now(), now());
+
+INSERT INTO users(user_name,user_email, user_password, user_address, user_create_time, user_update_time)
+VALUE ('이상현2','lsh80165@naver.com','9999', '서울', now(), now());
+
+select * from users;
+
+
+
+INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count)
+VALUE (1,null,0,'test Title','test content',now(),now(),13.777777,13.888888,'대전 유성구',5,'원룸','월세',date("2022-11-19"),'1111010100',0);
+
+INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count)
+VALUE (1,null,0,'test Title2','test content2',now(),now(),15.777777,16.888888,'대전 유성구',5,'투룸','전세',date("2022-11-18"),'1111010100',0);
+
+INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count)
+VALUE (1,null,0,'test Title3','test content3',now(),now(),133.777777,336.888888,'대전 중구',6,'쓰리룸','전세',date("2022-11-18"),'1111010100',2);
+
+select * from transfer_boards;
+
+INSERT INTO transfer_board_files(tb_id,file_path, file_content_type,is_attachment)
+VALUE (1,'/user/lsh9672/img1.png','image/png', 0);
+
+INSERT INTO transfer_board_files(tb_id,file_path, file_content_type,is_attachment)
+VALUE (1,'/user/lsh9672/img2.png','image/jpg', 0);
+
+INSERT INTO transfer_board_files(tb_id,file_path, file_content_type,is_attachment)
+VALUE (1,'/user/lsh9672/contract.pdf','application/pdf', 1);
+
+INSERT INTO transfer_board_files(tb_id,file_path, file_content_type,is_attachment)
+VALUE (2,'/user/lsh9672/contract.pdf','application/pdf', 1);
+
+select * from transfer_board_files;
+
+
+
+
+
+
+

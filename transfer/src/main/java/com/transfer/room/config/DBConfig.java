@@ -14,7 +14,9 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(basePackages = {
-        "com.transfer.room.user.mapper"
+        "com.transfer.room.user.mapper",
+        "com.transfer.room.transferboard.mapper",
+        "com.transfer.room.region.mapper"
 })
 public class DBConfig {
     @Bean

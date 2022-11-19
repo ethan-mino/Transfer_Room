@@ -12,11 +12,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema transfer_dev
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `transfer_dev` ;
 
 -- CREATE USER 'transfer_dev_user' identified by 'transfer_dev_user';
 -- GRANT ALL PRIVILEGES ON transfer_dev.* to 'transfer_dev_user'@'%';
-
-USE `transfer_dev` ;
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`users`
@@ -174,6 +173,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_boards` (
   `transferer_id` INT NOT NULL,
   `transferee_id` INT NULL,
   `dongCode` VARCHAR(10) NOT NULL,
+  `like_count` INT NOT NULL,
   PRIMARY KEY (`tb_id`),
   INDEX `fk_transfer_boards_users1_idx` (`transferer_id` ASC) VISIBLE,
   INDEX `fk_transfer_boards_users2_idx` (`transferee_id` ASC) VISIBLE,
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_files` (
   `tb_id` INT NOT NULL,
   `file_path` VARCHAR(500) NOT NULL,
   `file_content_type` VARCHAR(255) NOT NULL,
-  `file_status` INT NOT NULL,
+  `is_attachment` INT NOT NULL,
   PRIMARY KEY (`file_id`, `tb_id`),
   CONSTRAINT `fk_transfer_board_files_transfer_boards1`
     FOREIGN KEY (`tb_id`)
@@ -212,8 +212,6 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_files` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 
 USE `transfer_dev` ;
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transfer.room.region.mapper.RegionMapper">
+
+    <select id="findAllSido" resultType="com.transfer.room.region.dto.SidoNameDto">
+        SELECT dongCode, sidoName  -- 구군이 하나라도 존재하는 시도만 SELECT
+        FROM regions dc
+        WHERE sidoName IS NOT NULL AND gugunName IS NULL AND dongName IS NULL
+              AND (
+                    SELECT count(dongCode)
+                    FROM regions cc
+                    WHERE cc.gugunName IS NOT NULL AND cc.dongName IS NULL AND cc.dongCode LIKE CONCAT(substr(dc.dongCode, 1, 2), '%')
+                ) > 1
+        ORDER BY dongCode;
+    </select>
+
+    <select id="findAllGugunBySidoCode" resultType="com.transfer.room.region.dto.GugunNameDto">
+        SELECT dongCode, gugunName  -- 동이 하나라도 존재하는 구군 SELECT
+        FROM regions dc
+        WHERE gugunName IS NOT NULL AND dongName IS NULL AND dc.dongCode LIKE CONCAT(SUBSTR(#{sidoCode}, 1, 2), '%')
+          AND (
+                  SELECT count(dongCode)
+                  FROM regions cc
+                  WHERE cc.dongName IS NOT NULL AND cc.dongCode LIKE CONCAT(substr(dc.dongCode, 1, 5), '%')
+              ) > 1
+        ORDER BY gugunName;
+
+    </select>
+
+    <select id="findAllDongByGugunCode" resultType="com.transfer.room.region.dto.DongNameDto">
+        SELECT dongCode, dongName
+        FROM regions
+        WHERE dongName IS NOT NULL AND dongCode LIKE concat(SUBSTR(#{gugunCode}, 1, 5), '%')
+        ORDER BY dongName;
+    </select>
+
+    <select id="findAllDongByDongCode" resultType="com.transfer.room.region.dto.RegionDto">
+        SELECT dongCode, sidoName, gugunName, dongName
+        FROM regions
+        WHERE dongName IS NOT NULL AND dongCode = ${dongCode}
+        ORDER BY dongName;
+    </select>
+
+</mapper>
+

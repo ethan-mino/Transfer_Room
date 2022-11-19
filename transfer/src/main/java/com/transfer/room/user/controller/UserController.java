@@ -29,8 +29,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(
-            @RequestBody UserDto userDto) throws AuthenticationException {
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody UserDto userDto) throws AuthenticationException {
+
+        // TODO: 2022-11-19 userDto에는 유저 테이블의 모든 정보다 다 들어있음 - 로그인시에 필요 없는 값도 있기 떄문에 따로 UserLoginDto를 만들어서 사용하는 것이 어떨까 싶음
+
         String userEmail = userDto.getUserEmail();
         UserDto queriedUser = userService.findUserByUserEmail(userEmail);
 
