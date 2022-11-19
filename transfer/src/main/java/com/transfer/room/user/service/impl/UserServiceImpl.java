@@ -51,25 +51,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = false)
-    public int modifyUser(UserDto updatedUserDto) throws Exception{
+    public boolean modifyUser(UserDto updatedUserDto) throws Exception{
         UserEntity userEntity = UserEntity.toUserDto(updatedUserDto);
-        return userMapper.updateUser(userEntity);
+        int userModifyCnt = userMapper.updateUser(userEntity);
+        boolean isUserModified = (userModifyCnt == 1);
+        return isUserModified;
     }
 
     @Override
     @Transactional(readOnly = false)
-    public int addUser(UserDto userDto) throws Exception{
+    public boolean addUser(UserDto userDto) throws Exception{
+        System.out.println(userDto);
         UserEntity userEntity = UserEntity.toUserDto(userDto);
         userMapper.insertUser(userEntity);
-
         // TODO : 유저 이메일 중복 검사 필요
         // TODO : ROLE_USER에 해당하는 ROLE의 id를 매번 조회해야 함
 
         UserRoleDto userRoleDto = userMapper.selectRoleByRoleName(UserRole.ROLE_USER);
+
         UserRoleEntity userRoleEntity = UserRoleEntity.builder()
                 .userId(userEntity.getUserId())
                 .roleId(userRoleDto.getRoleId())
                 .build();
-        return userMapper.insertUserRole(userRoleEntity);
+
+        int userRoleInsertCnt = userMapper.insertUserRole(userRoleEntity);
+        boolean isUserRoleInserted = (userRoleInsertCnt == 1);
+        return isUserRoleInserted;
     }
 }

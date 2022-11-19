@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 public class UserController {
@@ -26,7 +29,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody UserDto userDto) throws AuthenticationException {
+    public ResponseEntity<ApiResponse<String>> login(
+            @RequestBody UserDto userDto) throws AuthenticationException {
         String userEmail = userDto.getUserEmail();
         UserDto queriedUser = userService.findUserByUserEmail(userEmail);
 
@@ -34,6 +38,7 @@ public class UserController {
 
         // 아이디 또는 비밀번호가 일치하지 않는 경우
         if(isAuthFailed){
+            // TODO : Exception processing
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }else{  // 아이디와 비밀번호가 일치하는 경우
             ApiResponse<String> apiResponse = new ApiResponse<>();
@@ -41,6 +46,40 @@ public class UserController {
             String token = jwtTokenProvider.createToken(userEmail);  // token 생성
             apiResponse.setData(token);
             return ResponseEntity.ok(apiResponse);
+        }
+    }
+
+    @PostMapping("/signup") // 회원가입
+    public ResponseEntity<ApiResponse<UserDto>> signup(
+            @Valid @RequestBody UserDto userDto,
+            BindingResult bindingResult) {
+        ApiResponse<UserDto> apiResponse = new ApiResponse<>();
+
+        if(bindingResult.hasErrors()){
+            // TODO : Exception processing
+//            throw new InvalidInputException();
+            return ResponseEntity.badRequest().build();
+        }else{
+            String userEmail = userDto.getUserEmail();
+            String password = userDto.getUserPassword();
+            String encodedPassword = passwordEncoder.encode(password);  // 비밀번호 암호화
+
+            userDto.setUserPassword(encodedPassword);
+            try{
+                boolean isUserAdded = userService.addUser(userDto);
+                if(isUserAdded){ // 계정이 생성된 경우
+                    UserDto createdUser = userService.findUserByUserEmail(userEmail);
+                    apiResponse.setData(createdUser);
+                    return ResponseEntity.ok(apiResponse);
+                }else{  // 계정 생성에 실패한 경우
+                    // TODO : Exception processing
+                    return ResponseEntity.internalServerError().build();
+                }
+            }catch (Exception e){
+                // TODO : Exception Processing
+                e.printStackTrace();
+                return ResponseEntity.internalServerError().build();
+            }
         }
     }
 }

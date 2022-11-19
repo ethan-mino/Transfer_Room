@@ -1,49 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.transfer.room.user.mapper.UserMapper">
-    <select id="selectUserByUserId" resultType="com.transfer.room.user.dto.UserDto">
+    <select id="selectUserByUserId"
+            resultType="com.transfer.room.user.dto.UserDto">
         SELECT user_id, user_name, user_email, user_password, user_address
-        FROM user
+        FROM users
         WHERE user_id = #{userId}
     </select>
 
-    <select id="selectUserByUserEmail" resultType="com.transfer.room.user.dto.UserDto">
+    <select id="selectUserByUserEmail"
+            resultType="com.transfer.room.user.dto.UserDto">
         SELECT user_id, user_name, user_email, user_password, user_address
-        FROM user
+        FROM users
         WHERE user_email = #{userEmail}
     </select>
 
-    <update id="updateUser" parameterType="com.transfer.room.user.entity.UserEntity">
-        UPDATE user
+    <update id="updateUser"
+            parameterType="com.transfer.room.user.entity.UserEntity">
+        UPDATE users
         SET user_password = #{iserPassword},
             user_address = #{userAddress}
         WHERE user_id = #{userId}
     </update>
 
-    <insert id = "insertUser" parameterType="com.transfer.room.user.entity.UserEntity">
-        INSERT INTO user(user_name, user_email, user_password, user_address)
+    <insert id = "insertUser"
+            parameterType="com.transfer.room.user.entity.UserEntity"
+            useGeneratedKeys="true"
+            keyColumn="user_id"
+            keyProperty="userId">
+        INSERT INTO users(user_name, user_email, user_password, user_address)
         VALUES (#{userName}, #{userEmail}, #{userPassword}, #{userAddress})
     </insert>
 
-    <select id = "selectUserRoleByUserId" resultType="com.transfer.room.user.dto.UserRoleDto">
-        SELECT user_role.user_id, user_role.role_id, role.role_name
-        FROM user_role JOIN role ON user_role.role_id = role.role_id
+    <select id = "selectUserRoleByUserId"
+            resultType="com.transfer.room.user.dto.UserRoleDto">
+        SELECT user_roles.user_id, user_roles.role_id, role.role_name
+        FROM user_roles JOIN role ON user_roles.role_id = role.role_id
         WHERE user_id = #{userId}
     </select>
 
-    <insert id = "insertUserRole" parameterType="com.transfer.room.user.entity.UserRoleEntity">
-        INSERT INTO  `user_role`(role_id, user_id)
+    <insert id = "insertUserRole"
+            parameterType="com.transfer.room.user.entity.UserRoleEntity">
+        INSERT INTO  `user_roles`(role_id, user_id)
         VALUES(#{roleId}, #{userId})
     </insert>
 
-    <delete id = "deleteUserRole" parameterType="int">
-        DELETE FROM user_role
+    <delete id = "deleteUserRole"
+            parameterType="int">
+        DELETE FROM user_roles
         WHERE user_id = #{userId} AND role_id = #{roleId}
     </delete>
 
-    <select id = "selectRoleByRoleName" resultType="com.transfer.room.user.dto.UserRoleDto">
+    <select id = "selectRoleByRoleName"
+            resultType="com.transfer.room.user.dto.UserRoleDto">
         SELECT role_id, role_name
-        FROM role
+        FROM roles
         WHERE role_name = #{roleName}
     </select>
 </mapper>
