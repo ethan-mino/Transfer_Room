@@ -36,10 +36,14 @@ public class UserController {
         String userEmail = userDto.getUserEmail();
         UserDto queriedUser = userService.findUserByUserEmail(userEmail);
 
+        System.out.println(queriedUser);
+
+
         boolean isAuthFailed = (queriedUser == null || !passwordEncoder.matches(userDto.getUserPassword(), queriedUser.getUserPassword()));
 
         // 아이디 또는 비밀번호가 일치하지 않는 경우
         if(isAuthFailed){
+
             // TODO : Exception processing
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }else{  // 아이디와 비밀번호가 일치하는 경우
@@ -55,6 +59,8 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserDto>> signup(
             @Valid @RequestBody UserDto userDto,
             BindingResult bindingResult) {
+
+        // TODO: 2022-11-20 DTO가 엔티티의 모든 정보를 담고 있음. 별도의 반환용 DTO가 필요(현재 생성시간, 업데이트 시간이 들어가고 있음.)
         ApiResponse<UserDto> apiResponse = new ApiResponse<>();
 
         if(bindingResult.hasErrors()){

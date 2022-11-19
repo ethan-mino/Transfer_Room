@@ -19,7 +19,8 @@
             parameterType="com.transfer.room.user.entity.UserEntity">
         UPDATE users
         SET user_password = #{iserPassword},
-            user_address = #{userAddress}
+            user_address = #{userAddress},
+            user_update_time = now(),
         WHERE user_id = #{userId}
     </update>
 
@@ -28,8 +29,8 @@
             useGeneratedKeys="true"
             keyColumn="user_id"
             keyProperty="userId">
-        INSERT INTO users(user_name, user_email, user_password, user_address)
-        VALUES (#{userName}, #{userEmail}, #{userPassword}, #{userAddress})
+        INSERT INTO users(user_name, user_email, user_password, user_address,user_create_time,user_update_time)
+        VALUES (#{userName}, #{userEmail}, #{userPassword}, #{userAddress},now(),now())
     </insert>
 
     <select id = "selectUserRoleByUserId"

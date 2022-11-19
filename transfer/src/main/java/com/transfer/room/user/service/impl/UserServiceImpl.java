@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         // TODO : ROLE_USER에 해당하는 ROLE의 id를 매번 조회해야 함
 
         UserRoleDto userRoleDto = userMapper.selectRoleByRoleName(UserRole.ROLE_USER);
+        System.out.println("teset:" + userRoleDto);
 
         UserRoleEntity userRoleEntity = UserRoleEntity.builder()
                 .userId(userEntity.getUserId())
