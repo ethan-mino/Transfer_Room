@@ -26,7 +26,8 @@ public class TransferBoardListDto {
 
     private List<TransferBoardFileDto> imgFilePath = new ArrayList<>(); // 여러 사진중 대표 사진만 보여주면 됨.
 
-    TransferBoardListDto transferBoardListDto(List<TransferBoardFilesEntity> transferBoardFileEntities){
+    /*게시판 리스트에는 첨부파일이 필요 없기 때문에, 사진만 가져와서 보여줌.*/
+    public TransferBoardListDto insertImgFile(List<TransferBoardFilesEntity> transferBoardFileEntities){
         for(TransferBoardFilesEntity transferBoardFile : transferBoardFileEntities){
             //계약서와 이미지 파일 분리.
             if(transferBoardFile.getIsAttachment() == 0){

@@ -11,6 +11,7 @@ public class TransferBoardFileDto {
     private int fileId; //파일 id
     private String fileUrl; // 파일 url
 
+
     /*파일 엔티티를 받아서 파일 다운로드가 가능한 url로 반환.*/
     public TransferBoardFileDto(TransferBoardFilesEntity transferBoardFilesEntity){
 
