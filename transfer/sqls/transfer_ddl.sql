@@ -199,7 +199,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`files`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `transfer_dev`.`files` (
+CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_files` (
   `file_path` VARCHAR(500) NOT NULL,
   `file_content_type` VARCHAR(255) NOT NULL,
   `tb_id` INT NOT NULL AUTO_INCREMENT,
