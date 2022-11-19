@@ -9,8 +9,15 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body{
-    font-family: BMDOHYEON, MalgunGothic, sans-serif !important;
+    font-family: ONE-Mobile-POP, BMDOHYEON, MalgunGothic, sans-serif !important;
     font-size: 14px !important;
     background-color: #f6f8f9;
     margin : 0;

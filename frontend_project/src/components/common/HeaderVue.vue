@@ -1,31 +1,29 @@
 <template>
   <div>
-    <header class="p-3 text-bg-dark">
+    <header class="p-3">
       <div class="container">
-        <div
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
-        >
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <h2>
-            <router-link to="/" class="nav-link px-6 text-secondary"
-              >구해줘방</router-link
-            >
+            <router-link to="/" class="nav-link px-6 text-secondary">
+              <img
+                  src="@/assets/img/logo.png"
+                  alt="rlfalsgh95"
+                  style = "width : 100px;"
+                />
+            </router-link>
           </h2>
-          <ul
-            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 li-margin"
-          >
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 li-margin">
             <li></li>
             <li>
               <router-link
                 :to="{ name: 'transferPage' }"
-                class="nav-link px-1 text-white"
-                >양도</router-link
-              >
+               >양도</router-link>
             </li>
             <li>
-              <a href="#" class="nav-link px-1 text-white">커뮤니티</a>
+              <a href="#">커뮤니티</a>
             </li>
-            <li><a href="#" class="nav-link px-1 text-white">공지사항</a></li>
-            <li><a href="#" class="nav-link px-1 text-white">마이페이지</a></li>
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">마이페이지</a></li>
           </ul>
           <div class="text-end">
             <!-- <template v-if="this.$session.get('userInfo') != null"> -->
@@ -48,14 +46,7 @@
             <!-- <template v-else> -->
             <div class="authOff">
               <router-link :to="{ name: 'loginPage' }">
-                <button type="button" class="btn btn-outline-light me-2">
-                  Login
-                </button>
-              </router-link>
-              <router-link :to="{ name: 'signupPage' }">
-                <button type="button" class="btn btn-outline-light me-2">
-                  SignUp
-                </button>
+                Login / SignUp
               </router-link>
             </div>
             <!-- </template> -->

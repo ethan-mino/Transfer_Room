@@ -5,8 +5,7 @@
       <div class="contain">
         <div
           class="p-0 mb-5 bg-light justify-content-center rounded-3"
-          style="display: flex; margin-top: 30px"
-        >
+          style="display: flex; margin-top: 30px">
           <img
             src="https://cdn.pixabay.com/photo/2022/07/01/04/42/beach-house-7294928_960_720.png"
             alt=""
