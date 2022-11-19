@@ -203,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`files` (
   `file_path` VARCHAR(500) NOT NULL,
   `file_content_type` VARCHAR(255) NOT NULL,
   `tb_id` INT NOT NULL AUTO_INCREMENT,
+  `file_status` INT NOT NULL,
   PRIMARY KEY (`tb_id`),
   CONSTRAINT `fk_files_transfer_boards1`
     FOREIGN KEY (`tb_id`)
@@ -210,6 +211,8 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`files` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
 
 USE `transfer_dev` ;
 
