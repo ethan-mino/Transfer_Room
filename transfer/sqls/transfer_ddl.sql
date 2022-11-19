@@ -197,15 +197,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `transfer_dev`.`files`
+-- Table `transfer_dev`.`transfer_board_files`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_files` (
+  `file_id` INT NOT NULL AUTO_INCREMENT,
+  `tb_id` INT NOT NULL,
   `file_path` VARCHAR(500) NOT NULL,
   `file_content_type` VARCHAR(255) NOT NULL,
-  `tb_id` INT NOT NULL AUTO_INCREMENT,
   `file_status` INT NOT NULL,
-  PRIMARY KEY (`tb_id`),
-  CONSTRAINT `fk_files_transfer_boards1`
+  PRIMARY KEY (`file_id`, `tb_id`),
+  CONSTRAINT `fk_transfer_board_files_transfer_boards1`
     FOREIGN KEY (`tb_id`)
     REFERENCES `transfer_dev`.`transfer_boards` (`tb_id`)
     ON DELETE NO ACTION
