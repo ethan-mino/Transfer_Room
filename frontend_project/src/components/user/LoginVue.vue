@@ -92,6 +92,7 @@ export default {
 
       //로그인성공하면 메인 페이지로 이동
       if (this.isLogin) {
+        alert("로그인 성공!");
         this.$router.push({ name: "Main" });
       }
     },

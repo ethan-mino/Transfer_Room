@@ -34,22 +34,22 @@ const regionStore = {
     SET_SIDO_LIST(state, sidoValues) {
       sidoValues.forEach((sidoValue) => {
         state.sidos.push({
-          value: sidoValue.sidoCode,
+          value: sidoValue.dongCode,
           text: sidoValue.sidoName,
         });
       });
     },
     SET_GUGUN_LIST(state, gugunValues) {
       gugunValues.forEach((gugunValue) => {
-        state.sidos.push({
-          value: gugunValue.gugunCode,
+        state.guguns.push({
+          value: gugunValue.dongCode,
           text: gugunValue.gugunName,
         });
       });
     },
     SET_DONG_LIST(state, dongValues) {
       dongValues.forEach((dongValue) => {
-        state.sidos.push({
+        state.dongs.push({
           value: dongValue.dongCode,
           text: dongValue.dongName,
         });
@@ -60,6 +60,7 @@ const regionStore = {
     async getSido({ commit }) {
       await sidoList(
         ({ data }) => {
+          console.log(data);
           commit("SET_SIDO_LIST", data);
         },
         (error) => {
@@ -67,8 +68,9 @@ const regionStore = {
         }
       );
     },
-    async getGugun({ commit }) {
+    async getGugun({ commit }, sidoCode) {
       await gugunList(
+        sidoCode,
         ({ data }) => {
           commit("SET_GUGUN_LIST", data);
         },
@@ -77,8 +79,9 @@ const regionStore = {
         }
       );
     },
-    async getDong({ commit }) {
+    async getDong({ commit }, gugunCode) {
       await dongList(
+        gugunCode,
         ({ data }) => {
           commit("SET_DONG_LIST", data);
         },

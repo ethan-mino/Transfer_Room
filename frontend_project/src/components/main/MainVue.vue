@@ -55,6 +55,7 @@
                   type="button"
                   id="list-btn"
                   class="search btn btn-light"
+                  @click="searchBtn"
                 >
                   검색
                 </button>
@@ -147,6 +148,7 @@ export default {
   created() {
     this.CLEAR_SIDO_LIST();
     this.getSido();
+    console.log(this.sidos);
   },
   methods: {
     ...mapActions(regionStore, ["getSido", "getGugun", "getDong"]),
@@ -155,17 +157,18 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
-    gugunList() {
-      console.log("tset");
-      console.log(this.sidoCode);
+    gugunList: function () {
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
-    dongList() {
+    dongList: function () {
       this.CLEAR_DONG_LIST();
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
+    },
+    searchBtn: function () {
+      this.$router.push({ name: "transferPage" });
     },
   },
 };
