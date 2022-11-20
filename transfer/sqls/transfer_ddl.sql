@@ -12,10 +12,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema transfer_dev
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `transfer_dev` ;
+-- -----------------------------------------------------
+-- Schema transfer_dev
+-- -----------------------------------------------------
 
--- CREATE USER 'transfer_dev_user' identified by 'transfer_dev_user';
--- GRANT ALL PRIVILEGES ON transfer_dev.* to 'transfer_dev_user'@'%';
+-- -----------------------------------------------------
+-- Schema transfer_dev
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `transfer_dev` ;
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`users`
@@ -174,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_boards` (
   `transferee_id` INT NULL,
   `dongCode` VARCHAR(10) NOT NULL,
   `like_count` INT NOT NULL,
+  `approving_status` INT NOT NULL,
   PRIMARY KEY (`tb_id`),
   INDEX `fk_transfer_boards_users1_idx` (`transferer_id` ASC) VISIBLE,
   INDEX `fk_transfer_boards_users2_idx` (`transferee_id` ASC) VISIBLE,
@@ -209,6 +215,30 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_files` (
   CONSTRAINT `fk_transfer_board_files_transfer_boards1`
     FOREIGN KEY (`tb_id`)
     REFERENCES `transfer_dev`.`transfer_boards` (`tb_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `transfer_dev`.`interesting_area`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `transfer_dev`.`interesting_area` (
+  `ia_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `dongCode` VARCHAR(10) NOT NULL,
+  `ia_create_time` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`ia_id`, `user_id`, `dongCode`),
+  INDEX `fk_interesting_area_users1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_interesting_area_regions1_idx` (`dongCode` ASC) VISIBLE,
+  CONSTRAINT `fk_interesting_area_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `transfer_dev`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_interesting_area_regions1`
+    FOREIGN KEY (`dongCode`)
+    REFERENCES `transfer_dev`.`regions` (`dongCode`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
