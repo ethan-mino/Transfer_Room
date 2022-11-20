@@ -90,4 +90,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.p-3 {
+  background-image: linear-gradient(
+    134deg,
+    rgb(238 124 255) -5%,
+    rgb(255 145 150) 56%,
+    rgb(255 148 150) 56%
+  );
+}
+</style>

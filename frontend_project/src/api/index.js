@@ -11,4 +11,15 @@ function apiInstance() {
   return instance;
 }
 
-export { apiInstance };
+function regionInstance() {
+  const instance = axios.create({
+    baseURL: process.env.VUE_APP_API_REGION_URL,
+    headers: {
+      "Content-Type": "application/json; charset=uft-8",
+    },
+  });
+
+  return instance;
+}
+
+export { apiInstance, regionInstance };

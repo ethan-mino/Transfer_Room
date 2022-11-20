@@ -1,0 +1,93 @@
+import { sidoList, gugunList, dongList } from "@/api/region";
+
+const regionStore = {
+  namespaced: true,
+  //시도 구군 동 select 박스에 들어갈 내용 저장.
+  state: {
+    sidos: [{ value: null, text: "시도선택" }],
+    guguns: [{ value: null, text: "구군선택" }],
+    dongs: [{ value: null, text: "동선택" }],
+  },
+  getters: {
+    sidoValueList: function (state) {
+      return state.sidos;
+    },
+    gugunValueList: function (state) {
+      return state.guguns;
+    },
+    dongValueList: function (state) {
+      return state.dongs;
+    },
+  },
+  mutations: {
+    //초기화
+    CLEAR_SIDO_LIST(state) {
+      state.sidos = [{ value: null, text: "시도선택" }];
+    },
+    CLEAR_GUGUN_LIST(state) {
+      state.guguns = [{ value: null, text: "구군선택" }];
+    },
+    CLEAR_DONG_LIST(state) {
+      state.dongs = [{ value: null, text: "동선택" }];
+    },
+    //생성
+    SET_SIDO_LIST(state, sidoValues) {
+      sidoValues.forEach((sidoValue) => {
+        state.sidos.push({
+          value: sidoValue.sidoCode,
+          text: sidoValue.sidoName,
+        });
+      });
+    },
+    SET_GUGUN_LIST(state, gugunValues) {
+      gugunValues.forEach((gugunValue) => {
+        state.sidos.push({
+          value: gugunValue.gugunCode,
+          text: gugunValue.gugunName,
+        });
+      });
+    },
+    SET_DONG_LIST(state, dongValues) {
+      dongValues.forEach((dongValue) => {
+        state.sidos.push({
+          value: dongValue.dongCode,
+          text: dongValue.dongName,
+        });
+      });
+    },
+  },
+  actions: {
+    async getSido({ commit }) {
+      await sidoList(
+        ({ data }) => {
+          commit("SET_SIDO_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    async getGugun({ commit }) {
+      await gugunList(
+        ({ data }) => {
+          commit("SET_GUGUN_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    async getDong({ commit }) {
+      await dongList(
+        ({ data }) => {
+          commit("SET_DONG_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+  },
+};
+
+export default regionStore;
