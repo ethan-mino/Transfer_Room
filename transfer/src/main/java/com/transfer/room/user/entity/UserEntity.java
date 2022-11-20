@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @ToString
 @Getter
 @Builder
@@ -14,6 +16,8 @@ public class UserEntity {
     private String userEmail;
     private String userPassword;
     private String userAddress;
+    private LocalDateTime userCreateTime;
+    private LocalDateTime userUpdateTime;
 
     public static UserEntity toUserDto(UserDto userDto){
         return UserEntity.builder().userId(userDto.getUserId())

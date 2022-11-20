@@ -1,13 +1,11 @@
 package com.transfer.room.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @ToString
 @Getter
@@ -22,9 +20,6 @@ public class UserDto {
     private String userPassword;
     private String userAddress;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private Date createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private Date updatedAt;
+    private LocalDateTime userCreateTime;
+    private LocalDateTime userUpdateTime;
 }

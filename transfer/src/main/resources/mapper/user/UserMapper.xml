@@ -3,14 +3,14 @@
 <mapper namespace="com.transfer.room.user.mapper.UserMapper">
     <select id="selectUserByUserId"
             resultType="com.transfer.room.user.dto.UserDto">
-        SELECT user_id, user_name, user_email, user_password, user_address
+        SELECT user_id, user_name, user_email, user_password, user_address, user_create_time, user_update_time
         FROM users
         WHERE user_id = #{userId}
     </select>
 
     <select id="selectUserByUserEmail"
             resultType="com.transfer.room.user.dto.UserDto">
-        SELECT user_id, user_name, user_email, user_password, user_address
+        SELECT user_id, user_name, user_email, user_password, user_address, user_create_time, user_update_time
         FROM users
         WHERE user_email = #{userEmail}
     </select>
@@ -20,7 +20,7 @@
         UPDATE users
         SET user_password = #{iserPassword},
             user_address = #{userAddress},
-            user_update_time = now(),
+            user_update_time = NOW()
         WHERE user_id = #{userId}
     </update>
 
@@ -29,20 +29,20 @@
             useGeneratedKeys="true"
             keyColumn="user_id"
             keyProperty="userId">
-        INSERT INTO users(user_name, user_email, user_password, user_address,user_create_time,user_update_time)
-        VALUES (#{userName}, #{userEmail}, #{userPassword}, #{userAddress},now(),now())
+        INSERT INTO users(user_name, user_email, user_password, user_address, user_create_time, user_update_time)
+        VALUES (#{userName}, #{userEmail}, #{userPassword}, #{userAddress}, NOW(), NOW())
     </insert>
 
     <select id = "selectUserRoleByUserId"
             resultType="com.transfer.room.user.dto.UserRoleDto">
-        SELECT user_roles.user_id, user_roles.role_id, role.role_name
-        FROM user_roles JOIN role ON user_roles.role_id = role.role_id
+        SELECT user_roles.user_id, user_roles.role_id, roles.role_name
+        FROM user_roles JOIN roles ON user_roles.role_id = roles.role_id
         WHERE user_id = #{userId}
     </select>
 
     <insert id = "insertUserRole"
             parameterType="com.transfer.room.user.entity.UserRoleEntity">
-        INSERT INTO  `user_roles`(role_id, user_id)
+        INSERT INTO  user_roles(role_id, user_id)
         VALUES(#{roleId}, #{userId})
     </insert>
 
