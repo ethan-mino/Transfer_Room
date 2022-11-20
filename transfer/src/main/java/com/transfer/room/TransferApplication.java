@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 	* TODO : service, mapper로 파라미터 전달 할 때, DTO 사용할 지 상의 (select, delete 시)
 	* TODO : Controller Advice 적용
 	* TODO : JUnit을 이용한 테스트 코드 작성
+	* TODO : REST API 서버의 응답 통일 (ex. insert 성공 시, 어떤 데이터를 내려줄지)
  */
 @SpringBootApplication
 @ConfigurationPropertiesScan

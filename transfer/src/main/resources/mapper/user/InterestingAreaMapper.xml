@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.transfer.room.user.mapper.InterestingAreaMapper">
+
+    <resultMap id="InterestingAreaDetailsMap" type="com.transfer.room.user.dto.InterestingAreaDetails">
+        <id property="interestingAreaId" column="ia_id"/>
+        <result property="dongCode" column="dongCode"/>
+        <result property="userId" column="user_id"/>
+        <result property="interestingAreaCreateTime" column="ia_create_time"/>
+        <result property="interestingAreaCreateTime" column="ia_create_time"/>
+        <result property="sidoName" column="sidoName"/>
+        <result property="gugunName" column="gugunName"/>
+        <result property="dongName" column="dongName"/>
+    </resultMap>
+
+    <select id="selectAllInterestingAreasDetails" resultMap="InterestingAreaDetailsMap">
+        SELECT ia_id, user_id, r.dongCode, ia_create_time, sidoName, gugunName, dongName
+        FROM interesting_areas JOIN regions r on interesting_areas.dongCode = r.dongCode
+        WHERE user_id = #{userId}
+        ORDER BY ia_create_time DESC
+    </select>
+
+    <select id="selectInterestingAreaDetailById" resultMap="InterestingAreaDetailsMap">
+        SELECT ia_id, user_id, d.dongCode, ia_create_time, sidoName, gugunName, dongName
+        FROM interesting_areas JOIN regions d on interesting_areas.dongCode = d.dongCode
+        WHERE ia_id = #{interestingAreaId} AND user_id = #{userId}
+        ORDER BY ia_create_time DESC
+    </select>
+
+    <delete id="deleteInterestingAreaById">
+        DELETE
+        FROM interesting_areas
+        WHERE ia_id = #{interestingAreaId} AND user_id = #{userId}
+    </delete>
+
+    <insert id="insertInterestingArea"
+            parameterType="com.transfer.room.user.dto.InterestingAreaDto"
+            useGeneratedKeys="true"
+            keyProperty="interestingAreaId"
+            keyColumn="ia_id">
+        INSERT INTO interesting_areas(user_id, dongCode, ia_create_time)
+        VALUES (#{userId}, #{dongCode}, NOW())
+    </insert>
+</mapper>

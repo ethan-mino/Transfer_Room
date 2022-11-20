@@ -58,6 +58,7 @@ public class JwtTokenProvider {
         return token;
     }
 
+    // TODO : 잘못된 토큰에 대한 Decode 처리
     // Jwt Token의 유효성 및 만료 기간 검사
     public boolean validateToken(String jwtToken) {
         try {

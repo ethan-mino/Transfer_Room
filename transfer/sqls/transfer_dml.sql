@@ -3,16 +3,16 @@
 -- -----------------------------------------------------
 
 INSERT INTO users(user_id, user_name,user_email, user_password, user_address, user_create_time, user_update_time)
-    VALUE (1, '이상현','lsh80165@gmail.com','1234', '대전', now(), now());
+    VALUE (1, '이상현','lsh80165@gmail.com','$2a$10$cXTmQ4l6civQlxvj7bkvD.I7vhPyJLBM.oPlStfFa104XDXSRSCbq', '대전', now(), now());
 
 INSERT INTO users(user_id, user_name,user_email, user_password, user_address, user_create_time, user_update_time)
-    VALUE (2, '이상현2','lsh80165@naver.com','9999', '서울', now(), now());
+    VALUE (2, '이상현2','lsh80165@naver.com','$2a$10$cXTmQ4l6civQlxvj7bkvD.I7vhPyJLBM.oPlStfFa104XDXSRSCbq', '서울', now(), now());
 
 INSERT INTO users(user_id, user_name,user_email, user_password, user_address, user_create_time, user_update_time)
-    VALUE (3, '길민호','rlfalsgh95@naver.com','1111', '용인', now(), now());
+    VALUE (3, '길민호','rlfalsgh95@naver.com','$2a$10$cXTmQ4l6civQlxvj7bkvD.I7vhPyJLBM.oPlStfFa104XDXSRSCbq', '용인', now(), now());
 
 INSERT INTO users(user_id, user_name,user_email, user_password, user_address, user_create_time, user_update_time)
-    VALUE (4, 'test','test@naver.com','1111', '용인', now(), now());
+    VALUE (4, 'test','test@naver.com','$2a$10$cXTmQ4l6civQlxvj7bkvD.I7vhPyJLBM.oPlStfFa104XDXSRSCbq', '용인', now(), now());
 
 
 -- -----------------------------------------------------
