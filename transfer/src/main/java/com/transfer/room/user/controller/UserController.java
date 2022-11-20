@@ -1,6 +1,7 @@
 package com.transfer.room.user.controller;
 
 import com.transfer.room.config.security.JwtTokenProvider;
+import com.transfer.room.user.dto.LoginDto;
 import com.transfer.room.user.dto.UserDto;
 import com.transfer.room.user.service.UserService;
 import com.transfer.room.util.ApiResponse;
@@ -29,21 +30,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody UserDto userDto) throws AuthenticationException {
-
-        // TODO: 2022-11-19 userDto에는 유저 테이블의 모든 정보다 다 들어있음 - 로그인시에 필요 없는 값도 있기 떄문에 따로 UserLoginDto를 만들어서 사용하는 것이 어떨까 싶음
-
-        String userEmail = userDto.getUserEmail();
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginDto loginDto) throws AuthenticationException {
+        String userEmail = loginDto.getUserEmail();
         UserDto queriedUser = userService.findUserByUserEmail(userEmail);
 
-        System.out.println(queriedUser);
-
-
-        boolean isAuthFailed = (queriedUser == null || !passwordEncoder.matches(userDto.getUserPassword(), queriedUser.getUserPassword()));
+        boolean isAuthFailed = (queriedUser == null || !passwordEncoder.matches(loginDto.getUserPassword(), queriedUser.getUserPassword()));
 
         // 아이디 또는 비밀번호가 일치하지 않는 경우
         if(isAuthFailed){
-
             // TODO : Exception processing
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }else{  // 아이디와 비밀번호가 일치하는 경우
