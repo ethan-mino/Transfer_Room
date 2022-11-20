@@ -26,7 +26,7 @@ public class TransferBoardServiceImpl implements TransferBoardService {
     public TransferBoardDto findTransferBoardByArticleId(int articleId) {
 
         TransferBoardDto transferBoardDto = transferBoardMapper.selectTransferBoardByArticleId(articleId); //양도 게시글 정보 조회
-        List<TransferBoardFilesEntity> transferBoardFilesEntityList = transferBoardFilesMapper.selectTransferBoardFilesByArticleId(transferBoardDto.getArticleId());
+        List<TransferBoardFilesEntity> transferBoardFilesEntityList = transferBoardFilesMapper.selectTransferBoardFilesByArticleId(transferBoardDto.getTransferBoardId());
         transferBoardDto = transferBoardDto.insertFile(transferBoardFilesEntityList);//게시글에 들어갈 파일 조회
 
         return transferBoardDto;
@@ -39,7 +39,7 @@ public class TransferBoardServiceImpl implements TransferBoardService {
         List<TransferBoardListDto> transferBoardListDtos = transferBoardMapper.selectTransferBoardByDongCode(dongCode); //동코드로 게시글 조회
         //각 게시글에 대해 파일 정보 조회.
         for(int index = 0; index < transferBoardListDtos.size(); index++){
-            int tempArticleId = transferBoardListDtos.get(index).getArticleId(); //리스트에서 id값 꺼내오기
+            int tempArticleId = transferBoardListDtos.get(index).getTransferBoardId(); //리스트에서 id값 꺼내오기
             List<TransferBoardFilesEntity> transferBoardFilesEntityList = transferBoardFilesMapper.selectTransferBoardFilesByArticleId(tempArticleId); //id값으로 파일 조회.
             transferBoardListDtos.get(index).insertImgFile(transferBoardFilesEntityList); //해당 객체에 파일경로를 담음
         }

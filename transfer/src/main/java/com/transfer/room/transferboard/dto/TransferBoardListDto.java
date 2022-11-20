@@ -14,7 +14,7 @@ public class TransferBoardListDto {
     //웹뷰에서 슬라이드해서 볼수 있는 간단한 정보들.
 
 
-    private int articleId; //게시글 단건 조회시 필요하기 때문에 가지고 있어야 됨
+    private int transferBoardId; //게시글 단건 조회시 필요하기 때문에 가지고 있어야 됨
     private String transferTitle; //게시글 제목
     private Double roomLatitude; // 위도 - 맵에 좌표를 찍기 위함.
     private Double roomLongitude;// 경도

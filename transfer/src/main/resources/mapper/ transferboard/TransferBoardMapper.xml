@@ -3,7 +3,7 @@
 <mapper namespace="com.transfer.room.transferboard.mapper.TransferBoardMapper">
 
     <resultMap id="TransferBoardDtoMap" type="com.transfer.room.transferboard.dto.TransferBoardDto">
-        <id property="articleId" column="tb_id"/>
+        <id property="transferBoardId" column="tb_id"/>
         <result property="transfererId" column="transferer_id"/>
         <result property="transfereeId" column="transferee_id"/>
         <result property="transferStatus" column="transfer_status"/>
@@ -25,7 +25,7 @@
     </resultMap>
 
     <resultMap id="TransferBoardListDtoMap" type="com.transfer.room.transferboard.dto.TransferBoardListDto">
-        <id property="articleId" column="tb_id"/>
+        <id property="transferBoardId" column="tb_id"/>
         <result property="transferTitle" column="tb_title"/>
         <result property="roomLatitude" column="room_latitude"/>
         <result property="roomLongitude" column="room_longitude"/>
@@ -46,7 +46,7 @@
         FROM transfer_boards as tb
         JOIN regions as dc
         ON tb.dongCode = dc.dongCode
-        WHERE tb.tb_id = #{articleId}
+        WHERE tb.tb_id = #{transferBoardId}
         ORDER BY tb.like_count DESC;
     </select>
 
@@ -64,7 +64,8 @@
     </select>
 
     <insert id="insertTransferBoard"
-            parameterType="com.transfer.room.transferboard.entity.TransferBoardsEntity">
+            parameterType="com.transfer.room.transferboard.entity.TransferBoardsEntity"
+            useGeneratedKeys="true" keyProperty="tbId">
         INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status
         ,tb_title,tb_content,tb_create_time,tb_update_time
         ,room_latitude,room_longitude, room_address, room_floor, room_type

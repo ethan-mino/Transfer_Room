@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class TransferBoardDto {
 
-    private int articleId;
+    private int transferBoardId;
     private int transfererId;
     private int transfereeId;
     private int transferStatus;

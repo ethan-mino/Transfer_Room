@@ -16,6 +16,7 @@
               <input
                 class="input-wrap__input"
                 type="email"
+                v-model="userSignupInfo.userEmail"
                 placeholder="이메일"
               />
               <span class="input-wrap__input-focus"></span>
@@ -25,7 +26,12 @@
               class="input-wrap validate-input m-b-15"
               data-validate="이름을 입력해주세요"
             >
-              <input class="input-wrap__input" type="text" placeholder="이름" />
+              <input
+                class="input-wrap__input"
+                type="text"
+                v-model="userSignupInfo.userName"
+                placeholder="이름"
+              />
               <span class="input-wrap__input-focus"></span>
             </div>
 
@@ -39,6 +45,7 @@
               <input
                 class="input-wrap__input"
                 type="password"
+                v-model="userSignupInfo.userPassword"
                 placeholder="비밀번호"
               />
               <span class="input-wrap__input-focus"></span>
@@ -47,13 +54,20 @@
               class="input-wrap validate-input m-b-15"
               data-validate="주소를 입력해주세요"
             >
-              <input class="input-wrap__input" type="text" placeholder="주소" />
+              <input
+                class="input-wrap__input"
+                type="text"
+                v-model="userSignupInfo.userAddress"
+                placeholder="주소"
+              />
               <span class="input-wrap__input-focus"></span>
             </div>
-            <!-- <span v-show="signup_fail_msg" class="login-form__fail-msg p-b-15"
+            <span v-if="emailDuplicated" class="login-form__fail-msg p-b-15"
               >이미 가입된 이메일입니다.</span
-            > -->
-            <button class="login-form__login-btn m-t-30">Sign up</button>
+            >
+            <button class="login-form__login-btn m-t-30" @click="signupBtn">
+              Sign up
+            </button>
           </form>
         </div>
       </div>
@@ -63,8 +77,45 @@
 </template>
 
 <script>
+import { signup } from "@/api/member";
+
 export default {
   name: "SignupVue",
+  data() {
+    return {
+      userSignupInfo: {
+        userName: null,
+        userEmail: null,
+        userPassword: null,
+        userAddress: null,
+      },
+      signFailCheck: false,
+    };
+  },
+  computed: {
+    emailDuplicated: function () {
+      return this.signFailCheck;
+    },
+  },
+  methods: {
+    signupBtn: async function () {
+      await signup(
+        this.userSignupInfo,
+
+        //성공시
+        ({ data }) => {
+          console.log(data);
+          this.signFailCheck = false;
+          //로그인 창으로 이동
+          this.$router.push({ name: "loginPage" });
+        },
+        (error) => {
+          console.log(error);
+          this.signFailCheck = true;
+        }
+      );
+    },
+  },
 };
 </script>
 
