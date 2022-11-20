@@ -27,14 +27,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         // loginId에 해당하는 정보를 데이터베이스에서 읽어 CustomUser객체에 저장한다.
         // 해당 정보를 CustomUserDetails객체에 저장한다.
         UserDto userDto = userService.findUserByUserEmail(userEmail);
-        int userId = userDto.getUserId();
-
-        CustomUserDetails customUserDetails = new CustomUserDetails(userDto);
+        System.out.println(userDto);
+        System.out.println(userEmail);
 
         if(userDto == null){
             throw new UsernameNotFoundException(USER_NOT_FOUND_EXCEPTION_MESSAGE);
         }
 
+        CustomUserDetails customUserDetails = new CustomUserDetails(userDto);
+        int userId = userDto.getUserId();
         List<UserRoleDto> customRoles = userService.findUserRoleByUserId(userId);
 
         // 로그인 한 사용자의 권한 정보를 GrantedAuthority를 구현하고 있는 SimpleGrantedAuthority객체에 담아

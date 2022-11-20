@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/transferBoard/**").permitAll()
+                .antMatchers("/user/interest-area/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/transferBoard/**").permitAll()    // TODO : 본인의 게시글을 조회하는 메서드는 인증된 사용자만 사용할 수 있도록 수정
                 .antMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
                 .anyRequest().authenticated();
     }

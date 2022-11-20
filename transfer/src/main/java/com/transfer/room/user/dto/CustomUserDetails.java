@@ -12,6 +12,7 @@ import java.util.Collection;
 @Setter
 @ToString
 public class CustomUserDetails implements UserDetails {
+    private int userId;
     private String userEmail;
     private String username;
     private String password;
@@ -23,7 +24,8 @@ public class CustomUserDetails implements UserDetails {
 
     public CustomUserDetails(){}
     public CustomUserDetails(UserDto userDto){
-        this.setUserEmail(userEmail);
+        this.setUserId(userDto.getUserId());
+        this.setUserEmail(userDto.getUserEmail());
         this.setUsername(userDto.getUserName());
         this.setPassword(userDto.getUserPassword());
     }
