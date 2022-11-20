@@ -8,17 +8,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema transfer_dev
 -- -----------------------------------------------------
 
--- -----------------------------------------------------
--- Schema transfer_dev
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
--- -----------------------------------------------------
--- Schema transfer_dev
--- -----------------------------------------------------
+-- CREATE USER 'transfer_dev_user' identified by 'transfer_dev_user';
+-- GRANT ALL PRIVILEGES ON transfer_dev.* to 'transfer_dev_user'@'%';
 
--- -----------------------------------------------------
--- Schema transfer_dev
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `transfer_dev` ;
 
@@ -221,9 +213,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `transfer_dev`.`interesting_area`
+-- Table `transfer_dev`.`interesting_areas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `transfer_dev`.`interesting_area` (
+CREATE TABLE IF NOT EXISTS `transfer_dev`.`interesting_areas` (
   `ia_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `dongCode` VARCHAR(10) NOT NULL,
