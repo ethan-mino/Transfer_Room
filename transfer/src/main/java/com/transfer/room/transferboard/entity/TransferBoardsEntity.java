@@ -19,8 +19,9 @@ public class TransferBoardsEntity {
     private int roomFloor; // 방의 층
     private String roomType; // 방 종류
     private String contractType;// 방 계약 종류
-    private Date contractEndTime; //계약 종료일
+    private Date contractEndTime; //계약 종료일ㄴ
     private String dongCode; //동 코드
+    private int approvingStatus;// 승인 여부 (0: 미승인, 1: 승인, 2: 거절)
     private int likeCount;// 좋아요 수
 
 }
