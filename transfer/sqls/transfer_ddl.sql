@@ -5,12 +5,11 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema transfer_dev
--- -----------------------------------------------------
-
 -- CREATE USER 'transfer_dev_user' identified by 'transfer_dev_user';
 -- GRANT ALL PRIVILEGES ON transfer_dev.* to 'transfer_dev_user'@'%';
-
+-- -----------------------------------------------------
+-- Schema transfer_dev
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `transfer_dev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `transfer_dev` ;
 
@@ -216,13 +215,14 @@ ENGINE = InnoDB;
 -- Table `transfer_dev`.`interesting_areas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `transfer_dev`.`interesting_areas` (
-  `ia_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `dongCode` VARCHAR(10) NOT NULL,
   `ia_create_time` TIMESTAMP NOT NULL,
-  PRIMARY KEY (`ia_id`, `user_id`, `dongCode`),
+  `ia_id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`user_id`, `dongCode`),
   INDEX `fk_interesting_area_users1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_interesting_area_regions1_idx` (`dongCode` ASC) VISIBLE,
+  UNIQUE INDEX `ia_id_UNIQUE` (`ia_id` ASC) VISIBLE,
   CONSTRAINT `fk_interesting_area_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `transfer_dev`.`users` (`user_id`)
