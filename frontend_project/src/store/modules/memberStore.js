@@ -23,7 +23,9 @@ const memberStore = {
       state.isLogin = isLogin;
     },
     //로그인 실패 여부 확인 - 로그인 정보가 틀렸을때
-    SET_IS_LOGIN_ERROR: () => {},
+    SET_IS_LOGIN_ERROR: (state, isLoginError) => {
+      state.isLoginError = isLoginError;
+    },
     //로그인 성공하면 유저 정보 저장.
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
@@ -37,24 +39,20 @@ const memberStore = {
         user,
         ({ data }) => {
           //성공시
-          if (data.status === 200) {
-            let accessToken = data["data"]; //토큰 꺼내오기.
-            let decodeToken = jwtDecode(accessToken);
+          let accessToken = data["data"]; //토큰 꺼내오기.
+          let decodeToken = jwtDecode(accessToken);
 
-            //mutation에 commit 날려서 status 값 변경
-            commit("SET_IS_LOGIN", true); //로그인 되어있는지 상태 확인
-            commit("SET_IS_LOGIN_ERROR", false); // 로그인이 실패했는지 확인.
-            commit("SET_USER_INFO", decodeToken.sub); //유저정보에 email 저장.
-            sessionStorage.setItem("access-token", accessToken); //스토리지에도 저장.
-          }
-          //성공 상태를 제외한 나머지 모든 경우에 대해서 실패처리
-          else {
-            commit("SET_IS_LOGIN", false); //로그인 되어있는지 상태 확인
-            commit("SET_IS_LOGIN_ERROR", true); // 로그인이 실패했는지 확인.
-          }
+          //mutation에 commit 날려서 status 값 변경
+          commit("SET_IS_LOGIN", true); //로그인 되어있는지 상태 확인
+          commit("SET_IS_LOGIN_ERROR", false); // 로그인이 실패했는지 확인.
+          commit("SET_USER_INFO", decodeToken.sub); //유저정보에 email 저장.
+          sessionStorage.setItem("access-token", accessToken); //스토리지에도 저장.
         },
         (error) => {
           console.log(error);
+          //성공 상태를 제외한 나머지 모든 경우에 대해서 실패처리
+          commit("SET_IS_LOGIN", false); //로그인 되어있는지 상태 확인
+          commit("SET_IS_LOGIN_ERROR", true); // 로그인이 실패했는지 확인.
         }
       );
     },
