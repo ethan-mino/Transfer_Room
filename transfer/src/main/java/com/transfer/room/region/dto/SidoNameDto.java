@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class SidoNameDto {
 
-    private String dongCode;
+    private String sidoCode;
     private String sidoName;
 }

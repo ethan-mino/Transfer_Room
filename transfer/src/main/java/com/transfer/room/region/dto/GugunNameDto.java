@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class GugunNameDto {
 
-    private String dongCode;
+    private String gugunCode;
     private String gugunName;
 }
