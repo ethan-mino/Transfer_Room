@@ -147,11 +147,13 @@ export default {
   },
   created() {
     this.CLEAR_SIDO_LIST();
+    this.CLEAR_GUGUN_LIST();
+    this.CLEAR_DONG_LIST();
     this.getSido();
     console.log(this.sidos);
   },
   methods: {
-    ...mapActions(regionStore, ["getSido", "getGugun", "getDong"]),
+    ...mapActions(regionStore, ["getSido", "getGugun", "getDong","setSelectDongCode"]),
     ...mapMutations(regionStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
@@ -168,7 +170,22 @@ export default {
       if (this.gugunCode) this.getDong(this.gugunCode);
     },
     searchBtn: function () {
-      this.$router.push({ name: "transferPage" });
+
+      //시도 구군 동까지 전부 입력이 되어있어야 됨.
+      if (this.sidoCode === null) {
+        alert("시도를 선택해주세요");
+      }
+      else if (this.gugunCode === null) {
+        alert("구군을 선택해주세요");
+      }
+      else if (this.dongCode === null) {
+        alert("동을 선택해주세요");
+      }
+      else { 
+        this.setSelectDongCode(this.dongCode); //뷰엑스에 동코드 저장.
+        this.$router.push({ name: "transferPage" });
+      }
+      
     },
   },
 };

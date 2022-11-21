@@ -84,28 +84,27 @@
                 </button>
               </div>
 
-              <div class="form-group col-md-2">
-                <router-link :to="{ name: 'transferAdd' }">
-                  <button
-                    type="button"
-                    id="add-interesting-btn"
-                    class="search btn btn-info"
-                    style="color: #ffffff">
-                    등록
-                  </button>
-                </router-link>
-              </div>
               <!-- </c:if> -->
             </div>
           </div>
 
-          <div id="map" style="width: 100%; height: 100%"></div>
+          <div id="map" style="width: 100%; height: 100%; position:absolute"></div>
           <div id="interesting-area-list" style="display: none"></div>
+          
           <div class="overlay_buttons">
             <button
               type="button"
               class="overlay_button btn btn-secondary"
               value="roadview"
+              @click="setOverlayMapTypeId('normal')"
+            >
+              기본뷰 보기
+            </button>
+            <button
+              type="button"
+              class="overlay_button btn btn-secondary"
+              value="roadview"
+              @click="setOverlayMapTypeId('roadview')"
             >
               로드뷰 도로정보 보기
             </button>
@@ -113,6 +112,7 @@
               type="button"
               class="overlay_button btn btn-secondary"
               value="traffic"
+              @click="setOverlayMapTypeId('traffic')"
             >
               교통정보 보기
             </button>
@@ -120,6 +120,7 @@
               type="button"
               class="overlay_button btn btn-secondary"
               value="terrain"
+              @click="setOverlayMapTypeId('terrain')"
             >
               지형정보 보기
             </button>
@@ -127,6 +128,7 @@
               type="button"
               class="overlay_button btn btn-secondary"
               value="use_district"
+              @click="setOverlayMapTypeId('use_district')"
             >
               지적편집도 보기
             </button>
@@ -138,9 +140,43 @@
 </template>
 
 <script>
+import { mapActions, mapState, mapMutations } from "vuex";
+
+
+const regionStore = "regionStore";
+const transferStore = "transferBoardStore"
+
 export default {
   name: "TransferVue",
+  data() { 
+    return {
+      currentTypeId: null,
+
+      // 지도 마커 정보 담고 있기.
+    };
+  },
+  //생성시점에 동코드로 게시글 조회 해오기
+  created() {
+
+
+    //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
+    if (this.selectDongCode != null) { 
+      this.getBoardInfo();
+    }
+
+    //시도구군 초기화 및 시도 값 받아오기.
+    this.CLEAR_SIDO_LIST();
+    this.CLEAR_GUGUN_LIST();
+    this.CLEAR_DONG_LIST();
+    this.getSido();
+
+  },
+  computed: {
+    ...mapState(regionStore,["sidos", "guguns", "dongs","selectDongCode"]),
+  },
   mounted: function () {
+
+    console.log(this.selectDongCode);
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
       script.src =
@@ -155,6 +191,45 @@ export default {
     }
   },
   methods: {
+    ...mapActions(regionStore, ["getSido", "getGugun", "getDong","setSelectDongCode"]),
+    ...mapMutations(regionStore, [
+      "CLEAR_SIDO_LIST",
+      "CLEAR_GUGUN_LIST",
+      "CLEAR_DONG_LIST",
+    ]),
+    ...mapActions(transferStore, ["getTransferBoardResult"]),
+    getBoardInfo: async function () { 
+      await this.getTransferBoardResult(this.selectDongCode)
+    },
+    gugunList: function () {
+      this.CLEAR_GUGUN_LIST();
+      this.gugunCode = null;
+      if (this.sidoCode) this.getGugun(this.sidoCode);
+    },
+    dongList: function () {
+      this.CLEAR_DONG_LIST();
+      this.dongCode = null;
+      if (this.gugunCode) this.getDong(this.gugunCode);
+    },
+    searchBtn: function () {
+
+      //시도 구군 동까지 전부 입력이 되어있어야 됨.
+      if (this.sidoCode === null) {
+        alert("시도를 선택해주세요");
+      }
+      else if (this.gugunCode === null) {
+        alert("구군을 선택해주세요");
+      }
+      else if (this.dongCode === null) {
+        alert("동을 선택해주세요");
+      }
+      else { 
+        this.setSelectDongCode(this.dongCode); //뷰엑스에 동코드 저장.
+        this.$router.push({ name: "transferPage" });
+      }
+      
+    },
+
     initMap() {
       const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       const options = {
@@ -178,6 +253,34 @@ export default {
       this.zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(this.zoomControl, kakao.maps.ControlPosition.RIGHT);
     },
+    setOverlayMapTypeId(maptype) { 
+      var changeMaptype;
+
+      // maptype에 따라 지도에 추가할 지도타입을 결정합니다
+      if (maptype === 'traffic') {    // 교통정보 지도타입
+        changeMaptype = kakao.maps.MapTypeId.TRAFFIC;
+      } else if (maptype === 'roadview') {    // 로드뷰 도로정보 지도타입
+        changeMaptype = kakao.maps.MapTypeId.ROADVIEW;
+      } else if (maptype === 'terrain') {// 지형정보 지도타입
+        changeMaptype = kakao.maps.MapTypeId.TERRAIN;
+      } else if (maptype === 'use_district') {    // 지적편집도 지도타입
+        changeMaptype = kakao.maps.MapTypeId.USE_DISTRICT;
+      }
+
+      // 이미 등록된 지도 타입이 있으면 제거합니다
+      if (this.currentTypeId) {
+        this.map.removeOverlayMapTypeId(this.currentTypeId);
+      }
+
+      if (maptype !== 'normal') { 
+        // maptype에 해당하는 지도타입을 지도에 추가합니다
+        this.map.addOverlayMapTypeId(changeMaptype);
+      }
+      
+
+      // 지도에 추가된 타입정보를 갱신합니다
+      this.currentTypeId = changeMaptype;
+    }
   },
 };
 </script>

@@ -7,6 +7,8 @@ const regionStore = {
     sidos: [{ value: null, text: "시도선택" }],
     guguns: [{ value: null, text: "구군선택" }],
     dongs: [{ value: null, text: "동선택" }],
+    //사용자가 선택한 동코드
+    selectDongCode: null,
   },
   getters: {
     sidoValueList: function (state) {
@@ -55,6 +57,9 @@ const regionStore = {
         });
       });
     },
+    SET_DONG_CODE(state,dongCode) { 
+      state.selectDongCode = dongCode;
+    }
   },
   actions: {
     async getSido({ commit }) {
@@ -90,6 +95,9 @@ const regionStore = {
         }
       );
     },
+    setSelectDongCode({ commit }, dongcode) { 
+      commit("SET_DONG_CODE", dongcode);
+    }
   },
 };
 
