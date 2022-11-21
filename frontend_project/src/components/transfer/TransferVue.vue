@@ -59,7 +59,7 @@
                   id="list-btn"
                   class="search btn btn-primary"
                   @click="searchBtn"
-                  >
+                >
                   검색
                 </button>
               </div>
@@ -72,7 +72,7 @@
                   class="search btn btn-info"
                   style="color: #ffffff"
                   @click="interestingBtn"
-                  >
+                >
                   관심지역 등록하기
                 </button>
               </div>
@@ -81,9 +81,12 @@
             </div>
           </div>
 
-          <div id="map" style="width: 100%; height: 100%; position:absolute"></div>
+          <div
+            id="map"
+            style="width: 100%; height: 100%; position: absolute"
+          ></div>
           <div id="interesting-area-list" style="display: none"></div>
-          
+
           <div class="overlay_buttons">
             <button
               type="button"
@@ -135,26 +138,26 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 
-
 const regionStore = "regionStore";
-const transferStore = "transferBoardStore"
+const transferStore = "transferBoardStore";
 
 export default {
   name: "TransferVue",
-  data() { 
+  data() {
     return {
       currentTypeId: null,
 
-      sidoCode : null,
+      sidoCode: null,
       gugunCode: null,
       dongCode: null,
 
       // 지도 마커 정보 담고 있기.
+      markerInfos: [],
     };
   },
   //생성시점에 동코드로 게시글 조회 해오기
   created() {
-
+    console.log(this.selectDongCode);
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
     if (this.selectDongCode != null) {
       this.getBoardInfo();
@@ -167,12 +170,15 @@ export default {
       this.CLEAR_DONG_LIST();
       this.getSido();
     }
+
+    console.log("test");
+    console.log(this.transferBoardSearchValue);
   },
   computed: {
-    ...mapState(regionStore,["sidos", "guguns", "dongs","selectDongCode"]),
+    ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
+    ...mapState(transferStore, ["transferBoardSearchValue"]),
   },
   mounted: function () {
-
     console.log(this.selectDongCode);
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -185,18 +191,24 @@ export default {
       // this.initMap();
     } else {
       this.initMap();
+      this.setMarker();
     }
   },
   methods: {
-    ...mapActions(regionStore, ["getSido", "getGugun", "getDong","setSelectDongCode"]),
+    ...mapActions(regionStore, [
+      "getSido",
+      "getGugun",
+      "getDong",
+      "setSelectDongCode",
+    ]),
     ...mapMutations(regionStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
     ...mapActions(transferStore, ["getTransferBoardResult"]),
-    getBoardInfo: async function () { 
-      await this.getTransferBoardResult(this.selectDongCode)
+    getBoardInfo: async function () {
+      await this.getTransferBoardResult(this.selectDongCode);
     },
     gugunList: function () {
       this.CLEAR_GUGUN_LIST();
@@ -208,37 +220,34 @@ export default {
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
     },
-    interestingBtn: function () { 
+    interestingBtn: function () {
       //시도 구군 동까지 전부 입력이 되어있어야 됨.
       if (this.sidoCode === null) {
         alert("시도를 선택해주세요");
-      }
-      else if (this.gugunCode === null) {
+      } else if (this.gugunCode === null) {
         alert("구군을 선택해주세요");
-      }
-      else if (this.dongCode === null) {
+      } else if (this.dongCode === null) {
         alert("동을 선택해주세요");
-      }
-      else { 
+      } else {
         //관심페이지 등록하는 코드와, 관심지역 뷰엑스에 다시 호출하는 코드 실행.
       }
-
     },
-    searchBtn: function () { 
+    searchBtn: function () {
       //시도 구군 동까지 전부 입력이 되어있어야 됨.
       if (this.sidoCode === null) {
         alert("시도를 선택해주세요");
-      }
-      else if (this.gugunCode === null) {
+      } else if (this.gugunCode === null) {
         alert("구군을 선택해주세요");
-      }
-      else if (this.dongCode === null) {
+      } else if (this.dongCode === null) {
         alert("동을 선택해주세요");
-      }
-      else { 
+      } else {
         //동코드로 게시글 조회해서 지도 찍는 코드 실행.
+        this.getBoardInfo(); //게시글 다시 조회.
+        this.removeAllMaker(); //기존마커 삭제
+        this.setMarker(); // 마커 다시 찍기.
       }
 
+      console.log(this.transferBoardSearchValue);
     },
 
     initMap() {
@@ -264,17 +273,21 @@ export default {
       this.zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(this.zoomControl, kakao.maps.ControlPosition.RIGHT);
     },
-    setOverlayMapTypeId(maptype) { 
+    setOverlayMapTypeId(maptype) {
       var changeMaptype;
 
       // maptype에 따라 지도에 추가할 지도타입을 결정합니다
-      if (maptype === 'traffic') {    // 교통정보 지도타입
+      if (maptype === "traffic") {
+        // 교통정보 지도타입
         changeMaptype = kakao.maps.MapTypeId.TRAFFIC;
-      } else if (maptype === 'roadview') {    // 로드뷰 도로정보 지도타입
+      } else if (maptype === "roadview") {
+        // 로드뷰 도로정보 지도타입
         changeMaptype = kakao.maps.MapTypeId.ROADVIEW;
-      } else if (maptype === 'terrain') {// 지형정보 지도타입
+      } else if (maptype === "terrain") {
+        // 지형정보 지도타입
         changeMaptype = kakao.maps.MapTypeId.TERRAIN;
-      } else if (maptype === 'use_district') {    // 지적편집도 지도타입
+      } else if (maptype === "use_district") {
+        // 지적편집도 지도타입
         changeMaptype = kakao.maps.MapTypeId.USE_DISTRICT;
       }
 
@@ -283,15 +296,56 @@ export default {
         this.map.removeOverlayMapTypeId(this.currentTypeId);
       }
 
-      if (maptype !== 'normal') { 
+      if (maptype !== "normal") {
         // maptype에 해당하는 지도타입을 지도에 추가합니다
         this.map.addOverlayMapTypeId(changeMaptype);
       }
-      
 
       // 지도에 추가된 타입정보를 갱신합니다
       this.currentTypeId = changeMaptype;
-    }
+    },
+    //
+    createMaker(latitude, longitude) {
+      const coords = new kakao.maps.LatLng(latitude, longitude);
+
+      // 마커를 생성합니다
+      // const marker =
+      new kakao.maps.Marker({
+        map: this.map,
+        position: coords,
+        clickable: true,
+      });
+      // 마커에 마우스오버 이벤트를 등록합니다
+      // var overlay = new kakao.maps.CustomOverlay({
+      //   content: overlayContent,
+      //   map: this.map,
+      //   position: marker.getPosition(),
+      // });
+      // // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+      // kakao.maps.event.addListener(marker, "click", function () {
+      //   overlay.setMap(this.map);
+      // });
+    },
+    removeAllMaker() {
+      for (let i = 0; i < this.markerInfos.length; i++) {
+        this.markerInfos[i].marker.setMap(null);
+        this.markerInfos[i].overlay.setMap(null);
+      }
+      this.markerInfos = [];
+    },
+    setMarker() {
+      this.transferBoardSearchValue.forEach((searchInfo) => {
+        this.createMaker(searchInfo.roomLatitude, searchInfo.roomLongitude);
+      });
+      this.moveToFirstMarker();
+    },
+    //마커중 첫번째 위치로 이동.
+    moveToFirstMarker() {
+      if (this.markerInfos.length > 0) {
+        this.map.panTo(this.markerInfos[0].marker.getPosition());
+        console.log("test1231231");
+      }
+    },
   },
 };
 </script>

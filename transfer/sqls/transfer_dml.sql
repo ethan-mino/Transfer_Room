@@ -34,23 +34,23 @@ INSERT INTO user_roles(user_id, role_id) VALUES (4, 1);
 -- Table `transfer_dev`.`transfer_boards`
 -- -----------------------------------------------------
 INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
-VALUE (1,null,0,'test Title','test content',now(),now(),13.777777,13.888888,'대전 유성구',5,'원룸','월세',date('2022-11-19'),'1111010100',0,1);
+VALUE (1,null,0,'test Title','test content',now(),now(),37.58849849964078,126.97023583741927,'서울 종로구',5,'원룸','월세',date('2022-11-19'),'1111010100',0,1);
 
 INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
-VALUE (1,null,0,'test Title2','test content2',now(),now(),15.777777,16.888888,'대전 유성구',5,'투룸','전세',date('2022-11-18'),'1111010100',0,2);
+VALUE (1,null,0,'test Title2','test content2',now(),now(),37.58746664001659,126.96606968548963,'서울 종로구',5,'투룸','전세',date('2022-11-18'),'1111010100',0,2);
 
 INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
-VALUE (1,null,0,'test Title3','test content3',now(),now(),133.777777,336.888888,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,0);
+VALUE (1,null,0,'test Title3','test content3',now(),now(),37.587799079901984,126.96926240397876,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,0);
 
 INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
-VALUE (1,null,0,'test Title4','test content3',now(),now(),133.777777,336.888888,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,1);
+VALUE (1,null,0,'test Title4','test content3',now(),now(),37.58776388422341,126.97269531757203,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,1);
 
 
 INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
-VALUE (2,null,0,'test Title5','test content3',now(),now(),133.777777,336.888888,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,1);
+VALUE (2,null,0,'test Title5','test content3',now(),now(),37.58623866251204,126.96965705107075,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,1);
 
 INSERT INTO transfer_boards(transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
-VALUE (2,null,0,'test Title6','test content3',now(),now(),133.777777,336.888888,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,1);
+VALUE (2,null,0,'test Title6','test content3',now(),now(),37.59008759467351,126.96923881769176,'대전 중구',6,'쓰리룸','전세',date('2022-11-18'),'1111010100',2,1);
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`transfer_board_files`

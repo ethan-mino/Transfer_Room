@@ -23,12 +23,12 @@ function regionInstance() {
 }
 
 //양도 게시판 - 이미지 업로드를 위해서 multipart/form-data로 처리
-function transferBoardInstance() { 
+function transferBoardInstance() {
   const instance = axios.create({
     baseURL: process.env.VUE_APP_API_TRANSFER_BOARD_URL,
     headers: {
       "Content-Type": "multipart/form-data",
-    }
+    },
   });
 
   return instance;
