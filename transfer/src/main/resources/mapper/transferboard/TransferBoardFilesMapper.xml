@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.transfer.room.transferboard.mapper.TransferBoardFileMapper">
+
+    <resultMap id="TransferBoardFilesEntityMap" type="com.transfer.room.transferboard.entity.TransferBoardFileEntity">
+        <id property="fileId" column="file_id"/>
+        <result property="tbId" column="tb_id"/>
+        <result property="filePath" column="file_path"/>
+        <result property="fileContentType" column="file_content_type"/>
+        <result property="isAttachment" column="is_attachment"/>
+    </resultMap>
+
+    <select id="selectTransferBoardImageFilesByTransferBoardId"
+            parameterType="int"
+            resultMap="TransferBoardFilesEntityMap">
+        SELECT file_id, tb_id, file_path, file_content_type, is_attachment
+        FROM transfer_board_files
+        WHERE tb_id = #{transferBoardId} AND is_attachment = 0
+    </select>
+
+    <select id="selectTransferBoardAttachmentFilesByTransferBoardId"
+            parameterType="int"
+            resultMap="TransferBoardFilesEntityMap">
+        SELECT file_id, tb_id, file_path, file_content_type, is_attachment
+        FROM transfer_board_files
+        WHERE tb_id = #{transferBoardId} AND is_attachment = 1
+    </select>
+
+    <insert id = "insertTransferBoardFile"
+            parameterType="com.transfer.room.transferboard.entity.TransferBoardFileEntity"
+            useGeneratedKeys="true"
+            keyColumn="file_id"
+            keyProperty="fileId">
+        INSERT INTO transfer_board_files(tb_id, file_path, file_content_type, is_attachment)
+        VALUES (#{tbId}, #{filePath}, #{fileContentType}, #{isAttachment})
+    </insert>
+</mapper>
+

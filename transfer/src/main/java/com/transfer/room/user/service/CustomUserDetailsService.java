@@ -27,8 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         // loginId에 해당하는 정보를 데이터베이스에서 읽어 CustomUser객체에 저장한다.
         // 해당 정보를 CustomUserDetails객체에 저장한다.
         UserDto userDto = userService.findUserByUserEmail(userEmail);
-        System.out.println(userDto);
-        System.out.println(userEmail);
 
         if(userDto == null){
             throw new UsernameNotFoundException(USER_NOT_FOUND_EXCEPTION_MESSAGE);

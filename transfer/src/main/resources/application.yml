@@ -8,6 +8,10 @@ security:
   jwt:
     secret: asdawqelkajsldakxqkuhweoihkdajnskajhdoas
 
+spring:
+  servlet:
+    multipart:
+      location: c:/uploads
 ---
 
 spring:

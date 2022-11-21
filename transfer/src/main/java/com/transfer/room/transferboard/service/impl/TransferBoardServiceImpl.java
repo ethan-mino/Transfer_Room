@@ -1,15 +1,17 @@
 package com.transfer.room.transferboard.service.impl;
 
+import com.transfer.room.transferboard.dto.TransferBoardDetails;
 import com.transfer.room.transferboard.dto.TransferBoardDto;
-import com.transfer.room.transferboard.dto.TransferBoardListDto;
-import com.transfer.room.transferboard.entity.TransferBoardFilesEntity;
-import com.transfer.room.transferboard.entity.TransferBoardsEntity;
-import com.transfer.room.transferboard.mapper.TransferBoardFilesMapper;
+import com.transfer.room.transferboard.dto.TransferBoardFileDto;
+import com.transfer.room.transferboard.dto.TransferBoardSearchFilter;
+import com.transfer.room.transferboard.entity.TransferBoardEntity;
 import com.transfer.room.transferboard.mapper.TransferBoardMapper;
+import com.transfer.room.transferboard.service.TransferBoardFileService;
 import com.transfer.room.transferboard.service.TransferBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 @Service
@@ -18,39 +20,51 @@ public class TransferBoardServiceImpl implements TransferBoardService {
 
     //롬복을 이용하여 생성자 주입
     private final TransferBoardMapper transferBoardMapper;
-    private final TransferBoardFilesMapper transferBoardFilesMapper;
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public TransferBoardDto findTransferBoardByArticleId(int articleId) {
-
-        TransferBoardDto transferBoardDto = transferBoardMapper.selectTransferBoardByArticleId(articleId); //양도 게시글 정보 조회
-        List<TransferBoardFilesEntity> transferBoardFilesEntityList = transferBoardFilesMapper.selectTransferBoardFilesByArticleId(transferBoardDto.getTransferBoardId());
-        transferBoardDto = transferBoardDto.insertFile(transferBoardFilesEntityList);//게시글에 들어갈 파일 조회
-
-        return transferBoardDto;
-    }
+    private final TransferBoardFileService transferBoardFileService;
 
     @Override
     @Transactional(readOnly = true)
-    public List<TransferBoardListDto> findTransferBoardByDongCode(String dongCode) {
+    public List<TransferBoardDetails> findTransferBoard(TransferBoardSearchFilter searchFilter) {
+        List<TransferBoardDetails> transferBoardDetailList = transferBoardMapper.selectTransferBoard(searchFilter);
+        for(TransferBoardDetails transferBoardDetails : transferBoardDetailList){
+            int transferBoardId = transferBoardDetails.getTransferBoardId();
+            List<TransferBoardFileDto> imageFiles = transferBoardFileService.selectTransferBoardImageFilesByTransferBoardId(transferBoardId);
+            transferBoardDetails.setImgFilePath(imageFiles);
 
-        List<TransferBoardListDto> transferBoardListDtos = transferBoardMapper.selectTransferBoardByDongCode(dongCode); //동코드로 게시글 조회
-        //각 게시글에 대해 파일 정보 조회.
-        for(int index = 0; index < transferBoardListDtos.size(); index++){
-            int tempArticleId = transferBoardListDtos.get(index).getTransferBoardId(); //리스트에서 id값 꺼내오기
-            List<TransferBoardFilesEntity> transferBoardFilesEntityList = transferBoardFilesMapper.selectTransferBoardFilesByArticleId(tempArticleId); //id값으로 파일 조회.
-            transferBoardListDtos.get(index).insertImgFile(transferBoardFilesEntityList); //해당 객체에 파일경로를 담음
+            List<TransferBoardFileDto> attachments = transferBoardFileService.selectTransferBoardAttachmentFilesByTransferBoardId(transferBoardId);
+            transferBoardDetails.setAttachedFilePath(attachments);
         }
-        return transferBoardListDtos;
+
+        return transferBoardDetailList;
     }
 
-
-    //게시판 생성의 경우, 이미지 파일, 계약서도 저장되어야 하기 떄문에 손봐야됨.(수정중)
     @Override
     @Transactional(readOnly = false)
-    public boolean addTransferBoard(TransferBoardsEntity transferBoardsEntity) throws Exception {
-        return true;
+    public boolean addTransferBoard(TransferBoardDto transferBoardDto, List<MultipartFile> boardFiles) throws Exception {
+        TransferBoardEntity transferBoardEntity = TransferBoardEntity.toTransferBoardDto(transferBoardDto);
+        transferBoardMapper.insertTransferBoard(transferBoardEntity);
+        int fileInsertCnt = 0;
+        for(MultipartFile boardFile : boardFiles){
+            TransferBoardFileDto fileDto = new TransferBoardFileDto();
+            int tbId = transferBoardEntity.getTbId();
+            fileDto.setTbId(tbId);
+            fileInsertCnt++;
+            transferBoardFileService.insertTransferBoardFile(fileDto, boardFile);
+        }
+        return fileInsertCnt == boardFiles.size();
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean modifyTransferBoard(TransferBoardDto transferBoardDto, List<MultipartFile> boardFiles) throws Exception {
+        return false;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean modifyTransferBoardTransferee(int transferBoardId, int transfereeId) throws Exception {
+        int modifyCnt = transferBoardMapper.updateTransferBoardTransferee(transferBoardId, transfereeId);
+        boolean isModified = (modifyCnt != 0);
+        return isModified;
     }
 }

@@ -13,7 +13,12 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 	* TODO : Controller Advice 적용
 	* TODO : JUnit을 이용한 테스트 코드 작성
 	* TODO : REST API 서버의 응답 통일 (ex. insert 성공 시, 어떤 데이터를 내려줄지)
+	* TODO : 파일 저장은 S3에 저장
+	* TODO : 양도 게시글 파일 테이블을 첨부파일과 이미지 파일 테이블로 구분
+	* TODO : ApiResponse 클래스 위치 상의 (util?)
+	* TODO : Enum 클래스를 사용할 지, Enum 클래스의 위치 상의
  */
+
 @SpringBootApplication
 @ConfigurationPropertiesScan
 public class TransferApplication {
