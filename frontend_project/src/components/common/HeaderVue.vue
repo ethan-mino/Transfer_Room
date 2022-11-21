@@ -17,7 +17,7 @@
           >
             <li></li>
             <li>
-              <router-link :to="{ name: 'transferPage' }">양도</router-link>
+                <router-link :to="{ name: 'transferPage' }" class="test">양도</router-link>
             </li>
             <li>
               <router-link :to="{ name: 'transferAdd' }">게시글 등록</router-link>
@@ -29,24 +29,6 @@
             <!-- <li><a href="#">마이페이지</a></li> -->
           </ul>
           <div class="text-end">
-            <!-- <template v-if="this.$session.get('userInfo') != null"> -->
-            <!-- <div class="authOn">
-              <a class="user_info" href="#">
-                <img
-                  src="@/assets/img/user.jpg"
-                  alt="rlfalsgh95"
-                  class="user_info__img"
-                />
-              </a>
-              <div
-                style="position: absolute; top: 70px"
-                tabindex="-1"
-                class="css-1ieyvgb"
-              ></div>
-            </div> -->
-            <!-- </template> -->
-
-            <!-- <template v-else> -->
             <div class="authOff" v-if="userInfo">
               <ul class="nav">
                 <li><a href="#">마이페이지</a></li>
@@ -74,7 +56,13 @@ const memberStore = "memberStore";
 export default {
   name: "HeaderVue",
   data() {
-    return {};
+    return {
+      currentPath: null,
+
+    };
+  },
+  created() {
+    this.currentPath = this.$route.path;
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
@@ -94,12 +82,20 @@ export default {
 </script>
 
 <style>
+
+
 .p-3 {
+
+  /*
   background-image: linear-gradient(
     134deg,
     rgb(238 124 255) -5%,
     rgb(255 145 150) 56%,
     rgb(255 148 150) 56%
   );
+  */
+  background-color: transparent;
 }
+
+
 </style>

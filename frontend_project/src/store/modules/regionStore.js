@@ -9,6 +9,11 @@ const regionStore = {
     dongs: [{ value: null, text: "동선택" }],
     //사용자가 선택한 동코드
     selectDongCode: null,
+
+    //사용자가 선택한 이름
+    selectsidoName: null,
+    selectgugunName: null,
+    selectdongName: null,
   },
   getters: {
     sidoValueList: function (state) {

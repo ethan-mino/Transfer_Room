@@ -8,6 +8,7 @@ header .logo {
 
 header *{
   color : #ffffff !important;
+
   z-index: 100;
 }
 

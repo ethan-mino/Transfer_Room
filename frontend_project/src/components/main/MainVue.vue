@@ -7,12 +7,13 @@
 
           <div id="deal-input">
             <div class="row col-md-12 justify-content-center mb-2">
+              
               <div class="form-group col-md-2">
                 <select
                   class="form-select"
                   id="sido"
                   v-model="sidoCode"
-                  @change="gugunList"
+                  @change="gugunList($event)"
                 >
                   <option
                     v-for="(item, index) in sidos"
@@ -28,7 +29,7 @@
                   class="form-select"
                   id="gugun"
                   v-model="gugunCode"
-                  @change="dongList"
+                  @change="dongList($event)"
                 >
                   <option
                     v-for="(item, index) in guguns"
@@ -40,7 +41,7 @@
                 </select>
               </div>
               <div class="form-group col-md-2">
-                <select class="form-select" id="dong" v-model="dongCode">
+                <select class="form-select" id="dong" v-model="dongCode" @change="dongChange($event)">
                   <option
                     v-for="(item, index) in dongs"
                     :value="item.value"
@@ -138,7 +139,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(regionStore, ["sidos", "guguns", "dongs"]),
+    ...mapState(regionStore, ["sidos", "guguns", "dongs","selectsidoName","selectgugunName","selectdongName"]),
     // ...mapGetters(regionStore, [
     //   "sidoValueList",
     //   "gugunValueList",
@@ -159,15 +160,20 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
-    gugunList: function () {
+    gugunList: function (e) {
+      console.log(e.target)
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
-    dongList: function () {
+    dongList: function (e) {
+      console.log(e.target);
       this.CLEAR_DONG_LIST();
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
+    },
+    dongChange: function (e) { 
+      console.log(e.target);
     },
     searchBtn: function () {
 

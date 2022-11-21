@@ -7,11 +7,12 @@ import MainVue from "@/components/main/MainVue";
 
 export default {
   name: "MainView",
-  comments: {
+  components: {
     MainVue,
   },
-  components: { MainVue },
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

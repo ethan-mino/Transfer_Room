@@ -11,64 +11,55 @@
           <div id="deal-input">
             <div class="row col-md-12 justify-content-center mb-2">
               <div class="form-group col-md-2">
-                <!-- <select
+                <select
                   class="form-select"
                   id="sido"
                   v-model="sidoCode"
                   @change="gugunList"
                 >
                   <option
-                    v-for="(item, index) in sidoOption"
+                    v-for="(item, index) in sidos"
                     :value="item.value"
                     :key="index"
                   >
                     {{ item.text }}
                   </option>
-                </select> -->
-                <select class="form-select" id="sido">
-                  <option value="">시도선택</option>
                 </select>
               </div>
               <div class="form-group col-md-2">
-                <!-- <select
+                <select
                   class="form-select"
                   id="gugun"
                   v-model="gugunCode"
                   @change="dongList"
                 >
                   <option
-                    v-for="(item, index) in gugunOption"
+                    v-for="(item, index) in guguns"
                     :value="item.value"
                     :key="index"
                   >
                     {{ item.text }}
                   </option>
-                </select> -->
-                <select class="form-select" id="gugun">
-                  <option value="">구군선택</option>
                 </select>
               </div>
-              <!-- <div class="form-group col-md-2">
+              <div class="form-group col-md-2">
                 <select class="form-select" id="dong" v-model="dongCode">
                   <option
-                    v-for="(item, index) in dongOption"
+                    v-for="(item, index) in dongs"
                     :value="item.value"
                     :key="index"
                   >
                     {{ item.text }}
                   </option>
-                </select>
-              </div> -->
-              <div class="form-group col-md-2">
-                <select class="form-select" id="dong">
-                  <option value="">동선택</option>
                 </select>
               </div>
               <div class="form-group col-md-2" style="display: contents">
                 <button
                   type="button"
                   id="list-btn"
-                  class="search btn btn-primary">
+                  class="search btn btn-primary"
+                  @click="searchBtn"
+                  >
                   검색
                 </button>
               </div>
@@ -79,7 +70,9 @@
                   type="button"
                   id="add-interesting-btn"
                   class="search btn btn-info"
-                  style="color: #ffffff">
+                  style="color: #ffffff"
+                  @click="interestingBtn"
+                  >
                   관심지역 등록하기
                 </button>
               </div>
@@ -152,24 +145,28 @@ export default {
     return {
       currentTypeId: null,
 
+      sidoCode : null,
+      gugunCode: null,
+      dongCode: null,
+
       // 지도 마커 정보 담고 있기.
     };
   },
   //생성시점에 동코드로 게시글 조회 해오기
   created() {
 
-
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
-    if (this.selectDongCode != null) { 
+    if (this.selectDongCode != null) {
       this.getBoardInfo();
     }
 
     //시도구군 초기화 및 시도 값 받아오기.
-    this.CLEAR_SIDO_LIST();
-    this.CLEAR_GUGUN_LIST();
-    this.CLEAR_DONG_LIST();
-    this.getSido();
-
+    else {
+      this.CLEAR_SIDO_LIST();
+      this.CLEAR_GUGUN_LIST();
+      this.CLEAR_DONG_LIST();
+      this.getSido();
+    }
   },
   computed: {
     ...mapState(regionStore,["sidos", "guguns", "dongs","selectDongCode"]),
@@ -211,8 +208,7 @@ export default {
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
     },
-    searchBtn: function () {
-
+    interestingBtn: function () { 
       //시도 구군 동까지 전부 입력이 되어있어야 됨.
       if (this.sidoCode === null) {
         alert("시도를 선택해주세요");
@@ -224,10 +220,25 @@ export default {
         alert("동을 선택해주세요");
       }
       else { 
-        this.setSelectDongCode(this.dongCode); //뷰엑스에 동코드 저장.
-        this.$router.push({ name: "transferPage" });
+        //관심페이지 등록하는 코드와, 관심지역 뷰엑스에 다시 호출하는 코드 실행.
       }
-      
+
+    },
+    searchBtn: function () { 
+      //시도 구군 동까지 전부 입력이 되어있어야 됨.
+      if (this.sidoCode === null) {
+        alert("시도를 선택해주세요");
+      }
+      else if (this.gugunCode === null) {
+        alert("구군을 선택해주세요");
+      }
+      else if (this.dongCode === null) {
+        alert("동을 선택해주세요");
+      }
+      else { 
+        //동코드로 게시글 조회해서 지도 찍는 코드 실행.
+      }
+
     },
 
     initMap() {
