@@ -8,7 +8,10 @@ const regionStore = {
     guguns: [{ value: null, text: "구군선택" }],
     dongs: [{ value: null, text: "동선택" }],
     //사용자가 선택한 동코드
+    selectsidoCode: null,
+    selectgugunCode: null,
     selectDongCode: null,
+
 
     //사용자가 선택한 이름
     selectsidoName: null,

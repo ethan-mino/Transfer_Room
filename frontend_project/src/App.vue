@@ -19,7 +19,7 @@ export default {
 
 <style>
 #app {
-  height: 100%;
+  height: 1000px;
   width: 100%;
 }
 
@@ -31,4 +31,7 @@ export default {
 @import "assets/css/common/nav.css";
 @import "assets/css/common/footer.css";
 @import "assets/css/map.css";
+
+@import "assets/css/transfer/transferAdd.css";
+
 </style>

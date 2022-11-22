@@ -81,10 +81,10 @@
             </div>
           </div>
 
-          <div
-            id="map"
-            style="width: 100%; height: 100%; position: absolute"
-          ></div>
+          <div id="map" style="width: 100%; height: 100%; position: absolute"></div>
+          <!-- <div>
+            <InterestVue></InterestVue>
+          </div> -->
           <div id="interesting-area-list" style="display: none"></div>
 
           <div class="overlay_buttons">
@@ -189,7 +189,9 @@ export default {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
     ...mapState(transferStore, ["transferBoardSearchValue"]),
     ...mapState(interestingStore, ["interestingInfos","insertFail"]),
+    
   },
+
   mounted: function () {
     console.log(this.selectDongCode);
     if (!window.kakao || !window.kakao.maps) {
