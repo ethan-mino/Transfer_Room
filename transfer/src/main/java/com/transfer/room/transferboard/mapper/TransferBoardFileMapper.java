@@ -13,6 +13,7 @@ public interface TransferBoardFileMapper {
     List<TransferBoardFileDto> selectTransferBoardImageFilesByTransferBoardId(int transferBoardId); //해당 게시글의 이미지 파일 전체 조회
     List<TransferBoardFileDto> selectTransferBoardAttachmentFilesByTransferBoardId(int transferBoardId); //해당 게시글의 첨부 파일 전체 조회
 
+    TransferBoardFileDto selectTransferBoardAttachmentFileByTransferBoardFileId(int transferBoardFileId);
     /* 생성 */
     int insertTransferBoardFile(TransferBoardFileEntity transferBoardFileEntity);
 

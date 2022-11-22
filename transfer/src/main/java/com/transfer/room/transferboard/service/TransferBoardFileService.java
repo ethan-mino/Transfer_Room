@@ -11,9 +11,10 @@ public interface TransferBoardFileService {
     /* 조회 */
     List<TransferBoardFileDto> selectTransferBoardImageFilesByTransferBoardId(int transferBoardId); //해당 게시글의 파일 전체 조회
     List<TransferBoardFileDto> selectTransferBoardAttachmentFilesByTransferBoardId(int transferBoardId);
+    TransferBoardFileDto selectTransferBoardAttachmentFileByTransferBoardFileId(int transferBoardFileId);
     /* 생성 */
-    int insertTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) throws IOException;
+    boolean insertTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) throws IOException;
 
     /* 수정 */
-    int modifyTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile);
+    boolean modifyTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) throws Exception;
 }

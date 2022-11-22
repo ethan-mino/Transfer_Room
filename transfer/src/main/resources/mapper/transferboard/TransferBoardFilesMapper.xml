@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.transfer.room.transferboard.mapper.TransferBoardFileMapper">
 
-    <resultMap id="TransferBoardFilesEntityMap" type="com.transfer.room.transferboard.entity.TransferBoardFileEntity">
+    <resultMap id="TransferBoardFilesDtoMap" type="com.transfer.room.transferboard.dto.TransferBoardFileDto">
         <id property="fileId" column="file_id"/>
         <result property="tbId" column="tb_id"/>
         <result property="filePath" column="file_path"/>
@@ -12,7 +12,7 @@
 
     <select id="selectTransferBoardImageFilesByTransferBoardId"
             parameterType="int"
-            resultMap="TransferBoardFilesEntityMap">
+            resultMap="TransferBoardFilesDtoMap">
         SELECT file_id, tb_id, file_path, file_content_type, is_attachment
         FROM transfer_board_files
         WHERE tb_id = #{transferBoardId} AND is_attachment = 0
@@ -20,10 +20,18 @@
 
     <select id="selectTransferBoardAttachmentFilesByTransferBoardId"
             parameterType="int"
-            resultMap="TransferBoardFilesEntityMap">
+            resultMap="TransferBoardFilesDtoMap">
         SELECT file_id, tb_id, file_path, file_content_type, is_attachment
         FROM transfer_board_files
         WHERE tb_id = #{transferBoardId} AND is_attachment = 1
+    </select>
+
+    <select id = "selectTransferBoardAttachmentFileByTransferBoardFileId"
+            resultMap="TransferBoardFilesDtoMap">
+        # TODO : file_id -> tb_file_id
+        SELECT file_id, tb_id, file_path, file_content_type, is_attachment
+        FROM transfer_board_files
+        WHERE file_id = #{transferBoardFileId}
     </select>
 
     <insert id = "insertTransferBoardFile"

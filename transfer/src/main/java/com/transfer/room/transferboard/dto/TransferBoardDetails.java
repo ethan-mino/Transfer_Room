@@ -37,7 +37,6 @@ public class TransferBoardDetails {
     private int approvingStatus;
 
     /*이미지 파일과 계약서를 구분해서 넣음*/
-    private List<TransferBoardFileDto> imgFilePath = new ArrayList<>();
-
-    private List<TransferBoardFileDto> attachedFilePath = new ArrayList<>();
+    private List<TransferBoardFileDto> imgFileList = new ArrayList<>();
+    private List<TransferBoardFileDto> attachedFileList = new ArrayList<>();
 }

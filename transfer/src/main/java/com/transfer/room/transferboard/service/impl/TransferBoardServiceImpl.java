@@ -29,10 +29,10 @@ public class TransferBoardServiceImpl implements TransferBoardService {
         for(TransferBoardDetails transferBoardDetails : transferBoardDetailList){
             int transferBoardId = transferBoardDetails.getTransferBoardId();
             List<TransferBoardFileDto> imageFiles = transferBoardFileService.selectTransferBoardImageFilesByTransferBoardId(transferBoardId);
-            transferBoardDetails.setImgFilePath(imageFiles);
+            transferBoardDetails.setImgFileList(imageFiles);
 
             List<TransferBoardFileDto> attachments = transferBoardFileService.selectTransferBoardAttachmentFilesByTransferBoardId(transferBoardId);
-            transferBoardDetails.setAttachedFilePath(attachments);
+            transferBoardDetails.setAttachedFileList(attachments);
         }
 
         return transferBoardDetailList;

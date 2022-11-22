@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import static com.transfer.room.util.FileUtil.saveFile;
 
 @Service
 public class TransferBoardFileServiceImpl implements TransferBoardFileService {
@@ -22,24 +21,6 @@ public class TransferBoardFileServiceImpl implements TransferBoardFileService {
     private final TransferBoardFileMapper transferBoardFileMapper;
     public TransferBoardFileServiceImpl(TransferBoardFileMapper transferBoardFileMapper){
         this.transferBoardFileMapper = transferBoardFileMapper;
-    }
-
-    private String getRealFileName(MultipartFile file) {
-        String today = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
-        String originalFileName = file.getOriginalFilename();
-        System.out.println(originalFileName);
-        String baseName = originalFileName.split("\\.")[0];
-        String extension = originalFileName.split("\\.")[1];
-        return baseName + "-" + today + "." + extension;
-    }
-    private String saveFile(MultipartFile file) throws IOException{
-        System.out.println(uploadFIlePath);
-        File saveDir = new File(uploadFIlePath);
-        if (!saveDir.exists()) saveDir.mkdirs();
-        String realFileName = getRealFileName(file);
-        File saveFile = new File(saveDir, realFileName);
-        file.transferTo(saveFile);
-        return saveDir + File.separator + realFileName;
     }
 
     @Override
@@ -55,9 +36,14 @@ public class TransferBoardFileServiceImpl implements TransferBoardFileService {
     }
 
     @Override
+    public TransferBoardFileDto selectTransferBoardAttachmentFileByTransferBoardFileId(int transferBoardFileId) {
+        return transferBoardFileMapper.selectTransferBoardAttachmentFileByTransferBoardFileId(transferBoardFileId);
+    }
+
+    @Override
     @Transactional(readOnly = false)
-    public int insertTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) throws IOException {
-        String realFilePath = saveFile(transferBoardFile);
+    public boolean insertTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) throws IOException {
+        String realFilePath = saveFile(transferBoardFile, uploadFIlePath);
         String fileContentType = transferBoardFile.getContentType();
         transferBoardFileDto.setFileContentType(fileContentType);
         transferBoardFileDto.setFilePath(realFilePath);
@@ -66,12 +52,14 @@ public class TransferBoardFileServiceImpl implements TransferBoardFileService {
         transferBoardFileDto.setIsAttachment(isAttachment);
 
         TransferBoardFileEntity transferBoardFileEntity = TransferBoardFileEntity.toTransferBoardFileDto(transferBoardFileDto);
-        return transferBoardFileMapper.insertTransferBoardFile(transferBoardFileEntity);
+        int transferBoardFileInsertCnt = transferBoardFileMapper.insertTransferBoardFile(transferBoardFileEntity);
+        boolean isTransferBoardFileAdded = (transferBoardFileInsertCnt == 0);
+        return isTransferBoardFileAdded;
     }
 
     @Override
     @Transactional(readOnly = false)
-    public int modifyTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) {
-        return 0;
+    public boolean modifyTransferBoardFile(TransferBoardFileDto transferBoardFileDto, MultipartFile transferBoardFile) {
+        return true;
     }
 }
