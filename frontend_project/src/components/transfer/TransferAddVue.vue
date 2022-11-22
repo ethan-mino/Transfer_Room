@@ -154,6 +154,7 @@ export default {
 </script>
 
 <style>
+
 .detail-contents .detail-input{
     border: 1px solid rgb(223, 223, 223) !important;
   }
