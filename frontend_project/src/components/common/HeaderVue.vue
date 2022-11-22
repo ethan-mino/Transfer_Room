@@ -75,7 +75,8 @@ export default {
       console.log("user info : " + this.userInfo);
 
       this.userLogout(); //로그아웃 action 호출
-      if (this.$route.path != "/") this.$router.push({ name: "Main" }); // 로그아웃되면 메인페이지로 이동.
+      this.$router.push({ name: "loginPage" });// 로그아웃되면 로그인 페이지로 이동.
+      
     },
   },
 };

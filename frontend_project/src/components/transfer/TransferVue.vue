@@ -156,11 +156,12 @@ export default {
     };
   },
   //생성시점에 동코드로 게시글 조회 해오기
-  created() {
+  async created() {
     console.log(this.selectDongCode);
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
     if (this.selectDongCode != null) {
-      this.getBoardInfo();
+      await this.getBoardInfo();
+      
     }
 
     //시도구군 초기화 및 시도 값 받아오기.
@@ -172,7 +173,8 @@ export default {
     }
 
     console.log("test");
-    console.log(this.transferBoardSearchValue);
+    console.log("test1 : "+ this.transferBoardSearchValue)
+    
   },
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
@@ -189,10 +191,11 @@ export default {
       });
       document.head.appendChild(script);
       // this.initMap();
-    } else {
-      this.initMap();
-      this.setMarker();
     }
+    else {
+      this.initMap();
+    }
+    
   },
   methods: {
     ...mapActions(regionStore, [
@@ -209,6 +212,7 @@ export default {
     ...mapActions(transferStore, ["getTransferBoardResult"]),
     getBoardInfo: async function () {
       await this.getTransferBoardResult(this.selectDongCode);
+      console.log("test2 : "+ this.transferBoardSearchValue)
     },
     gugunList: function () {
       this.CLEAR_GUGUN_LIST();
@@ -232,7 +236,7 @@ export default {
         //관심페이지 등록하는 코드와, 관심지역 뷰엑스에 다시 호출하는 코드 실행.
       }
     },
-    searchBtn: function () {
+    searchBtn: async function () {
       //시도 구군 동까지 전부 입력이 되어있어야 됨.
       if (this.sidoCode === null) {
         alert("시도를 선택해주세요");
@@ -241,13 +245,21 @@ export default {
       } else if (this.dongCode === null) {
         alert("동을 선택해주세요");
       } else {
+
         //동코드로 게시글 조회해서 지도 찍는 코드 실행.
-        this.getBoardInfo(); //게시글 다시 조회.
-        this.removeAllMaker(); //기존마커 삭제
+        this.setSelectDongCode(this.dongCode); //해당 동코드 저장.
+        await this.getBoardInfo(); //게시글 다시 조회.
+
+        console.log("check data : " + this.transferBoardSearchValue);
+
+        //게시글 조회 후 획인결과 게시글이 없다면 이전에 검색한 결과를 계속 지도에 찍음.
+        if (this.transferBoardSearchValue.length == 0) {
+          alert("검색결과가 없습니다.");
+        }
         this.setMarker(); // 마커 다시 찍기.
       }
 
-      console.log(this.transferBoardSearchValue);
+      console.log("value check : " + this.transferBoardSearchValue);
     },
 
     initMap() {
@@ -272,6 +284,11 @@ export default {
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성합니다
       this.zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(this.zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      if (this.transferBoardSearchValue != null) { 
+        this.setMarker();
+      }
+      
     },
     setOverlayMapTypeId(maptype) {
       var changeMaptype;
@@ -306,11 +323,12 @@ export default {
     },
     //
     createMaker(latitude, longitude) {
+      this.removeAllMaker();
       const coords = new kakao.maps.LatLng(latitude, longitude);
 
       // 마커를 생성합니다
       // const marker =
-      new kakao.maps.Marker({
+      const marker = new kakao.maps.Marker({
         map: this.map,
         position: coords,
         clickable: true,
@@ -325,11 +343,14 @@ export default {
       // kakao.maps.event.addListener(marker, "click", function () {
       //   overlay.setMap(this.map);
       // });
+
+      const markerInfo = { marker: marker, overlay: null};
+      this.markerInfos.push(markerInfo);
     },
     removeAllMaker() {
       for (let i = 0; i < this.markerInfos.length; i++) {
-        this.markerInfos[i].marker.setMap(null);
-        this.markerInfos[i].overlay.setMap(null);
+        this.markerInfos[i].marker=null;
+        this.markerInfos[i].overlay = null;
       }
       this.markerInfos = [];
     },
@@ -341,6 +362,7 @@ export default {
     },
     //마커중 첫번째 위치로 이동.
     moveToFirstMarker() {
+      
       if (this.markerInfos.length > 0) {
         this.map.panTo(this.markerInfos[0].marker.getPosition());
         console.log("test1231231");

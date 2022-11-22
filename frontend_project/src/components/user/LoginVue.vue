@@ -79,20 +79,22 @@ export default {
         userEmail: null,
         userPassword: null,
       },
+      
     };
+  },
+  created: function() {
+    this.clearError();
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
   },
   methods: {
-    ...mapActions(memberStore, ["userConfirm"]),
-
+    ...mapActions(memberStore, ["userConfirm","clearError"]),
     loginLogic: async function () {
       await this.userConfirm(this.userLoginInfo); // 유저 정보를 넘겨서 로그인 시도
 
       //로그인성공하면 메인 페이지로 이동
       if (this.isLogin) {
-        alert("로그인 성공!");
         this.$router.push({ name: "Main" });
       }
     },
