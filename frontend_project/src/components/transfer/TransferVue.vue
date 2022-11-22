@@ -3,8 +3,10 @@
     <div class="contain">
       <div class="trading_info_area">
         <div class="aside">
-          <span class="trading-legend">거래 정보</span>
-          <div class="trading-data-list"></div>
+          <span class="trading-legend">양도 정보</span>
+          <div class="trading-data-list">
+            <TransferListVue></TransferListVue>
+          </div>
         </div>
 
         <div class="map">
@@ -142,6 +144,7 @@
 
 <script>
 import InterestVue from "@/components/transfer/interest/InterestVue";
+import TransferListVue from "@/components/transfer/TransferListVue";
 
 import { mapActions, mapState, mapMutations } from "vuex";
 
@@ -153,6 +156,7 @@ export default {
   name: "TransferVue",
   components: {
     InterestVue,
+    TransferListVue,
   },
   data() {
     return {
