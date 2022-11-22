@@ -28,8 +28,8 @@ ul, li {
     list-style-type: none;
 }
 
-div.content-container{
-    margin: -70px 0 -80px 0;
+div.content-container2{
+    margin: auto;
     padding: 70px 0 80px 0;
     min-height: 100%;
     display: flex;

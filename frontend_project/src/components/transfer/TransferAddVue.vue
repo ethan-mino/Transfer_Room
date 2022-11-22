@@ -1,5 +1,5 @@
 <template>
-  <div class="content_container22 add-transfer">
+  <div class="content-container2 add-transfer">
     <header>
         <div class="header-content">
             방 내놓기
@@ -164,7 +164,7 @@ export default {
   height: 100%;
 }
 
-.add-transfer .content_container2{
+.add-transfer .content-container2{
   margin: -70px auto -80px auto !important;
 }
 
@@ -173,8 +173,10 @@ export default {
   text-align: center;
 }
 
-.add-transfer .content_container2{
+.content-container2{
   width : 1000px;
+  text-align: center;
+  margin: auto;
 }
 
 .add-transfer .detail-contents > h1 {
