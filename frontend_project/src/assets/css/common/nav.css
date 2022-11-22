@@ -8,7 +8,6 @@ header .logo {
 
 header *{
   color : #ffffff !important;
-
   z-index: 100;
 }
 
@@ -19,210 +18,15 @@ header a{
 header a:hover{
   font-weight: bold;
   background-color: transparent !important;
+  transition: none;
+}
+
+header a:focus{
+  background-color: transparent !important;
 }
 
 .nav{
   margin-left : 50px;
-}
-
-.user_info {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin-right: -16px;
-  padding: 10px;
-}
-
-.user_info:hover {
-  cursor: pointer;
-}
-
-.user_info__img {
-  width: 50px;
-  height: 50px;
-  border-radius: 70%;
-}
-
-.css-19pvhlo {
-  --solvedac-card-background-color: #f7f8f9;
-  --solvedac-card-text-color: #000000;
-  --solvedac-card-hover-background-color: #dadfe3;
-  --solvedac-card-hover-text-color: #000000;
-  display: block;
-  background: var(--solvedac-card-background-color);
-  border-radius: 8px;
-  padding: 8px;
-  background-color: #fcfafa;
-}
-
-.css-xdditt {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 72px;
-  -webkit-background-size: cover;
-  background-size: cover;
-  -webkit-background-position: center;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 8px 8px 0 0;
-}
-
-.css-2ja0qw {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  padding: 16px 16px 8px 16px;
-  gap: 8px;
-  font-weight: 700;
-  letter-spacing: -0.02ch;
-  -webkit-transition: background-color 0.3s ease;
-  transition: background-color 0.3s ease;
-  border-radius: 8px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-
-.css-ieycvy {
-  position: relative;
-  border-radius: 999px;
-  width: 56px;
-  height: 56px;
-}
-
-.css-1bwc0wg {
-  border-top: 1px dashed #dddfe0;
-}
-
-.css-f4mglm {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 40px;
-  gap: 8px;
-  width: 100%;
-  font-size: 90%;
-}
-
-.css-lri41r {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-transition: background-color 0.3s ease;
-  transition: background-color 0.3s ease;
-  border-radius: 8px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-
-.css-1omr8f {
-  display: block;
-  font-size: 1.5em;
-  line-height: 1;
-}
-
-.css-lri41r {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-transition: background-color 0.3s ease;
-  transition: background-color 0.3s ease;
-  border-radius: 8px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}
-
-.css-lri41r:hover {
-  background-color: #dddfe0;
-}
-
-.css-1hi9wmq {
-  color: #8a8f95;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-}
-
-.css-1bwc0wg {
-  border-top: 1px dashed #dddfe0;
-}
-
-.css-18412tx {
-  --solvedac-card-background-color: #f7f8f9;
-  --solvedac-card-text-color: #000000;
-  --solvedac-card-hover-background-color: #dadfe3;
-  --solvedac-card-hover-text-color: #000000;
-  display: block;
-  background: var(--solvedac-card-background-color);
-  color: var(--solvedac-card-text-color);
-  border-radius: 8px;
-  padding: 8px;
-  box-shadow: rgb(221 223 224 / 40%) 0px 4px 8px;
-  transition: opacity 0.5s ease 0s, transform 0.5s ease 0s;
-  width: 100%;
-  max-width: 320px;
-  z-index: 30000;
-  transform-origin: right top;
-  pointer-events: all;
-  opacity: 1;
-  transform: translateY(8px) scale(1);
 }
 
 .li-margin > li {
