@@ -25,7 +25,6 @@ const transferBoardStore = {
       await getTransferBoardList(
         dongCode,
         ({ data }) => {
-          commit("CLEAR_SEARCH_VALUE");
           console.log("info : " + data);
           console.log("dong code : " + dongCode);
           commit("SET_SEARCH_VALUE", data);

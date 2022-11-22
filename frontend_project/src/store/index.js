@@ -5,6 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 import memberStore from "@/store/modules/memberStore";
 import regionStore from "@/store/modules/regionStore";
 import transferBoardStore from "@/store/modules/transferBoardStore";
+import interestingStore from "@/store/modules/interestingStore";
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     memberStore,
     regionStore,
     transferBoardStore,
+    interestingStore,
   },
   plugins: [
     createPersistedState({

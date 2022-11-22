@@ -31,6 +31,9 @@ const memberStore = {
       state.isLogin = true;
       state.userInfo = userInfo;
     },
+    CLEAR_LOGIN_ERROR: (state) => { 
+      state.isLoginError = false;
+    }
   },
   actions: {
     //로그인버튼 눌렀을때 동작.
@@ -70,6 +73,10 @@ const memberStore = {
       //     console.log("유저 정보 없음");
       //   }
     },
+
+    clearError({ commit }) { 
+      commit("CLEAR_LOGIN_ERROR");
+    }
   },
 };
 

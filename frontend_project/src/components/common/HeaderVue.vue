@@ -20,7 +20,7 @@
                 <router-link :to="{ name: 'transferPage' }" class="test">양도</router-link>
             </li>
             <li>
-              <router-link :to="{ name: 'transferAdd' }">게시글 등록</router-link>
+              <router-link :to="{ name: 'transferAdd' }">방 내놓기</router-link>
             </li>
             <li>
               <a href="#">커뮤니티</a>

@@ -138,8 +138,10 @@
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
 
+
 const regionStore = "regionStore";
 const transferStore = "transferBoardStore";
+const interestingStore = "interestingStore";
 
 export default {
   name: "TransferVue",
@@ -157,11 +159,14 @@ export default {
   },
   //생성시점에 동코드로 게시글 조회 해오기
   async created() {
+    /*관심지역 조회*/
+    await this.selctInterestingInfo(); // 뷰엑스에 저장되어있음.
+
+
     console.log(this.selectDongCode);
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
     if (this.selectDongCode != null) {
       await this.getBoardInfo();
-      
     }
 
     //시도구군 초기화 및 시도 값 받아오기.
@@ -179,6 +184,7 @@ export default {
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
     ...mapState(transferStore, ["transferBoardSearchValue"]),
+    ...mapState(interestingStore, ["interestingInfos"]),
   },
   mounted: function () {
     console.log(this.selectDongCode);
@@ -210,31 +216,22 @@ export default {
       "CLEAR_DONG_LIST",
     ]),
     ...mapActions(transferStore, ["getTransferBoardResult"]),
+    ...mapActions(interestingStore, ["selectInteresting","insertInteresting" ]),
     getBoardInfo: async function () {
       await this.getTransferBoardResult(this.selectDongCode);
       console.log("test2 : "+ this.transferBoardSearchValue)
     },
     gugunList: function () {
+          //구군 정보 가져오기.
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
     dongList: function () {
+          //동정보 가져오기.
       this.CLEAR_DONG_LIST();
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
-    },
-    interestingBtn: function () {
-      //시도 구군 동까지 전부 입력이 되어있어야 됨.
-      if (this.sidoCode === null) {
-        alert("시도를 선택해주세요");
-      } else if (this.gugunCode === null) {
-        alert("구군을 선택해주세요");
-      } else if (this.dongCode === null) {
-        alert("동을 선택해주세요");
-      } else {
-        //관심페이지 등록하는 코드와, 관심지역 뷰엑스에 다시 호출하는 코드 실행.
-      }
     },
     searchBtn: async function () {
       //시도 구군 동까지 전부 입력이 되어있어야 됨.
@@ -262,6 +259,34 @@ export default {
       console.log("value check : " + this.transferBoardSearchValue);
     },
 
+    /*관심지역 처리 파트*/
+    interestingBtn: async function () {
+      //시도 구군 동까지 전부 입력이 되어있어야 됨
+      if(this.sidoCode === null) {
+        alert("시도를 선택해주세요");
+      } else if (this.gugunCode === null) {
+        alert("구군을 선택해주세요");
+      } else if (this.dongCode === null) {
+        alert("동을 선택해주세요");
+      } else {
+        //관심페이지 등록하는 코드와, 관심지역 뷰엑스에 다시 호출하는 코드 실행.
+        await this.insertInterestingInfo(); //추가하고
+        await this.selctInterestingInfo(); //새로 조회.
+      }
+    },
+    selctInterestingInfo: async function () { 
+      await this.selectInteresting();
+
+      console.log("test interesting : " + this.interestingInfos);
+    },
+    insertInterestingInfo: async function () { 
+
+      let data = { "dongCode": this.dongCode };
+      await this.insertInteresting(data);
+
+    },
+    
+    /*지도 처리 파트*/
     initMap() {
       const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       const options = {

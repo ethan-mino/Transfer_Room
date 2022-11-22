@@ -7,6 +7,7 @@ const api = apiInstance();
 async function getTransferBoardList(dongCode, success, fail) {
   api.defaults.headers["Authorization"] =
     sessionStorage.getItem("access_token");
+  console.log("token : " + sessionStorage.getItem("access_token"));
   await api
     .get(`/transfer-board/approved?dongCode=${dongCode}`)
     .then(success)
