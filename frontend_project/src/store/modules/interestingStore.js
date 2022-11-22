@@ -6,6 +6,7 @@ const interestingStore = {
 
     state: {
         interestingInfos: [],
+        insertFail: false,
 
     },
     getters: {
@@ -15,17 +16,22 @@ const interestingStore = {
     },
     mutations: {
         SET_INTERESTING_LIST(state, interestingValues) {
-            state.interestingInfos = interestingValues;
+            state.interestingInfos = interestingValues.data;
         },
         CLEAR_INTERESTING_LIST(state) {
             state.interestingInfos = [];
+        },
+        SET_INSERT_FAIL(state) { 
+            state.insertFail = true;
+        },
+        CLEAR_INSERT_FAIL(state) { 
+            state.insertFail = false;
         }
     },
     actions: {
         selectInteresting: async function ({ commit }) {
             await getInterest(
                 ({ data }) => {
-                    console.log(data);
                     commit("SET_INTERESTING_LIST", data);
                 },
                 (error) => {
@@ -40,9 +46,11 @@ const interestingStore = {
                 insertInfo,
                 ({ data }) => {
                     console.log(data);
+                    commit("CLEAR_INSERT_FAIL");
                 },
                 (error) => {
                     console.log(error);
+                    commit("SET_INSERT_FAIL");  
                 }
             );
         },

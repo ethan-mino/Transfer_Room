@@ -155,6 +155,10 @@ export default {
 
       // 지도 마커 정보 담고 있기.
       markerInfos: [],
+
+      //지도 초기 위치
+      initLat: 37.40202682159887,
+      initLng: 127.1086368474788,
     };
   },
   //생성시점에 동코드로 게시글 조회 해오기
@@ -184,7 +188,7 @@ export default {
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
     ...mapState(transferStore, ["transferBoardSearchValue"]),
-    ...mapState(interestingStore, ["interestingInfos"]),
+    ...mapState(interestingStore, ["interestingInfos","insertFail"]),
   },
   mounted: function () {
     console.log(this.selectDongCode);
@@ -252,6 +256,7 @@ export default {
         //게시글 조회 후 획인결과 게시글이 없다면 이전에 검색한 결과를 계속 지도에 찍음.
         if (this.transferBoardSearchValue.length == 0) {
           alert("검색결과가 없습니다.");
+          this.map.panTo(new kakao.maps.LatLng(this.initLat, this.initLng));
         }
         this.setMarker(); // 마커 다시 찍기.
       }
@@ -271,13 +276,21 @@ export default {
       } else {
         //관심페이지 등록하는 코드와, 관심지역 뷰엑스에 다시 호출하는 코드 실행.
         await this.insertInterestingInfo(); //추가하고
-        await this.selctInterestingInfo(); //새로 조회.
+
+        //중복에러가 났다면 true 가 됨.
+        if (this.insertFail) {
+          alert("이미 등록된 지역입니다.")
+        }
+        else { 
+          await this.selctInterestingInfo(); //새로 조회.
+        }
+
+        console.log(this.interestingInfos);
+        
       }
     },
     selctInterestingInfo: async function () { 
       await this.selectInteresting();
-
-      console.log("test interesting : " + this.interestingInfos);
     },
     insertInterestingInfo: async function () { 
 
@@ -291,7 +304,7 @@ export default {
       const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       const options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(36.3552, 127.2985), //지도의 중심좌표.
+        center: new kakao.maps.LatLng(this.initLat, this.initLng), //지도의 중심좌표.
         level: 5, //지도의 레벨(확대, 축소 정도)
       };
 
@@ -348,7 +361,7 @@ export default {
     },
     //
     createMaker(latitude, longitude) {
-      this.removeAllMaker();
+      
       const coords = new kakao.maps.LatLng(latitude, longitude);
 
       // 마커를 생성합니다
@@ -374,12 +387,13 @@ export default {
     },
     removeAllMaker() {
       for (let i = 0; i < this.markerInfos.length; i++) {
-        this.markerInfos[i].marker=null;
+        this.markerInfos[i].marker.setMap(null);
         this.markerInfos[i].overlay = null;
       }
       this.markerInfos = [];
     },
     setMarker() {
+      this.removeAllMaker();
       this.transferBoardSearchValue.forEach((searchInfo) => {
         this.createMaker(searchInfo.roomLatitude, searchInfo.roomLongitude);
       });
