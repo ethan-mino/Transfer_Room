@@ -1,14 +1,13 @@
 <template>
   <div>
-    <header class="p-3">
+    <header class="p-3" :class="[($route.path==='/')? 'color' : 'white']">
       <div class="container">
         <div
           class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
         >
           <router-link to="/" class="nav-link px-6 text-secondary">
             <img
-              src="@/assets/img/white_logo.png"
-              alt="rlfalsgh95"
+              :src="($route.path==='/')? white_logo_url : color_logo_url"
               class="logo"
             />
           </router-link>
@@ -57,12 +56,9 @@ export default {
   name: "HeaderVue",
   data() {
     return {
-      currentPath: null,
-
+      white_logo_url : require("../../assets/img/white_logo.png"),
+      color_logo_url : require("../../assets/img/color_logo.png")
     };
-  },
-  created() {
-    this.currentPath = this.$route.path;
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
@@ -77,7 +73,7 @@ export default {
       this.userLogout(); //로그아웃 action 호출
       this.$router.push({ name: "loginPage" });// 로그아웃되면 로그인 페이지로 이동.
       
-    },
+    }
   },
 };
 </script>
