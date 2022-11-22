@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/transfer-board/**","/region/**").permitAll()    // TODO : 본인의 게시글을 조회하는 메서드는 인증된 사용자만 사용할 수 있도록 수정
                                                                                                                          // TODO : download/** 제거
                 .antMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
+
                 .anyRequest().authenticated();
     }
 

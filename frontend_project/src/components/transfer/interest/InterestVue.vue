@@ -1,90 +1,46 @@
 <template>
   <div>
-    <div class="form-group col-md-2">
-        <select
-          class="form-select"
-          id="sido"
-          v-model="this.selectsidoCode"
-          @change="gugunList($event)"
+    <div
+      class="interesting-area"
+      v-for="item in interestingInfos"
+      :key="item.dongCode"
+    >
+      <div class="interesting-content">
+        <!-- <input class="dongCode" type="hidden" value="${data.dongCode}"/>
+          <input class="id" type="hidden" value="${data.id}"/> -->
+
+        <span class="region"
+          >관심지역 : {{ item.sidoName }} {{ item.gugunName }}
+          {{ item.dongName }}</span
+        ><br />
+        <span class="interesting-create-date"
+          >생성일 : {{ item.interestingAreaCreateTime }}</span
         >
-          <option
-            v-for="(item, index) in this.sidos"
-            :value="item.value"
-            :key="index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
       </div>
-      <div class="form-group col-md-2">
-        <select
-          class="form-select"
-          id="gugun"
-          v-model="this.selectgugunCode"
-          @change="dongList($event)"
-        >
-          <option
-            v-for="(item, index) in this.guguns"
-            :value="item.value"
-            :key="index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group col-md-2">
-        <select class="form-select" id="dong" v-model="this.selectDongCode" @change="dongChange($event)">
-          <option
-            v-for="(item, index) in this.dongs"
-            :value="item.value"
-            :key="index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
+      <div class="close" @click="deleteValue(item.interestingAreaId)"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
-const regionStore = "regionStore";
+import { mapState, mapActions } from "vuex";
+
+const interestingStore = "interestingStore";
+
 export default {
-    name: "InterestVue",
-    create: {
-        ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectsidoName", "selectgugunName", "selectdongName"]),
-        ...mapActions(regionStore, ["getSido", "getGugun", "getDong","setSelectDongCode","selectgugunCode","selectsidoCode"]),
-        ...mapMutations(regionStore, [
-        "CLEAR_SIDO_LIST",
-        "CLEAR_GUGUN_LIST",
-        "CLEAR_DONG_LIST",
-    ]),
-    },
-    computed: {
-        
-    },
-    methods: {
-    
-    gugunList: function (e) {
-      console.log(e.target)
-      this.CLEAR_GUGUN_LIST();
-      this.selectgugunCode = null;
-      if (this.selectsidoCode) this.getGugun(this.selectsidoCode);
-    },
-    dongList: function (e) {
-      console.log(e.target);
-      this.CLEAR_DONG_LIST();
-      this.selectDongCode = null;
-      if (this.selectgugunCode) this.getDong(this.selectgugunCode);
-    },
-    dongChange: function (e) { 
-      console.log(e.target);
+  name: "InterestVue",
+  computed: {
+    ...mapState(interestingStore, ["interestingInfos"]),
+  },
+  methods: {
+    ...mapActions(interestingStore, ["deleteInteresting"]),
+    //해당 관심지역을 삭제하는 코드
+    deleteValue: async function (id) {
+      console.log("check111");
+      await this.deleteInteresting(id);
     },
   },
-    
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

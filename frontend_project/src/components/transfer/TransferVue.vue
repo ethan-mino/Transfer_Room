@@ -81,11 +81,16 @@
             </div>
           </div>
 
-          <div id="map" style="width: 100%; height: 100%; position: absolute"></div>
+          <div
+            id="map"
+            style="width: 100%; height: 100%; position: absolute"
+          ></div>
           <!-- <div>
             <InterestVue></InterestVue>
           </div> -->
-          <div id="interesting-area-list" style="display: none"></div>
+          <div id="interesting-area-list" style="display: ">
+            <InterestVue></InterestVue>
+          </div>
 
           <div class="overlay_buttons">
             <button
@@ -136,8 +141,9 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
+import InterestVue from "@/components/transfer/interest/InterestVue";
 
+import { mapActions, mapState, mapMutations } from "vuex";
 
 const regionStore = "regionStore";
 const transferStore = "transferBoardStore";
@@ -145,6 +151,9 @@ const interestingStore = "interestingStore";
 
 export default {
   name: "TransferVue",
+  components: {
+    InterestVue,
+  },
   data() {
     return {
       currentTypeId: null,
@@ -166,7 +175,6 @@ export default {
     /*관심지역 조회*/
     await this.selctInterestingInfo(); // 뷰엑스에 저장되어있음.
 
-
     console.log(this.selectDongCode);
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
     if (this.selectDongCode != null) {
@@ -182,14 +190,12 @@ export default {
     }
 
     console.log("test");
-    console.log("test1 : "+ this.transferBoardSearchValue)
-    
+    console.log("test1 : " + this.transferBoardSearchValue);
   },
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
     ...mapState(transferStore, ["transferBoardSearchValue"]),
-    ...mapState(interestingStore, ["interestingInfos","insertFail"]),
-    
+    ...mapState(interestingStore, ["interestingInfos", "insertFail"]),
   },
 
   mounted: function () {
@@ -203,11 +209,9 @@ export default {
       });
       document.head.appendChild(script);
       // this.initMap();
-    }
-    else {
+    } else {
       this.initMap();
     }
-    
   },
   methods: {
     ...mapActions(regionStore, [
@@ -222,19 +226,19 @@ export default {
       "CLEAR_DONG_LIST",
     ]),
     ...mapActions(transferStore, ["getTransferBoardResult"]),
-    ...mapActions(interestingStore, ["selectInteresting","insertInteresting" ]),
+    ...mapActions(interestingStore, ["selectInteresting", "insertInteresting"]),
     getBoardInfo: async function () {
       await this.getTransferBoardResult(this.selectDongCode);
-      console.log("test2 : "+ this.transferBoardSearchValue)
+      console.log("test2 : " + this.transferBoardSearchValue);
     },
     gugunList: function () {
-          //구군 정보 가져오기.
+      //구군 정보 가져오기.
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
     dongList: function () {
-          //동정보 가져오기.
+      //동정보 가져오기.
       this.CLEAR_DONG_LIST();
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
@@ -248,7 +252,6 @@ export default {
       } else if (this.dongCode === null) {
         alert("동을 선택해주세요");
       } else {
-
         //동코드로 게시글 조회해서 지도 찍는 코드 실행.
         this.setSelectDongCode(this.dongCode); //해당 동코드 저장.
         await this.getBoardInfo(); //게시글 다시 조회.
@@ -269,7 +272,7 @@ export default {
     /*관심지역 처리 파트*/
     interestingBtn: async function () {
       //시도 구군 동까지 전부 입력이 되어있어야 됨
-      if(this.sidoCode === null) {
+      if (this.sidoCode === null) {
         alert("시도를 선택해주세요");
       } else if (this.gugunCode === null) {
         alert("구군을 선택해주세요");
@@ -281,26 +284,22 @@ export default {
 
         //중복에러가 났다면 true 가 됨.
         if (this.insertFail) {
-          alert("이미 등록된 지역입니다.")
-        }
-        else { 
+          alert("이미 등록된 지역입니다.");
+        } else {
           await this.selctInterestingInfo(); //새로 조회.
         }
 
-        console.log(this.interestingInfos);
-        
+        console.log(this.interestingInfos[0]);
       }
     },
-    selctInterestingInfo: async function () { 
+    selctInterestingInfo: async function () {
       await this.selectInteresting();
     },
-    insertInterestingInfo: async function () { 
-
-      let data = { "dongCode": this.dongCode };
+    insertInterestingInfo: async function () {
+      let data = { dongCode: this.dongCode };
       await this.insertInteresting(data);
-
     },
-    
+
     /*지도 처리 파트*/
     initMap() {
       const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
@@ -325,10 +324,9 @@ export default {
       this.zoomControl = new kakao.maps.ZoomControl();
       this.map.addControl(this.zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-      if (this.transferBoardSearchValue != null) { 
+      if (this.transferBoardSearchValue != null) {
         this.setMarker();
       }
-      
     },
     setOverlayMapTypeId(maptype) {
       var changeMaptype;
@@ -363,7 +361,6 @@ export default {
     },
     //
     createMaker(latitude, longitude) {
-      
       const coords = new kakao.maps.LatLng(latitude, longitude);
 
       // 마커를 생성합니다
@@ -384,7 +381,7 @@ export default {
       //   overlay.setMap(this.map);
       // });
 
-      const markerInfo = { marker: marker, overlay: null};
+      const markerInfo = { marker: marker, overlay: null };
       this.markerInfos.push(markerInfo);
     },
     removeAllMaker() {
@@ -403,7 +400,6 @@ export default {
     },
     //마커중 첫번째 위치로 이동.
     moveToFirstMarker() {
-      
       if (this.markerInfos.length > 0) {
         this.map.panTo(this.markerInfos[0].marker.getPosition());
         console.log("test1231231");
