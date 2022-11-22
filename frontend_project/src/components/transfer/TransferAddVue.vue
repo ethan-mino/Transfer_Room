@@ -79,7 +79,7 @@
                 <tr>
                     <th>주소</th>
                     <td>
-                        <div class="input-wrap">
+                        <div class="input-wrap2">
                             <input type="text" class="detail-input" >
                         </div>
                     </td>
@@ -88,7 +88,7 @@
                 <tr>
                     <th>층</th>
                     <td>
-                        <div class="input-wrap">
+                        <div class="input-wrap2">
                             <input type="number" class="detail-input" >
                         </div>
                     </td>
@@ -97,7 +97,7 @@
                 <tr>
                     <th>계약 종료일</th>
                     <td>
-                        <div class="input-wrap">
+                        <div class="input-wrap2">
                             <input type="date" class="detail-input" >
                         </div>
                     </td>
@@ -116,7 +116,7 @@
                 <tr>
                     <th>제목</th>
                     <td>
-                        <div class="input-wrap">
+                        <div class="input-wrap2">
                             <input class="detail-input" name="tbTitle" type="text" placeholder="예)충남대 도보 10분거리, 혼자 살기 좋은 방 양도합니다.">
                         </div>
                     </td>
@@ -124,7 +124,7 @@
                 <tr>
                     <th>상세 설명</th>
                     <td>
-                        <div class="input-wrap">
+                        <div class="input-wrap2">
                             <textarea class="detail-text-area styled__Memo-sc-17hggnx-2 SAaJi" name="tbContent" placeholder="양도 상세설명 작성"></textarea>
                         </div>
                     </td>
@@ -154,6 +154,13 @@ export default {
 </script>
 
 <style>
+.detail-contents .detail-input{
+    border: 1px solid rgb(223, 223, 223) !important;
+  }
+  
+.detail-contents .detail-text-area:focus{
+  border: 1px solid rgb(223, 223, 223) !important;
+}
 
 .add-transfer header{
   margin: 80px 0px 64px;
