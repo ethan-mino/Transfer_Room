@@ -1,14 +1,25 @@
-header{
-  background-color: transparent;
-}
-
 header .logo {
   width : 100px;
 }
 
 header *{
-  color : #ffffff !important;
   z-index: 100;
+}
+
+header.color{
+  background-color: transparent;
+}
+
+header.white{
+  background-color: #ffffff;
+}
+
+header.color *{
+  color : #ffffff !important;
+}
+
+header.white *{
+  color : #000000 !important;
 }
 
 header a{
