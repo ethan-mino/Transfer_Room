@@ -5,7 +5,7 @@
       v-for="item in interestingInfos"
       :key="item.dongCode"
     >
-      <div class="interesting-content">
+      <div class="interesting-content" @click="interesting(item.dongCode)">
         <!-- <input class="dongCode" type="hidden" value="${data.dongCode}"/>
           <input class="id" type="hidden" value="${data.id}"/> -->
 
@@ -36,6 +36,10 @@ export default {
     deleteValue: async function (id) {
       console.log("check111");
       await this.deleteInteresting(id);
+    },
+    //관심지역으로 지도 이동.
+    interesting: function (dongcode) {
+      this.$emit("dongCode", dongcode);
     },
   },
 };

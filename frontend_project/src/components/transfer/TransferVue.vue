@@ -91,7 +91,7 @@
             <InterestVue></InterestVue>
           </div> -->
           <div id="interesting-area-list" style="display: ">
-            <InterestVue></InterestVue>
+            <InterestVue @dongCode="interestAreaBtn"></InterestVue>
           </div>
 
           <div class="overlay_buttons">
@@ -176,19 +176,16 @@ export default {
   },
   //생성시점에 동코드로 게시글 조회 해오기
   async created() {
-
-
     /*관심지역 조회*/
     await this.selctInterestingInfo(); // 뷰엑스에 저장되어있음.
 
     /*이전에 검색된 값 삭제*/
     this.clearSearchInfo();
 
-    console.log("before clear test :"+this.selectDongCode);
+    console.log("before clear test :" + this.selectDongCode);
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
     if (this.selectDongCode != null) {
       await this.getBoardInfo();
-      
     }
 
     //시도구군 초기화 및 시도 값 받아오기.
@@ -198,16 +195,14 @@ export default {
       this.CLEAR_DONG_LIST();
       this.getSido();
     }
-
-    
   },
-  beforeDestroy() { 
+  beforeDestroy() {
     this.selectCodeClear(); //선택했던 정보 초기화.
     // this.removeAllMaker();//지도 초기화
     // this.map.marker.clear();
 
-    console.log("after mark : " +  this.markerInfos);
-    console.log("after clear test :"+this.selectDongCode);
+    console.log("after mark : " + this.markerInfos);
+    console.log("after clear test :" + this.selectDongCode);
   },
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
@@ -216,18 +211,17 @@ export default {
   },
 
   mounted: function () {
-
     console.log(this.selectDongCode);
     // TODO - 현재 컴포넌트가 생성될때 지도를 생성하도록 바꿨는데, 지도 재생성하지 않고, 마커만 지우는 방법 생각해볼 필요가 있음.
     // if (!window.kakao || !window.kakao.maps) {
-      const script = document.createElement("script");
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=60929dd5ec29490e1dec592ba22a0dff&autoload=false";
-      script.addEventListener("load", () => {
-        kakao.maps.load(this.initMap);
-      });
-      document.head.appendChild(script);
-      // this.initMap();
+    const script = document.createElement("script");
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?appkey=60929dd5ec29490e1dec592ba22a0dff&autoload=false";
+    script.addEventListener("load", () => {
+      kakao.maps.load(this.initMap);
+    });
+    document.head.appendChild(script);
+    // this.initMap();
     // } else {
     //   this.initMap();
     // }
@@ -245,7 +239,7 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
-    ...mapActions(transferStore, ["getTransferBoardResult","clearSearchInfo"]),
+    ...mapActions(transferStore, ["getTransferBoardResult", "clearSearchInfo"]),
     ...mapActions(interestingStore, ["selectInteresting", "insertInteresting"]),
     getBoardInfo: async function () {
       await this.getTransferBoardResult(this.selectDongCode);
@@ -408,7 +402,7 @@ export default {
       for (let i = 0; i < this.markerInfos.length; i++) {
         this.markerInfos[i].marker.setMap(null);
         this.markerInfos[i].overlay = null;
-        
+
         // console.log("remove Marker etst : " + this.markerInfos[i].marker.);
       }
       this.markerInfos = [];
@@ -426,6 +420,20 @@ export default {
         this.map.panTo(this.markerInfos[0].marker.getPosition());
         console.log("test1231231");
       }
+    },
+    //자식으로부터 호출되는 메서드 - 관심지역을 선택하면 해당 지역으로 이동.
+    interestAreaBtn: async function (dongCode) {
+      this.setSelectDongCode(dongCode); //해당 동코드 저장.
+      await this.getBoardInfo(); //게시글 다시 조회.
+
+      console.log("check data : " + this.transferBoardSearchValue);
+
+      //게시글 조회 후 획인결과 게시글이 없다면 이전에 검색한 결과를 계속 지도에 찍음.
+      if (this.transferBoardSearchValue.length == 0) {
+        alert("검색결과가 없습니다.");
+        this.map.panTo(new kakao.maps.LatLng(this.initLat, this.initLng));
+      }
+      this.setMarker();
     },
   },
 };
