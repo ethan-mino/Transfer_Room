@@ -16,57 +16,62 @@
                 <tr>
                     <th>매물 종류</th>
                     <td>
-                        <ul class="radio-list">
-                            <li>
-                                <label class="input-radio">
-                                    <input type="radio" name="roomType" value="투룸" v-model="this.roomType" >
-                                    <p>투룸</p>
-                                </label>
-                            </li>
-
-                            <li>
-                                <label class="input-radio">
-                                    <input type="radio" name="roomType" value="쓰리룸" v-model="this.roomType">
-                                    <p>쓰리룸</p>
-                                </label>
-                            </li>
-
-
-                            <li>
-                                <label class="input-radio">
-                                    <input type="radio" name="roomType" value="아파트" v-model="this.roomType">
-                                    <p>아파트</p>
-                                </label>
-                            </li>
-
-                            <li>
-                                <label class="input-radio">
-                                    <input type="radio" name="roomType" value="오피스텔" v-model="this.roomType">
-                                    <p>오피스텔</p>
-                                </label>
-                            </li>
-                        </ul>
+                        <div class="input-wrap">
+                            <ul class="radio-list">
+                                <li>
+                                    <label class="input-radio">
+                                        <input type="radio" name="roomType" value="투룸" v-model="this.roomType" >
+                                        <p>투룸</p>
+                                    </label>
+                                </li>
+    
+                                <li>
+                                    <label class="input-radio">
+                                        <input type="radio" name="roomType" value="쓰리룸" v-model="this.roomType">
+                                        <p>쓰리룸</p>
+                                    </label>
+                                </li>
+    
+    
+                                <li>
+                                    <label class="input-radio">
+                                        <input type="radio" name="roomType" value="아파트" v-model="this.roomType">
+                                        <p>아파트</p>
+                                    </label>
+                                </li>
+    
+                                <li>
+                                    <label class="input-radio">
+                                        <input type="radio" name="roomType" value="오피스텔" v-model="this.roomType">
+                                        <p>오피스텔</p>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
 
                 <tr>
                     <th>계약 종류</th>
                     <td>
-                        <ul class="radio-list">
-                            <li>
-                                <label class="input-radio">
-                                    <input type="radio" name="contractType" value="월세" v-model="this.contractType">
-                                    <p>월세</p>
-                                </label>
-                            </li>
-
-                            <li>
-                                <label class="input-radio">
-                                    <input type="radio" name="contractType" value="전세" v-model="this.contractType">
-                                    <p>전세</p>
-                                </label>
-                            </li>
-                        </ul>
+                        <div class="input-wrap">
+                            <ul class="radio-list">
+                                <li>
+                                    <label class="input-radio">
+                                        <input type="radio" name="contractType" value="월세" v-model="this.contractType">
+                                        <p>월세</p>
+                                    </label>
+                                </li>
+    
+                                <li>
+                                    <label class="input-radio">
+                                        <input type="radio" name="contractType" value="전세" v-model="this.contractType">
+                                        <p>전세</p>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        
                     </td>
                 </tr>
 
@@ -128,7 +133,7 @@
                 <tr>
                     <td>
                       <div class="input-wrap">
-                        <input type="text" name="roomAddress" class="detail-input" v-model="this.roomAddress">
+                        <input type="text" name="roomAddress" class="detail-input" v-model="this.roomAddress" placeholder="예) 대전광역시 유성구 온천1동 124 삼성화재 유성연수원 ">
                       </div>
                     </td>
                 </tr>
@@ -137,7 +142,7 @@
                     <th>층</th>
                     <td>
                         <div class="input-wrap">
-                            <input type="number" name="roomFloor" class="detail-input" v-model="this.roomFloor">
+                            <input type="number" name="roomFloor" class="detail-input" v-model="this.roomFloor" placeholder="예) 4">
                         </div>
                     </td>
                 </tr>
@@ -165,7 +170,7 @@
                     <th>제목</th>
                     <td>
                         <div class="input-wrap">
-                            <input class="detail-input" name="tbTitle" type="text" placeholder="예)충남대 도보 10분거리, 혼자 살기 좋은 방 양도합니다." v-model="this.title">
+                            <input class="detail-input" name="tbTitle" type="text" placeholder="예) 충남대 도보 10분거리, 혼자 살기 좋은 방 양도합니다." v-model="this.title">
                         </div>
                     </td>
                 </tr>
