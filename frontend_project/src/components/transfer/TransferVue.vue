@@ -5,7 +5,7 @@
         <div class="aside">
           <span class="trading-legend">양도 정보</span>
           <div class="trading-data-list">
-            <TransferListVue></TransferListVue>
+            <TransferListVue @boardSelect="moveBoard"></TransferListVue>
           </div>
         </div>
 
@@ -206,7 +206,10 @@ export default {
   },
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
-    ...mapState(transferStore, ["transferBoardSearchValue"]),
+    ...mapState(transferStore, [
+      "transferBoardSearchValue",
+      "selectTransferBoardId",
+    ]),
     ...mapState(interestingStore, ["interestingInfos", "insertFail"]),
   },
 
@@ -239,7 +242,12 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
-    ...mapActions(transferStore, ["getTransferBoardResult", "clearSearchInfo"]),
+    /* eslint-disable */
+    ...mapActions(transferStore, [
+      "getTransferBoardResult",
+      "clearSearchInfo",
+      "setSelectBoardId",
+    ]),
     ...mapActions(interestingStore, ["selectInteresting", "insertInteresting"]),
     getBoardInfo: async function () {
       await this.getTransferBoardResult(this.selectDongCode);
@@ -434,6 +442,11 @@ export default {
         this.map.panTo(new kakao.maps.LatLng(this.initLat, this.initLng));
       }
       this.setMarker();
+    },
+    //리스트에서 이동할 게시글 선택하면 이동
+    moveBoard: function (transferBoardId) {
+      this.setSelectBoardId(transferBoardId);
+      // this.$router.push({ name: "Main" }); // TODO 게시물 상세 페이지로 이동 필요.
     },
   },
 };

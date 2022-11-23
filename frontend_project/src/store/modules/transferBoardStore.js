@@ -4,6 +4,9 @@ const transferBoardStore = {
   namespaced: true,
   state: {
     transferBoardSearchValue: null,
+
+    //선택된 보드 아이디 저장
+    selectTransferBoardId: null,
   },
 
   getters: {
@@ -18,7 +21,16 @@ const transferBoardStore = {
     CLEAR_SEARCH_VALUE(state) {
       state.transferBoardSearchValue = [];
     },
+
+    //이동할 게시글 id 셋팅
+    SET_BOARD_ID(state, boardId) {
+      state.selectTransferBoardId = boardId;
+    },
+    CLEAR_BOARD_ID(state) {
+      state.selectTransferBoardId = null;
+    },
   },
+  /* eslint-disable */
   actions: {
     //동코드로 보드 정보 가져오기
     async getTransferBoardResult({ commit }, dongCode) {
@@ -35,10 +47,17 @@ const transferBoardStore = {
       );
     },
 
-    clearSearchInfo: function ({ commit }) { 
+    clearSearchInfo: function ({ commit }) {
       commit("CLEAR_SEARCH_VALUE");
-    }
+    },
 
+    //이동할 게시글 아이디 저장
+    setSelectBoardId: function ({ commit }, boardId) {
+      commit("SET_BOARD_ID", boardId);
+    },
+    clearSelectBoardId: function ({ commit }) {
+      commit("CLEAR_BOARD_ID");
+    },
   },
 };
 
