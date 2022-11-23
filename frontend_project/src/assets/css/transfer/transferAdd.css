@@ -5,6 +5,11 @@
 .input-wrap .form-group{
   margin-bottom: 0px !important;
 }
+
+.input-wrap #deal-input{
+  top: 0px !important;
+}
+
 .detail-contents .detail-text-area:focus{
   border: 1px solid rgb(223, 223, 223) !important;
 }
