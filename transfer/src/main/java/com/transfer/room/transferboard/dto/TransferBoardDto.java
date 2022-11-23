@@ -3,6 +3,7 @@ package com.transfer.room.transferboard.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -25,6 +26,8 @@ public class TransferBoardDto {
     private int roomFloor; // 방의 층
     private String roomType; // 방 종류
     private String contractType;// 방 계약 종류
+
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date contractEndTime; //계약 종료일ㄴ
     private String dongCode; //동 코드
     private int approvingStatus;// 승인 여부 (0: 미승인, 1: 승인, 2: 거절)

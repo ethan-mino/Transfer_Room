@@ -128,6 +128,7 @@ public class TransferBoardController {
             @AuthenticationPrincipal CustomUserDetails loginUser){
 
         System.out.println(transferBoardDto);
+        System.out.println("test : " + boardFiles.size());
         int loginUserId = loginUser.getUserId();
         transferBoardDto.setTransfererId(loginUserId);
 

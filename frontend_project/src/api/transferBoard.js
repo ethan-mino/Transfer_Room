@@ -15,11 +15,11 @@ async function getTransferBoardList(dongCode, success, fail) {
 }
 
 //파일 업로드
-async function setTransferBoard(multipartData, success, fail) { 
+async function setTransferBoard(multipartData, success, fail) {
   tbApi.defaults.headers["Authorization"] =
     sessionStorage.getItem("access-token");
-  
-  await tbApi.post(`/transfer-board`,multipartData).then(success).catch(fail);
+
+  await tbApi.post(`/`, multipartData).then(success).catch(fail);
 }
 
-export { getTransferBoardList, setTransferBoard};
+export { getTransferBoardList, setTransferBoard };

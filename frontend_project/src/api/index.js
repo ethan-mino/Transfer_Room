@@ -35,7 +35,7 @@ function transferBoardInstance() {
 }
 
 //관심지역 등록
-function interestingInstance() { 
+function interestingInstance() {
   const instace = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL,
     headers: {
@@ -46,4 +46,9 @@ function interestingInstance() {
   return instace;
 }
 
-export { apiInstance, regionInstance, transferBoardInstance, interestingInstance };
+export {
+  apiInstance,
+  regionInstance,
+  transferBoardInstance,
+  interestingInstance,
+};
