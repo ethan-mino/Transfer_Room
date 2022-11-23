@@ -67,7 +67,17 @@ const regionStore = {
     },
     SET_DONG_CODE(state,dongCode) { 
       state.selectDongCode = dongCode;
-    }
+    },
+    CLEAR_SIDO_CODE(state) { 
+      state.selectsidoCode = null;
+    },
+    CLEAR_GUGUN_CODE(state) { 
+      state.selectgugunCode = null;
+    },
+    CLEAR_DONG_CODE(state) { 
+      state.selectDongCode = null;
+    },
+    
   },
   actions: {
     async getSido({ commit }) {
@@ -115,8 +125,13 @@ const regionStore = {
     clearGugun({ commit }) { 
       commit("CLEAR_GUGUN_LIST");
     },
-    clearDong({ commit }) { 
+    clearDong({ commit }) {
       commit("CLEAR_DONG_LIST");
+    },
+    selectCodeClear: function ({ commit }) { 
+      commit("CLEAR_SIDO_CODE");
+      commit("CLEAR_GUGUN_CODE");
+      commit("CLEAR_DONG_CODE");
     }
   },
 };

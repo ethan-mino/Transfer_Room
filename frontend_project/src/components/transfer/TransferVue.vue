@@ -176,13 +176,19 @@ export default {
   },
   //생성시점에 동코드로 게시글 조회 해오기
   async created() {
+
+
     /*관심지역 조회*/
     await this.selctInterestingInfo(); // 뷰엑스에 저장되어있음.
 
-    console.log(this.selectDongCode);
+    /*이전에 검색된 값 삭제*/
+    this.clearSearchInfo();
+
+    console.log("before clear test :"+this.selectDongCode);
     //선택된 동코드가 null이 아니라면(메인페이지에서 선택하고 온 경우.)
     if (this.selectDongCode != null) {
       await this.getBoardInfo();
+      
     }
 
     //시도구군 초기화 및 시도 값 받아오기.
@@ -193,8 +199,15 @@ export default {
       this.getSido();
     }
 
-    console.log("test");
-    console.log("test1 : " + this.transferBoardSearchValue);
+    
+  },
+  beforeDestroy() { 
+    this.selectCodeClear(); //선택했던 정보 초기화.
+    // this.removeAllMaker();//지도 초기화
+    // this.map.marker.clear();
+
+    console.log("after mark : " +  this.markerInfos);
+    console.log("after clear test :"+this.selectDongCode);
   },
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs", "selectDongCode"]),
@@ -203,8 +216,10 @@ export default {
   },
 
   mounted: function () {
+
     console.log(this.selectDongCode);
-    if (!window.kakao || !window.kakao.maps) {
+    // TODO - 현재 컴포넌트가 생성될때 지도를 생성하도록 바꿨는데, 지도 재생성하지 않고, 마커만 지우는 방법 생각해볼 필요가 있음.
+    // if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?appkey=60929dd5ec29490e1dec592ba22a0dff&autoload=false";
@@ -213,9 +228,9 @@ export default {
       });
       document.head.appendChild(script);
       // this.initMap();
-    } else {
-      this.initMap();
-    }
+    // } else {
+    //   this.initMap();
+    // }
   },
   methods: {
     ...mapActions(regionStore, [
@@ -223,13 +238,14 @@ export default {
       "getGugun",
       "getDong",
       "setSelectDongCode",
+      "selectCodeClear",
     ]),
     ...mapMutations(regionStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
-    ...mapActions(transferStore, ["getTransferBoardResult"]),
+    ...mapActions(transferStore, ["getTransferBoardResult","clearSearchInfo"]),
     ...mapActions(interestingStore, ["selectInteresting", "insertInteresting"]),
     getBoardInfo: async function () {
       await this.getTransferBoardResult(this.selectDongCode);
@@ -392,6 +408,8 @@ export default {
       for (let i = 0; i < this.markerInfos.length; i++) {
         this.markerInfos[i].marker.setMap(null);
         this.markerInfos[i].overlay = null;
+        
+        // console.log("remove Marker etst : " + this.markerInfos[i].marker.);
       }
       this.markerInfos = [];
     },

@@ -1,15 +1,15 @@
 <template>
     <div class="myPageContainer">
         <div class="container">
-            <h1 class="container-title">커뮤니티 게시글</h1> <!-- TODO : 모든 글씨가 bold 채라서 게시글 정보가 잘 안보임-->
-            <div style="display: flex; flex-direction: row;">
+            <h1 class="container-title">커뮤니티 게시글 내역</h1> <!-- TODO : 모든 글씨가 bold 채라서 게시글 정보가 잘 안보임-->
+            <div style="display: flex; flex-direction: row; justify-content: center;">
                 <div class="category-list" id="accordian">
                     <ul class="show-dropdown main-navbar">
                         <div class="selector-active">
                             <div class="top"></div>
                             <div class="bottom"></div>
                         </div>
-                        <li><a @click="selectBtn">내 정보</a></li>
+                        <li><a >내 정보</a></li>
                         <li><a>1:1 문의</a></li>
                         <li><a>양도 내역</a></li>
                         <li><a>커뮤니티 게시글 내역</a></li>
@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 @import "@/assets/css/accordianVerticalTap.css";
-@import "https://code.jquery.com/jquery-3.6.1.min.js";
+/*@import "https://code.jquery.com/jquery-3.6.1.min.js";*/
 
     .myPageContainer .container{
         display: flex;
@@ -114,6 +114,8 @@ export default {
     .myPageContainer h1.container-title{
         text-align: center;
         height: 60px;
+        padding-left: 200px;
+        padding-top: 10px;
     }
 
     .myPageContainer .list-table{

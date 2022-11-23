@@ -33,6 +33,5 @@ export default {
 @import "assets/css/map.css";
 
 @import "assets/css/transfer/transferAdd.css";
-@import "assets/css/accordianVerticalTap.css";
 
 </style>

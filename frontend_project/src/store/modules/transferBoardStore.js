@@ -35,6 +35,10 @@ const transferBoardStore = {
       );
     },
 
+    clearSearchInfo: function ({ commit }) { 
+      commit("CLEAR_SEARCH_VALUE");
+    }
+
   },
 };
 
