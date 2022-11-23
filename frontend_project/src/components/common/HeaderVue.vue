@@ -30,7 +30,7 @@
           <div class="text-end">
             <div class="authOff" v-if="userInfo">
               <ul class="nav">
-                <li><a href="#">마이페이지</a></li>
+                <li><a @click="mypageBtn">마이페이지</a></li>
                 <li><a @click="onClickLogout">로그아웃</a></li>
               </ul>
             </div>
@@ -73,6 +73,9 @@ export default {
       this.userLogout(); //로그아웃 action 호출
       this.$router.push({ name: "loginPage" });// 로그아웃되면 로그인 페이지로 이동.
       
+    },
+    mypageBtn: function () { 
+      this.$router.push({name : "myPage"}); //마이페이지로 이동
     }
   },
 };

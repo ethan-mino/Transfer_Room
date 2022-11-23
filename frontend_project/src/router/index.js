@@ -5,6 +5,7 @@ import LoginView from "@/views/user/LoginView";
 import SignupView from "@/views/user/SignupView";
 import TransferView from "@/views/transfer/TransferView";
 import TransferAddView from "@/views/transfer/TransferAddView";
+import MyPageView from "@/views/user/mypage/MyPageView";
 
 import store from "@/store";
 
@@ -53,6 +54,12 @@ const routes = [
     name: "transferAdd",
     beforeEnter: onlyAuthUser,
     component: TransferAddView,
+  },
+  {
+    path: "/myPage",
+    name: "myPage",
+    beforeEnter: onlyAuthUser,
+    component: MyPageView,
   },
 ];
 
