@@ -7,7 +7,12 @@
     >
       <!-- <input type="hidden" id="dealNo" value="${tradingData.aptCode}">
             <input type="hidden" id="aptCode" value="${tradingData.aptCode}"> -->
-      <div @click="transferBoardSelect(item.transferBoardId)">
+
+      <span class="img__span">
+        <img src="@/assets/img/apartment.jpg" />
+      </span>
+      <br />
+      <span @click="transferBoardSelect(item.transferBoardId)">
         <span class="transfer-title">{{ item.transferTitle }}<br /></span>
         <span class="floor">{{ item.roomFloor }} 층<br /></span>
         <span class="contract-type"
@@ -17,7 +22,7 @@
         <span class="contract-end-time"
           >계약만료일 : {{ item.contractEndTime }}<br
         /></span>
-      </div>
+      </span>
     </div>
   </div>
 </template>
@@ -43,4 +48,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@import "@/assets/css/transfer/transferList.css";
+</style>
