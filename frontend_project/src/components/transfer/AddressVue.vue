@@ -1,48 +1,6 @@
 <template>
     <div>
-      <div class="form-group col-md-2">
-          <select
-            class="form-select"
-            id="sido"
-            v-model="this.$store.state.selectsidoCode"
-            @change="gugunList($event)"
-          >
-            <option
-              v-for="(item, index) in this.$store.state.sidos"
-              :value="item.value"
-              :key="index"
-            >
-              {{ item.text }}
-            </option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <select
-            class="form-select"
-            id="gugun"
-            v-model="this.$store.state.selectgugunCode"
-            @change="dongList($event)"
-          >
-            <option
-              v-for="(item, index) in this.$store.state.guguns"
-              :value="item.value"
-              :key="index"
-            >
-              {{ item.text }}
-            </option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <select class="form-select" id="dong" v-model="this.$store.state.selectDongCode" @change="dongChange($event)">
-            <option
-              v-for="(item, index) in this.$store.state.dongs"
-              :value="item.value"
-              :key="index"
-            >
-              {{ item.text }}
-            </option>
-          </select>
-        </div>
+    
     </div>
   </template>
   

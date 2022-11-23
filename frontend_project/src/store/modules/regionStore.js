@@ -105,6 +105,18 @@ const regionStore = {
     },
     setSelectDongCode({ commit }, dongcode) { 
       commit("SET_DONG_CODE", dongcode);
+    },
+    //모든 정보 초기화
+    clearInfo({ commit }) { 
+      commit("CLEAR_SIDO_LIST");
+      commit("CLEAR_GUGUN_LIST");
+      commit("CLEAR_DONG_LIST");
+    },
+    clearGugun({ commit }) { 
+      commit("CLEAR_GUGUN_LIST");
+    },
+    clearDong({ commit }) { 
+      commit("CLEAR_DONG_LIST");
     }
   },
 };

@@ -24,9 +24,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
 const interestingStore = "interestingStore";
-
 export default {
   name: "InterestVue",
   computed: {
