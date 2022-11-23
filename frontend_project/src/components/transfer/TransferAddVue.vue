@@ -282,8 +282,9 @@ export default {
       roomLat: null,
       roomLng: null,
 
-      files: [],
-
+      files: [], //업로드용 파일
+      filesPreview: [],
+      uploadImageIndex: 0,
     }
   },
   created: function(){
@@ -388,11 +389,10 @@ export default {
     },
     registBtn: async function () {
       const formData = new FormData();
-      for (const file of event.target.files) {
-        formData.append('files', file)
-      }
+      formData.append('files', this.files);
 
       this.insertFormData(formData);
+
       await setTransferBoard(
         formData,
         ({ data }) => { 
@@ -402,7 +402,7 @@ export default {
           console.log(error);
         }
       )
-      this.router.push({ name: "TransferView" });
+      this.$router.push({ name: "TransferView" });
     },
     selectFile: async function (event) {
 
@@ -417,9 +417,11 @@ export default {
         formData.append("uploadFile",file);
       }
 
-
+        
       /*카카오 지오코더를 이용해서 좌표 변환*/
-      var geocoder = new kakao.maps.services.Geocoder();
+      /*
+      var geocoder = new kakao.maps.services.Geocoder(); // TODO 카카오 에러남
+
 
       //TODO : 현재는 (구) 주소를 사용하고 있지만, 추후에 도로명 주소를 써야됨(도로명 주소가 좀 더 정확한 위치를 알수 있음.)
       //TODO : 주소 입력시에는 사용자에게 자유롭게 입력하도록 하면, 잘못된 주소가 있을 수도 있기 때문에, zipcode를 이용하여 검색해서 등록할 수 있도록 함.
@@ -434,6 +436,9 @@ export default {
             this.roomLng = result[0].x;
         } 
       });  
+      */
+
+      
 
       let bodyData = {
         dongCode: this.dongCode,
@@ -445,8 +450,8 @@ export default {
         tbTitle: this.title,
         tbContent: this.content,
         approvingStatus: 1,
-        roomLatitude: this.roomLat,
-        roomLongitude: this.roomLng,
+        roomLatitude: 37.40202682159887,
+        roomLongitude: 127.1086368474788,
     }
 
       formData.append("data", bodyData);
