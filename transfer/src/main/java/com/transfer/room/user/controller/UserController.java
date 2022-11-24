@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -83,5 +81,23 @@ public class UserController {
                 return ResponseEntity.internalServerError().build();
             }
         }
+    }
+    //유저 정보 조회 컨트롤러 - 게시판 상세 조회시, 유저 이름 정보가 없음.
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<UserDto>> getUser(
+            @PathVariable("userId") int userId
+    ){
+
+        ApiResponse<UserDto> apiResponse = new ApiResponse<>();
+        try{
+            UserDto userDto = userService.findUserByUserId(userId);
+            apiResponse.setData(userDto);
+            return ResponseEntity.ok(apiResponse);
+        }
+        catch(Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
+
     }
 }

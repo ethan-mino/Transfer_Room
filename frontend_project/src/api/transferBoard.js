@@ -14,6 +14,17 @@ async function getTransferBoardList(dongCode, success, fail) {
     .catch(fail);
 }
 
+async function getTransferBoardById(transferBoardId, success, fail) { 
+  api.defaults.headers["Authorization"] =
+    sessionStorage.getItem("access-token");
+  console.log("token : " + sessionStorage.getItem("access-token"));
+  await api
+    .get(`/transfer-board/approved?transferBoardId=${transferBoardId}`)
+    .then(success)
+    .catch(fail);
+}
+
+
 //파일 업로드
 async function setTransferBoard(multipartData, success, fail) {
   tbApi.defaults.headers["Authorization"] =
@@ -22,4 +33,4 @@ async function setTransferBoard(multipartData, success, fail) {
   await tbApi.post(`/`, multipartData).then(success).catch(fail);
 }
 
-export { getTransferBoardList, setTransferBoard };
+export { getTransferBoardList, setTransferBoard, getTransferBoardById };

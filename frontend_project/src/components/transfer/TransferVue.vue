@@ -445,6 +445,7 @@ export default {
     },
     //리스트에서 이동할 게시글 선택하면 이동
     moveBoard: function (transferBoardId) {
+      console.log("emit parent check");
       this.setSelectBoardId(transferBoardId);
       this.$router.push({ name: "transferDetail" });
     },

@@ -7,7 +7,7 @@
                 <div class="carousel-item active">
                     <img src="@/assets/img/img1.jpg" class="d-block w-100" alt="">
                 </div>
-                <div class="carousel-item active">
+                <div class="carousel-item">
                     <img src="@/assets/img/img2.jpg" class="d-block w-100" alt="">
                 </div>
                 <div class="carousel-item">
@@ -28,45 +28,24 @@
             <div class="transfer_board" style = "width : 100%; padding : 20px">
                 <div class="board_infos">
                 <div class="tb_title" style = "font-size: 20px; margin-bottom : 10px; font-weight: bold;">
-                    유성온천역 근처 5분 거리, 혼자 살기 좋은 집 양도합니다.
+                    {{boardInfo.transferTitle}}
                 </div>
-                <span class = "address" style = "font-size: 15px; margin-bottom : 5px">장대로 80번길 59 세종하우스 105호</span>,
-                <span class = "room_floor">4층</span>
+                <span class = "address" style = "font-size: 15px; margin-bottom : 5px">{{boardInfo.roomAddress}}</span>,
+                <span class = "room_floor">{{boardInfo.roomFloor}}층</span>
 
                 <div>
-                    <span class = "room_type">원룸</span> / <span class = "contract_type">월세</span>
+                    <span class = "room_type">{{boardInfo.roomType}}</span> / <span class = "contract_type">{{boardInfo.contractType}}</span>
                 </div>
                 
                 <div style = "border-bottom: 1px solid lightgray; padding-bottom : 10px">
-                    <span class = "transferer">rlfalsgh95</span>,
-                    <span class = "create_time">2022.08.20</span>
+                    <!-- todo 작성자 id만 있어서 user 테이블 조인 필요. 또는 유저 테이블에 요청 필요 -->
+                    <span class = "transferer">{{userName}}</span>,
+                    <span class = "create_time">{{contractEndTime}}</span>
                 </div>
                 
                 
                 <pre class = "tb_content" style="font-size : 14px; padding : 20px 0px; border-bottom: 1px solid lightgray;">
-                    취뽀로 SSAFY를 퇴소하게 되어 집을 양도합니다! 
-                    좋은 기운 받으셔서, 취뽀 하시길 바랄게요!!
-
-                    🎈 구조와 특징 🎈
-
-                    ㅇ 넓은 베란다 공간 !!
-                    ㅇ 화이트톤 깔끔한 주방시설 !!
-
-
-                    🎈 위치와 교통 🎈
-
-                    ㅇ 선정릉역 선릉역 더블 역세권  
-                    ㅇ 편리한교통으로  버스노선 다수
-
-
-                    🎈 주차와 편의시설 🎈
-
-                    ㅇ 병원, 커피숍, 편의점, 세탁소, 미용실 등 편의시설 인접
-                    ㅇ 주차대수: 세대당 1대 선착순 협의 주차
-                    ㅇ 방향 기준: 안방
-                    ㅇ 수도, 전기, 가스 요금은 실사용량에 따라 별도 부과
-
-                    * 3개월 기준 금액으로 1~2개월은 협의 후 가능하다고 하시네요!! *
+                    {{boardInfo.transferContent}}
                 </pre>
                 </div>
             </div>
@@ -81,12 +60,55 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { getTransferBoardById } from "@/api/transferBoard";
+import { getUser } from "@/api/member";
+
+const transferBoardStore = "transferBoardStore";
+
 export default {
     name: "TransferDetailVue",
     data() { 
         return {
-        
+            boardInfo: {},
+            contractEndTime: null,
+            userName: "Anonymous",
         };
+    },
+    created: async function() {
+        // 게시글 정보 받아오기.
+        await getTransferBoardById(
+            this.selectTransferBoardId,
+            ({ data }) => { 
+                console.log(data);
+                this.boardInfo = data.data[0];
+            },
+            (error) => { 
+                console.log(error);
+            }
+        )
+
+        let splitTime = this.boardInfo.contractEndTime.split("-");
+
+        this.contractEndTime = splitTime[0] + "." + splitTime[1] + "." + splitTime[2];
+        //유저정보 조회
+        await getUser(
+            this.boardInfo.transfererId,
+            ({ data }) => { 
+                console.log(data);
+                if (data.data.userName != null) { 
+                    this.userName = data.data.userName;
+                }
+                
+            },
+            (error) => { 
+                console.log(error);
+            }
+        )
+        
+    },
+    computed: {
+        ...mapState(transferBoardStore, ["selectTransferBoardId"]),
     },
     methods: {
         registBtn: function () { 

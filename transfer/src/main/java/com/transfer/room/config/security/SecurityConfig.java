@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/pending/**").hasRole("ADMIN") // TODO : ENUM -> string 사용 방법
 //                .antMatchers(HttpMethod.DELETE,"/user/interest-area/**").authenticated()
                 .antMatchers(HttpMethod.DELETE,"/user/interest-area/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/transfer-board/**","/region/**").permitAll()    // TODO : 본인의 게시글을 조회하는 메서드는 인증된 사용자만 사용할 수 있도록 수정
+                .antMatchers(HttpMethod.GET,"/transfer-board/**","/region/**", "/user/**").permitAll()    // TODO : 본인의 게시글을 조회하는 메서드는 인증된 사용자만 사용할 수 있도록 수정
                                                                                                                          // TODO : download/** 제거
                 .antMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
 
