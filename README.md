@@ -1,7 +1,10 @@
 # Transfer_Room
 전/월세 계약을 양도할 수 있는 플랫폼
 
-![환승해방 로고](https://user-images.githubusercontent.com/53431518/203803328-49d19976-2459-405a-85cc-0d683079c188.png)
+<p align = "center">
+  <img src= "https://user-images.githubusercontent.com/53431518/203803328-49d19976-2459-405a-85cc-0d683079c188.png"></img>
+</p>
+
 <p align = "center">
   <img src= "https://user-images.githubusercontent.com/53431518/203803087-1f3bee8b-cd93-4052-9293-6401dbdd73bd.png"></img>
   환승해방 ERD
