@@ -116,6 +116,7 @@ public class TransferBoardController {
             @AuthenticationPrincipal CustomUserDetails loginUser){
 
         int transfereeId = loginUser.getUserId();
+        System.out.println(transfereeId);
 
         try{
             transferBoardService.modifyTransferBoardTransferee(transferBoardId, transfereeId);

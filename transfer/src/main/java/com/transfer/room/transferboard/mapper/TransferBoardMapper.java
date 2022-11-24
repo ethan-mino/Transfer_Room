@@ -3,6 +3,7 @@ package com.transfer.room.transferboard.mapper;
 import com.transfer.room.transferboard.dto.TransferBoardDetails;
 import com.transfer.room.transferboard.dto.TransferBoardSearchFilter;
 import com.transfer.room.transferboard.entity.TransferBoardEntity;
+import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -19,6 +20,6 @@ public interface TransferBoardMapper {
 
     /*수정*/
     int updateTransferBoard(TransferBoardEntity transferBoardEntity) throws Exception; //게시글 수정 메서드
-    int updateTransferBoardTransferee(int transferBoardId, int transfereeId) throws Exception;
+    int updateTransferBoardTransferee(@Param("transfereeId")int transfereeId,int transferBoardId) throws Exception;
     int updateTransferBoardTransferStatus(int transferBoardId) throws Exception;
 }
