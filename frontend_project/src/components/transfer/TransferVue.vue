@@ -446,7 +446,7 @@ export default {
     //리스트에서 이동할 게시글 선택하면 이동
     moveBoard: function (transferBoardId) {
       this.setSelectBoardId(transferBoardId);
-      // this.$router.push({ name: "Main" }); // TODO 게시물 상세 페이지로 이동 필요.
+      this.$router.push({ name: "transferDetail" });
     },
   },
 };
