@@ -7,21 +7,16 @@
     >
       <!-- <input type="hidden" id="dealNo" value="${tradingData.aptCode}">
             <input type="hidden" id="aptCode" value="${tradingData.aptCode}"> -->
-      <div @click="transferBoardSelect(item.transferBoardId)">
+      <div @click="transferBoardSelect(item.transferBoardId)" style = "display: flex;">
         <span class="img__span">
           <img :src="'http://localhost:8080/transfer-board/file/' + item.imgFileList[0].fileId" />
         </span>
         <br />
         <span >
-          <span class="transfer-title">{{ item.transferTitle }}<br /></span>
-          <span class="floor">{{ item.roomFloor }} 층<br /></span>
-          <span class="contract-type"
-            >계약 구분 : {{ item.contractType }}<br
-          /></span>
-          <span class="room-type">방 형태 : {{ item.roomType }}<br /></span>
-          <span class="contract-end-time"
-            >계약만료일 : {{ item.contractEndTime }}<br
-          /></span>
+          <div class="transfer-title">{{ item.transferTitle }}<br /></div>
+          <div class="address" style="font-size : 14px; margin-top : 10px">{{item.roomAddress.replace(/ {2,}/gi, " ").split(" ").splice(0, 4).join(" ")}}, {{ item.roomFloor }} 층</div> 
+          <div class="room-type">{{ item.roomType }}, {{item.contractType}}<br /></div>
+          <div class="transfer-content">{{item.transferContent}}</div>
         </span>
       </div>
     </div>

@@ -1,4 +1,40 @@
+@font-face {
+  font-family: 'ONE-Mobile-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.trading_data *{
+  font-family: ONE-Mobile-Regular !important;
+}
+
 .img__span img {
-  width: 250px;
-  height: 150px;
+  width: 150px;
+  height: 120px;
+  margin-right : 20px;
+  border-radius: 10px;
+  border : 1px solid lightgray;
+}
+
+.img__span * {
+  font-family: 'Courier New', Courier, monospace !important; 
+}
+
+.transfer-title{
+  font-size : 20px; 
+  font-weight : bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width : 200px;
+}
+
+.transfer-content{
+  margin-top : 15px;
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
