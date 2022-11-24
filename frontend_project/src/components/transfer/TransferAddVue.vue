@@ -459,18 +459,12 @@ export default {
     initMap() {
       console.log("map test");
     },
-    gugunList: async function (e) {
-      console.log(e);
-      console.log(e.target.textConent);
-      // this.sidoName = name;
-      // console.log(e);
+    gugunList: async function () {
       this.clearGugun(); //기존에 있던 동 정보 삭제.
       this.gugunCode = null;
       if (this.sidoCode) await this.getGugun(this.sidoCode);
     },
     dongList: async function () {
-      // this.gugunName = name;
-      // console.log(e);
       this.clearDong();
       this.dongCode = null;
       if (this.gugunCode) await this.getDong(this.gugunCode);
@@ -598,6 +592,11 @@ export default {
 
       formData.append("data", JSON.stringify(bodyData));
       // formData.append("data", bodyData);
+
+      for (const file2 of this.attachments) { 
+        console.log(file2);
+        formData.append("uploadFile", file2);
+      }
 
       await setTransferBoard(
         formData,
