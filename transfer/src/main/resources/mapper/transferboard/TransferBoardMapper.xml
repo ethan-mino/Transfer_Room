@@ -70,7 +70,7 @@
         ,#{tbTitle},#{tbContent},now(),now()
         ,#{roomLatitude},#{roomLongitude},#{roomAddress}
         ,#{roomFloor},#{roomType},#{contractType},#{contractEndTime}
-        ,#{dongCode}, 0, 0)
+        ,#{dongCode}, 0, 1)
     </insert>
 
     <update id = "updateTransferBoardTransferee">
