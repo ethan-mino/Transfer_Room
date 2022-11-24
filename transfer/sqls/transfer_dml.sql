@@ -106,6 +106,148 @@ INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_
 INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
     VALUE (8, 2,'c:/uploads/임대인_양도_동의서.pdf','application/pdf', 1);
 
+
+
+INSERT INTO transfer_boards(tb_id, transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
+    VALUE (3, 1,null,0,'🌞초역세권을 명 받았습니다🌞유성온천역 큰방😎', '✔ 위치 : 금성초등학교 앞
+
+✔ 구조 : 분리형원룸
+
+✔ 옵션 : TV, 세탁기, 냉장고, 인덕션, 에어컨
+ 전자레인지, 책상, 책장, 침대, 옷장 등
+
+✔ 난방 : 도시가스 개별난방
+
+✔ 설명 : 채광이 좋은 깔끔한 신축풀옵션입니다.
+               주변에 편의점과 우체국이 있어 편리합니다.
+               전용주차공간이 있어 차량있으신 분들은 OK!
+
+✔ 보증금 및 월세는 조절가능합니다
+
+✔ 현재 공실이라 바로 입주 가능해요
+
+✔ 총 주차대수 7대.',now(),now(),36.3898057,127.3492436,'대전시 유성구 궁동',5,'쓰리룸','월세',date('2022-11-19'),'3020012200',2,1);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (9, 3,'c:/uploads/room_7.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (10, 3,'c:/uploads/room_8.jpeg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (11, 3,'c:/uploads/room_9.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (12, 3,'c:/uploads/임대인_양도_동의서.pdf','application/pdf', 1);
+
+
+INSERT INTO transfer_boards(tb_id, transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
+    VALUE (4, 1,null,0,'🧡💛유성온천역 신축 단기 1층 즉시입주가능', '✔ 위치 : 금성초등학교 앞
+
+✔ 구조 : 분리형원룸
+
+✔ 옵션 : TV, 세탁기, 냉장고, 인덕션, 에어컨
+ 전자레인지, 책상, 책장, 침대, 옷장 등
+
+✔ 난방 : 도시가스 개별난방
+
+✔ 설명 : 채광이 좋은 깔끔한 신축풀옵션입니다.
+               주변에 편의점과 우체국이 있어 편리합니다.
+               전용주차공간이 있어 차량있으신 분들은 OK!
+
+✔ 보증금 및 월세는 조절가능합니다
+
+✔ 현재 공실이라 바로 입주 가능해요
+
+✔ 총 주차대수 7대.',now(),now(),36.3830031,127.3201105,'대전시 유성구 궁동',5,'아파트','전세',date('2022-11-19'),'3020012200',15,1);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (13, 4,'c:/uploads/room_10.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (14, 4,'c:/uploads/room_11.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (15, 4,'c:/uploads/room_12.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (16, 4,'c:/uploads/임대인_양도_동의서.pdf','application/pdf', 1);
+
+
+
+
+
+INSERT INTO transfer_boards(tb_id, transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
+    VALUE (5, 1,null,0,'🟩🟩깔끔,반지하,분리형 넓은 원룸🟩🟩', '✔ 애경연구소 인근에 위치해 있어요
+
+✔ 옵션 : TV, 세탁기, 냉장고, 인덕션, 에어컨
+     전자렌지,침대,책상,책장,옷장,신발장
+     등등이 있어요
+
+✔ 난방 : 도시가스 개별난방
+
+✔일반적인 신축원룸보다 넓은 방이에요~
+    주차장 완비되어 있고 실물로 볼시 더 좋은 방이에요!
+    바로앞에 공원이 있고, 인근에 교통 먹거리 편의시설이
+    고루 분포 되어 있어요
+
+✔ 실매물 확인하였고, 즉시 입주 가능해요^^
+
+✔ 건물 총 주차 대 수는 8대 입니다.',now(),now(),36.3872251,127.3488505,'대전시 유성구 궁동',5,'아파트','전세',date('2022-11-19'),'3020012200',2,1);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (17, 5,'c:/uploads/room_13.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (18, 5,'c:/uploads/room_14.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (19, 5,'c:/uploads/room_15.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (20, 5,'c:/uploads/임대인_양도_동의서.pdf','application/pdf', 1);
+
+
+
+
+/*
+
+ tb_id : 6
+ 1701-1
+
+ ✔ 애경연구소 인근에 위치해 있어요
+
+✔ 옵션 : TV, 세탁기, 냉장고, 인덕션, 에어컨
+     전자렌지,침대,책상,책장,옷장,신발장
+     등등이 있어요
+
+✔ 난방 : 도시가스 개별난방
+
+✔일반적인 신축원룸보다 넓은 방이에요~
+    주차장 완비되어 있고 실물로 볼시 더 좋은 방이에요!
+    바로앞에 공원이 있고, 인근에 교통 먹거리 편의시설이
+    고루 분포 되어 있어요
+
+✔ 실매물 확인하였고, 즉시 입주 가능해요^^
+
+✔ 건물 총 주차 대 수는 8대 입니다.
+
+INSERT INTO transfer_boards(tb_id, transferer_id,transferee_id,transfer_status,tb_title,tb_content,tb_create_time,tb_update_time,room_latitude,room_longitude, room_address, room_floor, room_type, contract_type,contract_end_time,dongCode,like_count,approving_status)
+    VALUE (5, 1,null,0,'',now(),now(),36.3872251,127.3488505,'대전시 유성구 궁동',5,'아파트','전세',date('2022-11-19'),'3020012200',2,1);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (17, 5,'c:/uploads/room_13.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (18, 5,'c:/uploads/room_14.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (19, 5,'c:/uploads/room_15.jpg','image/jpeg', 0);
+
+INSERT INTO transfer_board_files(file_id, tb_id,file_path, file_content_type,is_attachment)
+    VALUE (20, 5,'c:/uploads/임대인_양도_동의서.pdf','application/pdf', 1);
+ */
+
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`transfer_board_files`
 -- -----------------------------------------------------
