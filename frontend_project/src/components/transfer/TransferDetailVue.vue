@@ -4,15 +4,21 @@
             <div class="content">
             <div id="img-carousel" class="img-list carousel slide" style="margin-bottom : 15px;" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="@/assets/img/img1.jpg" class="d-block w-100" alt="">
-                </div>
-                <div class="carousel-item">
-                    <img src="@/assets/img/img2.jpg" class="d-block w-100" alt="">
-                </div>
-                <div class="carousel-item">
-                    <img src="@/assets/img/img3.jpg" class="d-block w-100" alt="">
-                </div>
+                    <div v-for="item in boardInfo.imgFileList" :key="item.fileId">
+                        <div class="carousel-item active" >
+                            <img :src="'http://localhost:8080/transfer-board/file/' + item.fileId" class="d-block w-100" alt="">
+                        </div>
+                    </div>
+
+                    <!-- <div class="carousel-item active">
+                        <img src="@/assets/img/img1.jpg" class="d-block w-100" alt="">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="@/assets/img/img2.jpg" class="d-block w-100" alt="">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="@/assets/img/img3.jpg" class="d-block w-100" alt="">
+                    </div> -->
                 </div>
                 
                 <button class="carousel-control-prev" type="button" data-bs-target="#img-carousel" data-bs-slide="prev">
