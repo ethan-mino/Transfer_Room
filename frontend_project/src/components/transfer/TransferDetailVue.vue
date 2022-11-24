@@ -4,21 +4,11 @@
             <div class="content">
             <div id="img-carousel" class="img-list carousel slide" style="margin-bottom : 15px;" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div v-for="item in boardInfo.imgFileList" :key="item.fileId">
-                        <div class="carousel-item active" >
+                    <div v-for="(item, idx) in boardInfo.imgFileList" :key="idx">
+                        <div class="carousel-item" :class="{active : (idx == 0)}">
                             <img :src="'http://localhost:8080/transfer-board/file/' + item.fileId" class="d-block w-100" alt="">
                         </div>
                     </div>
-
-                    <!-- <div class="carousel-item active">
-                        <img src="@/assets/img/img1.jpg" class="d-block w-100" alt="">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="@/assets/img/img2.jpg" class="d-block w-100" alt="">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="@/assets/img/img3.jpg" class="d-block w-100" alt="">
-                    </div> -->
                 </div>
                 
                 <button class="carousel-control-prev" type="button" data-bs-target="#img-carousel" data-bs-slide="prev">
@@ -50,9 +40,9 @@
                 </div>
                 
                 
-                <pre class = "tb_content" style="font-size : 14px; padding : 20px 0px; border-bottom: 1px solid lightgray;">
-                    {{boardInfo.transferContent}}
-                </pre>
+                <div class="tb_content" style="font-size : 14px; padding : 20px 0px; border-bottom: 1px solid lightgray;" v-html="boardInfo.transferContent.replace(/\n/gi, '</br>')">
+                    <!-- {{boardInfo.transferContent.replace(/\n/gi, '</br>')}} -->
+                </div>
                 </div>
             </div>
             
