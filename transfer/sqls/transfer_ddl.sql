@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`users` (
   `user_update_time` TIMESTAMP NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE)
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`user_roles` (
     REFERENCES `transfer_dev`.`roles` (`role_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE=InnoDB;
 
 
 -- -----------------------------------------------------
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`notices` (
     REFERENCES `transfer_dev`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -91,8 +91,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`community_categories` (
   `cc_id` INT NOT NULL AUTO_INCREMENT,
   `cc_name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`cc_id`))
-ENGINE = InnoDB;
-
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
 -- Table `transfer_dev`.`community_boards`
@@ -118,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`community_boards` (
     REFERENCES `transfer_dev`.`community_categories` (`cc_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -137,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`comments` (
     REFERENCES `transfer_dev`.`community_boards` (`cb_no`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -149,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`regions` (
   `gugunName` VARCHAR(30) NULL,
   `dongName` VARCHAR(30) NULL,
   PRIMARY KEY (`dongCode`))
-ENGINE = InnoDB;
+ENGINE=InnoDB;
 
 
 -- -----------------------------------------------------
@@ -193,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_boards` (
     REFERENCES `transfer_dev`.`regions` (`dongCode`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -211,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `transfer_dev`.`transfer_board_files` (
     REFERENCES `transfer_dev`.`transfer_boards` (`tb_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
