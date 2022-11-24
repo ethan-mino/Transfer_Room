@@ -24,6 +24,14 @@ async function getTransferBoardById(transferBoardId, success, fail) {
     .catch(fail);
 }
 
+//양도요청 - 해당 게시글 번호로 요청.
+async function transferRequest(transferBoardId, success, fail) { 
+  api.defaults.headers["Authorization"] =
+    sessionStorage.getItem("access-token");
+  
+  await api.post(`/transfer-board/${transferBoardId}`).then(success).catch(fail);
+}
+
 
 //파일 업로드
 async function setTransferBoard(multipartData, success, fail) {
@@ -33,4 +41,4 @@ async function setTransferBoard(multipartData, success, fail) {
   await tbApi.post(`/`, multipartData).then(success).catch(fail);
 }
 
-export { getTransferBoardList, setTransferBoard, getTransferBoardById };
+export { getTransferBoardList, setTransferBoard, getTransferBoardById, transferRequest };

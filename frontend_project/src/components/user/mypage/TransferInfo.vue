@@ -2,8 +2,9 @@
   <div class="contents">
     <table class="list-table">
       <colgroup>
+        <col width="10%" />
+        <col width="60%" />
         <col width="15%" />
-        <col width="70%" />
         <col width="15%" />
       </colgroup>
 
@@ -12,6 +13,7 @@
           <th>번호</th>
           <th>제목</th>
           <th>등록일</th>
+          <th>상태</th>
         </tr>
       </thead>
 
@@ -28,6 +30,7 @@
             <a href="#">{{ item.transferTitle }}</a>
           </td>
           <td>{{ item.contractEndTime }}</td>
+          <td>{{ item.transferStatus }}</td>
         </tr>
       </tbody>
     </table>
@@ -68,6 +71,12 @@ export default {
       this.selectTransferBoardId(e);
       this.$router.push({ name: "transferDetail" });
     },
+
+    //TODO 조건문 필요
+    // transferStatus 상태에 따라서 거래 상태를 진행, 수락, 완료 3상태로 나눔
+    // "진행중"의 경우, transferStatus가 0(미완료)이면서 transfereeId가 0(신청자 없음) 일 경우
+    // "수락" 버튼의 경우, transferStatus가 0(미완료)이면서 transfereeId가 0이 아닌 경우.
+    // "완료"의 경우, transferStatus가 1(완료)인 경우.
   },
 };
 </script>

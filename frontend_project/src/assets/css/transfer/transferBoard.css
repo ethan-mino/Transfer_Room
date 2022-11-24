@@ -56,6 +56,13 @@
   border: 0px;
   background-color: rgb(26, 90, 232);
 }
+.btn-wrap button.list {
+  color: rgb(255, 255, 255);
+  font-size: 15px;
+  border: 0px;
+  background-color: rgb(26, 232, 71);
+  margin-right: 10px;
+}
 
 .btn-wrap button {
   width: 160px;

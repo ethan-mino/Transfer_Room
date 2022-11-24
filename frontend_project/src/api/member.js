@@ -16,6 +16,13 @@ async function getUser(userId, success, fail) {
   await api.get(`/user/${userId}`).then(success).catch(fail);
 }
 
+//현재 유저 정보 받아오기.
+async function getCurrnetUser(success, fail) {
+  api.defaults.headers["Authorization"] =
+    sessionStorage.getItem("access-token");
+  await api.get('/user').then(success).catch(fail);
+}
+
 //유저 양도 내역 조회
 async function getMemberTransferInfo(success, fail) { 
   let decodeToken = jwtDecode(sessionStorage.getItem("access-token"))
@@ -23,6 +30,6 @@ async function getMemberTransferInfo(success, fail) {
   await api.get(`/transfer-board/${userEmail}`).then(success).catch(fail);
 }
 
-export { login, signup, getUser, getMemberTransferInfo};
+export { login, signup, getUser, getMemberTransferInfo, getCurrnetUser};
 
 // async function signup(signupInfo, success, fail) {}
