@@ -9,7 +9,7 @@
             <input type="hidden" id="aptCode" value="${tradingData.aptCode}"> -->
       <div @click="transferBoardSelect(item.transferBoardId)">
         <span class="img__span">
-          <img src="@/assets/img/apartment.jpg" />
+          <img :src="'http://localhost:8080/transfer-board/file/' + item.imgFileList[0].fileId" />
         </span>
         <br />
         <span >
