@@ -184,7 +184,7 @@
                   placeholder="예) 대전광역시 유성구 온천1동 124 삼성화재 유성연수원 "
                 />
                 <div class="address__btn">
-                  <span><button @click="insertFormData">확인</button></span>
+                  <span><button @click="insertFormData" style = "font-size:15px">확인</button></span>
                 </div>
               </div>
             </td>
@@ -329,6 +329,33 @@
       </div>
     </div>
 
+
+      <div id="inspire">
+        <div id="input-usage">
+          <div>
+            <div row wrap>
+              <div xs12>
+                <div class="dropzone" id="dropzone" ref="dropzone">
+                  <div class="text-container">
+                    <span @click="clickHandler">{{ text }}</span>
+                    <input ref="fileInput" v-show="false" type="file"/>
+                  </div>    
+                </div>
+              </div>
+              <div xs12>
+                <div row>
+                  <div></div>
+                </div>
+              </div>
+              <div xs12 style="text-align: center;">
+                <span>{{ attachments.length }} files</span>
+                <span>{{ message }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div class="agree-wrap">
       <label class="check-label">
         <input type="checkbox" />
@@ -378,7 +405,9 @@ export default {
       files: [], //업로드용 파일
       filesPreview: [],
       uploadImageIndex: 0,
-
+      text: '임대인이 양도에 동의했음을 증명할 수 있는 파일을 업로드해주세요.',
+      attachments: [],
+      message: '',
       files2: [],
     };
   },
@@ -399,6 +428,21 @@ export default {
     });
     document.head.appendChild(script);
     // }
+
+    const events = ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop']
+    events.forEach( function( evt ) {
+      this.$refs.dropzone.addEventListener(evt, function(e){ 
+        e.preventDefault();
+        e.stopPropagation();
+      }.bind(this), false);
+    }.bind(this));
+    
+    this.$refs.dropzone.addEventListener('drop', function(e){
+      for( let i = 0; i < e.dataTransfer.files.length; i++ ){
+        console.log(e.dataTransfer)
+        this.attachments.push( e.dataTransfer.files[i] );
+      }
+    }.bind(this));
   },
   computed: {
     ...mapState(regionStore, ["sidos", "guguns", "dongs"]),
@@ -609,10 +653,31 @@ export default {
         }
       });
     },
+    clickHandler() {
+      this.$refs.fileInput.click()
+    },
+    async onSubmit() {
+      // const formData = new FormData();
+      // formData.append("file", this.attachments[0]);
+			// var config = { 
+			// 	headers: {
+			// 		'Content-Type': 'multipart/form-data',
+			// 		'Access-Control-Allow-Origin': '*',
+			// 		'Access-Control-Allow-Methods': 'GET, POST'
+			// 	}
+			// }
+      try {
+        // await axios.post("http://167.71.6.102:5000/uploads", formData, config)
+        //   .then(response => this.message = response)
+      } catch (err) {
+        this.message = err
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
 @import "@/assets/css/include/imageUploader.css";
+@import "@/assets/css/include/dragAndDrop.css";
 </style>
