@@ -7,7 +7,6 @@
 
           <div id="deal-input">
             <div class="row col-md-12 justify-content-center mb-2">
-              
               <div class="form-group col-md-2">
                 <select
                   class="form-select"
@@ -41,7 +40,12 @@
                 </select>
               </div>
               <div class="form-group col-md-2">
-                <select class="form-select" id="dong" v-model="dongCode" @change="dongChange($event)">
+                <select
+                  class="form-select"
+                  id="dong"
+                  v-model="dongCode"
+                  @change="dongChange($event)"
+                >
                   <option
                     v-for="(item, index) in dongs"
                     :value="item.value"
@@ -68,33 +72,24 @@
         <section class="board-section">
           <h5 class="title">좋아요 많이 받은 양도 게시물</h5>
           <div class="cards">
-            <div class="card">
+            <div class="card" v-for="(item, index) in likeSelect" :key="index">
               <img
                 class="card-img-top"
-                src="@/assets/img/temp.jpg"
+                :src="
+                  'http://localhost:8080/transfer-board/file/' +
+                  item.imgFileList[0].fileId
+                "
                 alt="Card image cap"
               />
               <div class="card-body">
-                <p class="card-text">서율툭별시 종로구 청운동</p>
+                <p class="card-text">{{ item.roomAddress }}</p>
 
-                <h5 class="card-title">세종하우스 105호</h5>
-                <p class="card-text">6층, 원룸, 월세 10만원, 관리비 5만원</p>
-                <p class="card-text">2022.06.10까지 계약</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <img
-                class="card-img-top"
-                src="@/assets/img/temp.jpg"
-                alt="Card image cap"
-              />
-              <div class="card-body">
-                <p class="card-text">서율툭별시 종로구 청운동</p>
-
-                <h5 class="card-title">세종하우스 105호</h5>
-                <p class="card-text">6층, 원룸, 월세 10만원, 관리비 5만원</p>
-                <p class="card-text">2022.06.10까지 계약</p>
+                <h5 class="card-title">{{ item.transferTitle }}</h5>
+                <p class="card-text">
+                  {{ item.roomFloor }}층, {{ item.roomType }},
+                  {{ item.contractType }}
+                </p>
+                <p class="card-text">{{ item.contractEndTime }}까지 계약</p>
               </div>
             </div>
           </div>
@@ -103,18 +98,25 @@
         <section class="board-section">
           <h5 class="title">최근 올라온 양도 게시물</h5>
           <div class="cards">
-            <div class="card">
+            <div class="card" v-for="(item, index) in timeSelect" :key="index">
               <img
                 class="card-img-top"
-                src="@/assets/img/temp.jpg"
+                :src="
+                  'http://localhost:8080/transfer-board/file/' +
+                  item.imgFileList[0].fileId
+                "
                 alt="Card image cap"
               />
               <div class="card-body">
-                <p class="card-text">서율툭별시 종로구 청운동</p>
+                <p class="card-text">{{ item.roomAddress }}</p>
 
-                <h5 class="card-title">세종하우스 105호</h5>
-                <p class="card-text">6층, 원룸, 월세 10만원, 관리비 5만원</p>
-                <p class="card-text">2022.06.10까지 계약</p>
+                <h5 class="card-title">{{ item.transferTitle }}</h5>
+                <p class="card-text">
+                  { item.roomFloor }}층, {{ item.roomType }},{{
+                    item.contractType
+                  }}
+                </p>
+                <p class="card-text">{{ item.contractEndTime }}까지 계약</p>
               </div>
             </div>
           </div>
@@ -126,6 +128,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { mostLikeBoard, lastTimeBoard } from "@/api/transferBoard";
 
 const regionStore = "regionStore";
 
@@ -136,32 +139,71 @@ export default {
       sidoCode: null,
       gugunCode: null,
       dongCode: null,
+
+      //좋아요 순 데이터
+      likeSelect: [],
+      //시간 순 데이터.
+      timeSelect: [],
     };
   },
   computed: {
-    ...mapState(regionStore, ["sidos", "guguns", "dongs","selectsidoName","selectgugunName","selectdongName"]),
+    ...mapState(regionStore, [
+      "sidos",
+      "guguns",
+      "dongs",
+      "selectsidoName",
+      "selectgugunName",
+      "selectdongName",
+    ]),
     // ...mapGetters(regionStore, [
     //   "sidoValueList",
     //   "gugunValueList",
     //   "dongValueList",
     // ]),
   },
-  created() {
+  created: async function () {
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
     this.CLEAR_DONG_LIST();
     this.getSido();
     console.log(this.sidos);
+
+    //좋아요 순으로 5개 가져오기.
+    await mostLikeBoard(
+      ({ data }) => {
+        console.log(data);
+        this.likeSelect = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    //시간순으로 5개 가져오기.
+    await lastTimeBoard(
+      ({ data }) => {
+        console.log(data);
+        this.timeSelect = data.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   },
   methods: {
-    ...mapActions(regionStore, ["getSido", "getGugun", "getDong","setSelectDongCode"]),
+    ...mapActions(regionStore, [
+      "getSido",
+      "getGugun",
+      "getDong",
+      "setSelectDongCode",
+    ]),
     ...mapMutations(regionStore, [
       "CLEAR_SIDO_LIST",
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
     gugunList: function (e) {
-      console.log(e.target)
+      console.log(e.target);
       this.CLEAR_GUGUN_LIST();
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
@@ -172,26 +214,21 @@ export default {
       this.dongCode = null;
       if (this.gugunCode) this.getDong(this.gugunCode);
     },
-    dongChange: function (e) { 
+    dongChange: function (e) {
       console.log(e.target);
     },
     searchBtn: function () {
-
       //시도 구군 동까지 전부 입력이 되어있어야 됨.
       if (this.sidoCode === null) {
         alert("시도를 선택해주세요");
-      }
-      else if (this.gugunCode === null) {
+      } else if (this.gugunCode === null) {
         alert("구군을 선택해주세요");
-      }
-      else if (this.dongCode === null) {
+      } else if (this.dongCode === null) {
         alert("동을 선택해주세요");
-      }
-      else { 
+      } else {
         this.setSelectDongCode(this.dongCode); //뷰엑스에 동코드 저장.
         this.$router.push({ name: "transferPage" });
       }
-      
     },
   },
 };

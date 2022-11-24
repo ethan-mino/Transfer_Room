@@ -14,7 +14,7 @@ async function getTransferBoardList(dongCode, success, fail) {
     .catch(fail);
 }
 
-async function getTransferBoardById(transferBoardId, success, fail) { 
+async function getTransferBoardById(transferBoardId, success, fail) {
   api.defaults.headers["Authorization"] =
     sessionStorage.getItem("access-token");
   console.log("token : " + sessionStorage.getItem("access-token"));
@@ -25,13 +25,37 @@ async function getTransferBoardById(transferBoardId, success, fail) {
 }
 
 //양도요청 - 해당 게시글 번호로 요청.
-async function transferRequest(transferBoardId, success, fail) { 
+async function transferRequest(transferBoardId, success, fail) {
   api.defaults.headers["Authorization"] =
     sessionStorage.getItem("access-token");
-  
-  await api.post(`/transfer-board/${transferBoardId}`).then(success).catch(fail);
+
+  await api
+    .post(`/transfer-board/${transferBoardId}`)
+    .then(success)
+    .catch(fail);
 }
 
+//좋아요 순으로 5개 조회
+async function mostLikeBoard(success, fail) {
+  api.defaults.headers["Authorization"] =
+    sessionStorage.getItem("access-token");
+
+  await api
+    .get(`transfer-board/most-likes?numOfRows=5&type=likes`)
+    .then(success)
+    .catch(fail);
+}
+
+//시간 순으로 5개 조회
+async function lastTimeBoard(success, fail) {
+  api.defaults.headers["Authorization"] =
+    sessionStorage.getItem("access-token");
+
+  await api
+    .get(`transfer-board/most-likes?numOfRows=5`)
+    .then(success)
+    .catch(fail);
+}
 
 //파일 업로드
 async function setTransferBoard(multipartData, success, fail) {
@@ -41,4 +65,11 @@ async function setTransferBoard(multipartData, success, fail) {
   await tbApi.post(`/`, multipartData).then(success).catch(fail);
 }
 
-export { getTransferBoardList, setTransferBoard, getTransferBoardById, transferRequest };
+export {
+  getTransferBoardList,
+  setTransferBoard,
+  getTransferBoardById,
+  transferRequest,
+  mostLikeBoard,
+  lastTimeBoard,
+};

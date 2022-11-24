@@ -64,12 +64,13 @@ public class TransferBoardController {
 
     @GetMapping("/most-likes")
     public ResponseEntity<?> MostLikesTransferBoardDetails(
-            @RequestParam(value = "numOfRows", required = true) int numOfRows){
+            @RequestParam(value = "numOfRows", required = true) int numOfRows,
+            @RequestParam(value = "type", required = false) String type){
 
         TransferBoardSearchFilter searchFilter = new TransferBoardSearchFilter();
         searchFilter.setApprovingStatus(TransferBoardStatus.APPROVED.getValue());
         searchFilter.setNumOfRows(numOfRows);
-        searchFilter.setOrder("likes");
+        searchFilter.setOrder(type);
 
         // TODO : 본인의 양도 게시글이 아니라면 조회할 수 없도록 해야함
         List<TransferBoardDetails> transferBoardDetails = transferBoardService.findTransferBoard(searchFilter);
@@ -78,22 +79,6 @@ public class TransferBoardController {
         return ResponseEntity.ok(apiResponse);
     }
 
-    //시간순으로 정렬
-    @GetMapping("/last-time")
-    public ResponseEntity<?> LastTimeTransferBoardDetails(
-            @RequestParam(value = "numOfRows", required = true) int numOfRows){
-
-        TransferBoardSearchFilter searchFilter = new TransferBoardSearchFilter();
-        searchFilter.setApprovingStatus(TransferBoardStatus.APPROVED.getValue());
-        searchFilter.setNumOfRows(numOfRows);
-        searchFilter.setOrder("likes");
-
-        // TODO : 본인의 양도 게시글이 아니라면 조회할 수 없도록 해야함
-        List<TransferBoardDetails> transferBoardDetails = transferBoardService.findTransferBoard(searchFilter);
-        ApiResponse<List<TransferBoardDetails>> apiResponse = new ApiResponse<>();
-        apiResponse.setData(transferBoardDetails);
-        return ResponseEntity.ok(apiResponse);
-    }
 
     @GetMapping("/most-likes/{dongCode}")
     public ResponseEntity<?> MostLikesTransferBoardDetailsByDongCode(

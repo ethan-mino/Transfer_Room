@@ -23,5 +23,6 @@ public class TransferBoardSearchFilter {
         this.transferBoardId = -1;
         this.numOfRows = -1;
         this.myPageStatus = -1;
+        this.order = null;
     }
 }

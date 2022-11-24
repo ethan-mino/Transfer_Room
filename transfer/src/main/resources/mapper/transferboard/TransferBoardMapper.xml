@@ -40,7 +40,7 @@
             JOIN regions as dc ON tb.dongCode = dc.dongCode
             JOIN users transferer ON tb.transferer_id = transferer.user_id
             LEFT OUTER JOIN users transferee ON tb.transferee_id = transferee.user_id
-        <if test="myPageStatus == -1">WHERE transfer_status = 1</if>
+        <if test="myPageStatus == -1">WHERE transfer_status = 0</if>
         <if test="myPageStatus != -1">WHERE transfer_status = 1 or transfer_status = 0</if>
         <if test="approvingStatus != -1"> AND approving_status = #{approvingStatus}</if>
         <if test='userEmail != null and !userEmail.equals("")'>
