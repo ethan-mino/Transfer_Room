@@ -23,14 +23,34 @@
           bgcolor="white"
           v-for="(item, index) in userTransferBoard"
           :key="index"
-          @click="boardBtn(item.transferBoardId)"
         >
           <td>{{ index + 1 }}</td>
           <td>
-            <a href="#">{{ item.transferTitle }}</a>
+            <a @click="boardBtn(item.transferBoardId)">{{
+              item.transferTitle
+            }}</a>
           </td>
           <td>{{ item.contractEndTime }}</td>
-          <td>{{ item.transferStatus }}</td>
+          <!-- transferStatus가 0(미완료)이면서 transfereeId가 0(신청자 없음) 일 경우 -->
+          <td
+            class="progress__text"
+            v-if="item.transferStatus === 0 && item.transfereeId === 0"
+          >
+            진행중
+          </td>
+          <!-- "수락" 버튼의 경우, transferStatus가 0(미완료)이면서 transfereeId가 0이 아닌 경우. -->
+          <td v-if="item.transferStatus === 0 && item.transfereeId !== 0">
+            <button
+              class="accept__btn"
+              @click="acceptBtn(item.transferBoardId)"
+            >
+              수락
+            </button>
+          </td>
+          <!-- "완료"의 경우, transferStatus가 1(완료)인 경우. -->
+          <td class="completion__text" v-if="item.transferStatus === 1">
+            완료
+          </td>
         </tr>
       </tbody>
     </table>
@@ -47,7 +67,7 @@ export default {
   name: "TransferInfo",
   data() {
     return {
-      userTransferBoard: {},
+      userTransferBoard: [],
     };
   },
   created: async function () {
@@ -70,6 +90,15 @@ export default {
     boardBtn: function (e) {
       this.selectTransferBoardId(e);
       this.$router.push({ name: "transferDetail" });
+    },
+    acceptBtn: function (id) {
+      console.log(id);
+
+      console.log(this.userTransferBoard);
+      console.log(this.userTransferBoard[0].transferStatus);
+      console.log(this.userTransferBoard[0].transferStatus === 0);
+      console.log(this.userTransferBoard[0].transfereeId);
+      console.log(this.userTransferBoard[0].transfereeId === 0);
     },
 
     //TODO 조건문 필요
@@ -262,5 +291,16 @@ h1.container-title {
 .list-table td {
   border-bottom: 1px solid #444444;
   padding: 20px 5px;
+}
+.progress__text {
+  color: #e50c0c;
+}
+.completion__text {
+  color: #969696;
+}
+
+.accept__btn {
+  color: green;
+  border: 1px, black;
 }
 </style>
