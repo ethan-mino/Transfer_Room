@@ -73,23 +73,25 @@
           <h5 class="title">좋아요 많이 받은 양도 게시물</h5>
           <div class="cards">
             <div class="card" v-for="(item, index) in likeSelect" :key="index">
-              <img
-                class="card-img-top"
-                :src="
-                  'http://localhost:8080/transfer-board/file/' +
-                  item.imgFileList[0].fileId
-                "
-                alt="Card image cap"
-              />
-              <div class="card-body">
-                <p class="card-text">{{ item.roomAddress }}</p>
+              <div @click="moveBoard(item.transferBoardId)">
+                <img
+                  class="card-img-top"
+                  :src="
+                    'http://localhost:8080/transfer-board/file/' +
+                    item.imgFileList[0].fileId
+                  "
+                  alt="Card image cap"
+                />
+                <div class="card-body">
+                  <p class="card-text">{{ item.roomAddress }}</p>
 
-                <h5 class="card-title">{{ item.transferTitle }}</h5>
-                <p class="card-text">
-                  {{ item.roomFloor }}층, {{ item.roomType }},
-                  {{ item.contractType }}
-                </p>
-                <p class="card-text">{{ item.contractEndTime }}까지 계약</p>
+                  <h5 class="card-title">{{ item.transferTitle }}</h5>
+                  <p class="card-text">
+                    {{ item.roomFloor }}층, {{ item.roomType }},
+                    {{ item.contractType }}
+                  </p>
+                  <p class="card-text">{{ item.contractEndTime }}까지 계약</p>
+                </div>
               </div>
             </div>
           </div>
@@ -99,24 +101,26 @@
           <h5 class="title">최근 올라온 양도 게시물</h5>
           <div class="cards">
             <div class="card" v-for="(item, index) in timeSelect" :key="index">
-              <img
-                class="card-img-top"
-                :src="
-                  'http://localhost:8080/transfer-board/file/' +
-                  item.imgFileList[0].fileId
-                "
-                alt="Card image cap"
-              />
-              <div class="card-body">
-                <p class="card-text">{{ item.roomAddress }}</p>
+              <div @click="moveBoard(item.transferBoardId)">
+                <img
+                  class="card-img-top"
+                  :src="
+                    'http://localhost:8080/transfer-board/file/' +
+                    item.imgFileList[0].fileId
+                  "
+                  alt="Card image cap"
+                />
+                <div class="card-body">
+                  <p class="card-text">{{ item.roomAddress }}</p>
 
-                <h5 class="card-title">{{ item.transferTitle }}</h5>
-                <p class="card-text">
-                  { item.roomFloor }}층, {{ item.roomType }},{{
-                    item.contractType
-                  }}
-                </p>
-                <p class="card-text">{{ item.contractEndTime }}까지 계약</p>
+                  <h5 class="card-title">{{ item.transferTitle }}</h5>
+                  <p class="card-text">
+                    { item.roomFloor }}층, {{ item.roomType }},{{
+                      item.contractType
+                    }}
+                  </p>
+                  <p class="card-text">{{ item.contractEndTime }}까지 계약</p>
+                </div>
               </div>
             </div>
           </div>
@@ -131,6 +135,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 import { mostLikeBoard, lastTimeBoard } from "@/api/transferBoard";
 
 const regionStore = "regionStore";
+const transferStore = "transferBoardStore";
 
 export default {
   name: "MainVue",
@@ -155,6 +160,7 @@ export default {
       "selectgugunName",
       "selectdongName",
     ]),
+    ...mapState(transferStore, ["selectTransferBoardId"]),
     // ...mapGetters(regionStore, [
     //   "sidoValueList",
     //   "gugunValueList",
@@ -202,6 +208,7 @@ export default {
       "CLEAR_GUGUN_LIST",
       "CLEAR_DONG_LIST",
     ]),
+    ...mapActions(transferStore, ["setSelectBoardId"]),
     gugunList: function (e) {
       console.log(e.target);
       this.CLEAR_GUGUN_LIST();
@@ -229,6 +236,11 @@ export default {
         this.setSelectDongCode(this.dongCode); //뷰엑스에 동코드 저장.
         this.$router.push({ name: "transferPage" });
       }
+    },
+
+    moveBoard: function (id) {
+      this.setSelectBoardId(id);
+      this.$router.push({ name: "transferDetail" });
     },
   },
 };
