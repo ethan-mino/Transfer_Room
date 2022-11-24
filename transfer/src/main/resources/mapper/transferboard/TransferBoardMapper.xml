@@ -43,7 +43,7 @@
         WHERE transfer_status = 0
         <if test="approvingStatus != -1"> AND approving_status = #{approvingStatus}</if>
         <if test='userEmail != null and !userEmail.equals("")'>
-          AND (transferer.user_email = #{userEmail} OR transferee.user_email = ${userEmail})
+          AND (transferer.user_email = #{userEmail} OR transferee.user_email = #{userEmail})
         </if>
         <if test="transferBoardId != -1"> AND tb_id = #{transferBoardId}</if>
         <if test='dongCode != null and !dongCode.equals("")'> AND dc.dongCode = #{dongCode}</if>

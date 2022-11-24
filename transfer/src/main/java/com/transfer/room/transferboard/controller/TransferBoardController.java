@@ -50,7 +50,7 @@ public class TransferBoardController {
     @GetMapping("/{userEmail}")
     public ResponseEntity<?> transferBoardDetailsByUserEmail
             (@PathVariable("userEmail") String userEmail){
-
+        System.out.println("test : " + userEmail);
         TransferBoardSearchFilter searchFilter = new TransferBoardSearchFilter();
         searchFilter.setUserEmail(userEmail);
 

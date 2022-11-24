@@ -1,4 +1,5 @@
 import { apiInstance } from "./index.js";
+import jwtDecode from "jwt-decode";
 
 const api = apiInstance();
 
@@ -15,6 +16,13 @@ async function getUser(userId, success, fail) {
   await api.get(`/user/${userId}`).then(success).catch(fail);
 }
 
-export { login, signup, getUser};
+//유저 양도 내역 조회
+async function getMemberTransferInfo(success, fail) { 
+  let decodeToken = jwtDecode(sessionStorage.getItem("access-token"))
+  let userEmail = decodeToken.sub;
+  await api.get(`/transfer-board/${userEmail}`).then(success).catch(fail);
+}
+
+export { login, signup, getUser, getMemberTransferInfo};
 
 // async function signup(signupInfo, success, fail) {}

@@ -9,43 +9,13 @@
                             <div class="top"></div>
                             <div class="bottom"></div>
                         </div>
-                        <li><a>내 정보</a></li>
-                        <li><a>1:1 문의</a></li>
-                        <li><a>양도 내역</a></li>
-                        <li><a>커뮤니티 게시글 내역</a></li>
+                        <li><a @click="myInfo">내 정보</a></li>
+                        <li><a @click="questionInfo">1:1 문의</a></li>
+                        <li><a @click="transferInfo">양도 내역</a></li>
+                        <li><a @click="communtityInfo">커뮤니티 게시글 내역</a></li>
                     </ul>
                 </div>
-    
-                <div class="contents">
-                    <table class="list-table">
-                        <colgroup> 
-                            <col width="15%" /> 
-                            <col width="70%" /> 
-                            <col width="15%" />
-                        </colgroup>
-
-                        <thead>
-                            <tr align="center" bgcolor="white">
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>등록일</th>
-                            </tr>
-                        </thead>
-            
-                        <tbody>
-                            <tr align="center" bgcolor="white">
-                                <td>200</td>
-                                <td><a href="#">충남대 근처 10분거리, 혼자 살기 좋은 집 양도합니다.</a></td>
-                                <td>2022.11.24</td>
-                            </tr>
-                            <tr align="center" bgcolor="white">
-                                <td>201</td>
-                                <td><a href="#">유성온천역 근처 5분 거리, 쾌적한 집 양도합니다!!</a></td>
-                                <td>2022.11.24</td>
-                            </tr>
-                        </tbody>
-                    </table> 
-                </div>
+                <router-view></router-view>
             </div>
         </div>
     </div>
@@ -54,9 +24,15 @@
 
 <script>
 import $ from 'jquery'
+// import TransferInfo from "@/components/user/mypage/TransferInfo";
+// import MyInfo from "@/components/user/mypage/MyInfo";
 
 export default {
     name: "MyPageVue",
+    // components: {
+    //     TransferInfo,
+    //     MyInfo,
+    // },
     created : function() {
 
     },
@@ -77,8 +53,22 @@ export default {
                 "width": activeWidthVerticalWidth + "px"
             });
         },
+        myInfo: function() { 
+            this.$router.push({ name: "myInfo" });
+        },
+        questionInfo: function () { 
+            // this.$router.push({ name: "transferInfo" });
+        },
+        transferInfo: function () { 
+            this.$router.push({ name: "transferInfo" });
+        },
+        communtityInfo: function () { 
+            // this.$router.push({ name: "transferInfo" });
+        }
+
     },
-    mounted : function (){
+    mounted: function () {
+        this.$router.push({ name: "transferInfo" });
         const firstLiElem = $('#accordian ul li:nth-child(4)')
         this.activeTab(firstLiElem);
 
