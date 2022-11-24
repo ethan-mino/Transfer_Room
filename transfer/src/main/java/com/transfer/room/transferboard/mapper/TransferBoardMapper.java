@@ -20,6 +20,6 @@ public interface TransferBoardMapper {
 
     /*수정*/
     int updateTransferBoard(TransferBoardEntity transferBoardEntity) throws Exception; //게시글 수정 메서드
-    int updateTransferBoardTransferee(@Param("transfereeId")int transfereeId,int transferBoardId) throws Exception;
+    int updateTransferBoardTransferee(@Param("transferBoardId")int transferBoardId,@Param("transfereeId")int transfereeId ) throws Exception;
     int updateTransferBoardTransferStatus(int transferBoardId) throws Exception;
 }
