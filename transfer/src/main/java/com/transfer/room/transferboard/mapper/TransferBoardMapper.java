@@ -20,4 +20,5 @@ public interface TransferBoardMapper {
     /*수정*/
     int updateTransferBoard(TransferBoardEntity transferBoardEntity) throws Exception; //게시글 수정 메서드
     int updateTransferBoardTransferee(int transferBoardId, int transfereeId) throws Exception;
+    int updateTransferBoardTransferStatus(int transferBoardId) throws Exception;
 }

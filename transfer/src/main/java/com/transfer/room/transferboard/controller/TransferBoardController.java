@@ -53,6 +53,7 @@ public class TransferBoardController {
         System.out.println("test : " + userEmail);
         TransferBoardSearchFilter searchFilter = new TransferBoardSearchFilter();
         searchFilter.setUserEmail(userEmail);
+        searchFilter.setMyPageStatus(1);
 
         // TODO : 본인의 양도 게시글이 아니라면 조회할 수 없도록 해야함
         List<TransferBoardDetails> transferBoardDetails = transferBoardService.findTransferBoard(searchFilter);
@@ -63,6 +64,23 @@ public class TransferBoardController {
 
     @GetMapping("/most-likes")
     public ResponseEntity<?> MostLikesTransferBoardDetails(
+            @RequestParam(value = "numOfRows", required = true) int numOfRows){
+
+        TransferBoardSearchFilter searchFilter = new TransferBoardSearchFilter();
+        searchFilter.setApprovingStatus(TransferBoardStatus.APPROVED.getValue());
+        searchFilter.setNumOfRows(numOfRows);
+        searchFilter.setOrder("likes");
+
+        // TODO : 본인의 양도 게시글이 아니라면 조회할 수 없도록 해야함
+        List<TransferBoardDetails> transferBoardDetails = transferBoardService.findTransferBoard(searchFilter);
+        ApiResponse<List<TransferBoardDetails>> apiResponse = new ApiResponse<>();
+        apiResponse.setData(transferBoardDetails);
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    //시간순으로 정렬
+    @GetMapping("/last-time")
+    public ResponseEntity<?> LastTimeTransferBoardDetails(
             @RequestParam(value = "numOfRows", required = true) int numOfRows){
 
         TransferBoardSearchFilter searchFilter = new TransferBoardSearchFilter();
@@ -113,6 +131,7 @@ public class TransferBoardController {
             @AuthenticationPrincipal CustomUserDetails loginUser){
 
         int transfereeId = loginUser.getUserId();
+
         try{
             transferBoardService.modifyTransferBoardTransferee(transferBoardId, transfereeId);
             return ResponseEntity.ok().build();
@@ -140,4 +159,22 @@ public class TransferBoardController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PostMapping("/status/{transferBoardId}")
+    public ResponseEntity<?> transferBoardModiFyTransferStatus(
+            @PathVariable(value = "transferBoardId") int transferBoardId,
+            @AuthenticationPrincipal CustomUserDetails loginUser){
+
+        System.out.println("tesrse");
+//        int transfereeId = loginUser.getUserId();
+        try{
+            transferBoardService.modifyTransferBoardTransferStatus(transferBoardId);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
 }

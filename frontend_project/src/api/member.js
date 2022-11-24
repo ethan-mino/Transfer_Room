@@ -12,7 +12,7 @@ async function signup(userInfo, success, fail) {
 }
 
 //유저 정보 조회 - 이름 필요함.
-async function getUser(userId, success, fail) { 
+async function getUser(userId, success, fail) {
   await api.get(`/user/${userId}`).then(success).catch(fail);
 }
 
@@ -20,16 +20,34 @@ async function getUser(userId, success, fail) {
 async function getCurrnetUser(success, fail) {
   api.defaults.headers["Authorization"] =
     sessionStorage.getItem("access-token");
-  await api.get('/user').then(success).catch(fail);
+  await api.get("/user").then(success).catch(fail);
 }
 
 //유저 양도 내역 조회
-async function getMemberTransferInfo(success, fail) { 
-  let decodeToken = jwtDecode(sessionStorage.getItem("access-token"))
+async function getMemberTransferInfo(success, fail) {
+  let decodeToken = jwtDecode(sessionStorage.getItem("access-token"));
   let userEmail = decodeToken.sub;
   await api.get(`/transfer-board/${userEmail}`).then(success).catch(fail);
 }
 
-export { login, signup, getUser, getMemberTransferInfo, getCurrnetUser};
+//유저 양도 요청 승인
+async function acceptTransfer(transferBoardId, success, fail) {
+  api.defaults.headers["Authorization"] =
+    sessionStorage.getItem("access-token");
+
+  await api
+    .post(`/transfer-board/status/${transferBoardId}`)
+    .then(success)
+    .catch(fail);
+}
+
+export {
+  login,
+  signup,
+  getUser,
+  getMemberTransferInfo,
+  getCurrnetUser,
+  acceptTransfer,
+};
 
 // async function signup(signupInfo, success, fail) {}

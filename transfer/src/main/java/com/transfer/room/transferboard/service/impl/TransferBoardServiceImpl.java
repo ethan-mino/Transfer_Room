@@ -67,4 +67,11 @@ public class TransferBoardServiceImpl implements TransferBoardService {
         boolean isModified = (modifyCnt != 0);
         return isModified;
     }
+
+    @Override
+    public boolean modifyTransferBoardTransferStatus(int transferBoardId) throws Exception {
+        int modifyCnt = transferBoardMapper.updateTransferBoardTransferStatus(transferBoardId);
+        boolean isModified = (modifyCnt != 0);
+        return isModified;
+    }
 }

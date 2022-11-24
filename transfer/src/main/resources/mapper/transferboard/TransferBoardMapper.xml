@@ -40,7 +40,8 @@
             JOIN regions as dc ON tb.dongCode = dc.dongCode
             JOIN users transferer ON tb.transferer_id = transferer.user_id
             LEFT OUTER JOIN users transferee ON tb.transferee_id = transferee.user_id
-        WHERE transfer_status = 0
+        <if test="myPageStatus == -1">WHERE transfer_status = 1</if>
+        <if test="myPageStatus != -1">WHERE transfer_status = 1 or transfer_status = 0</if>
         <if test="approvingStatus != -1"> AND approving_status = #{approvingStatus}</if>
         <if test='userEmail != null and !userEmail.equals("")'>
           AND (transferer.user_email = #{userEmail} OR transferee.user_email = #{userEmail})
@@ -76,6 +77,12 @@
     <update id = "updateTransferBoardTransferee">
         UPDATE transfer_boards
         SET transferee_id = #{transfereeId}
+        WHERE tb_id = #{transferBoardId}
+    </update>
+
+    <update id = "updateTransferBoardTransferStatus">
+        UPDATE transfer_boards
+        SET transfer_status = 1
         WHERE tb_id = #{transferBoardId}
     </update>
 </mapper>

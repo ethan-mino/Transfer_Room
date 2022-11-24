@@ -62,7 +62,7 @@ import { mapActions } from "vuex";
 
 const transferStore = "transferBoardStore";
 
-import { getMemberTransferInfo } from "@/api/member";
+import { getMemberTransferInfo, acceptTransfer } from "@/api/member";
 export default {
   name: "TransferInfo",
   data() {
@@ -72,18 +72,7 @@ export default {
   },
   created: async function () {
     //해당 유저의 이메일로 데이터 조회해옴.
-    await getMemberTransferInfo(
-      ({ data }) => {
-        console.log(data);
-        this.userTransferBoard = data.data;
-        if (this.userTransferBoard == null) {
-          this.userTransferBoard = {};
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    await this.getMemberInfo();
   },
   methods: {
     ...mapActions(transferStore, ["selectTransferBoardId"]),
@@ -91,14 +80,34 @@ export default {
       this.selectTransferBoardId(e);
       this.$router.push({ name: "transferDetail" });
     },
-    acceptBtn: function (id) {
-      console.log(id);
+    getMemberInfo: async function () {
+      await getMemberTransferInfo(
+        ({ data }) => {
+          console.log(data);
+          this.userTransferBoard = data.data;
+          if (this.userTransferBoard == null) {
+            this.userTransferBoard = {};
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    //수락 요청
+    acceptBtn: async function (id) {
+      await acceptTransfer(
+        id,
+        ({ data }) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
-      console.log(this.userTransferBoard);
-      console.log(this.userTransferBoard[0].transferStatus);
-      console.log(this.userTransferBoard[0].transferStatus === 0);
-      console.log(this.userTransferBoard[0].transfereeId);
-      console.log(this.userTransferBoard[0].transfereeId === 0);
+      //데이터 세로 받아오기
+      await this.getMemberInfo();
     },
 
     //TODO 조건문 필요
@@ -116,7 +125,15 @@ export default {
   display: flex;
   flex-direction: column;
 }
-
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  background: #fff;
+  padding: 8px 16px;
+}
 .contents {
   width: 700px;
   height: 600px;
@@ -124,6 +141,12 @@ export default {
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   margin-left: 20px;
+  overflow: auto;
+}
+
+.contents thead th {
+  position: sticky;
+  top: 0;
 }
 
 h1.container-title {
@@ -148,150 +171,7 @@ h1.container-title {
   border-bottom: 1px solid #444444;
   padding: 20px 5px;
 }
-.container {
-  display: flex;
-  flex-direction: column;
-}
 
-.contents {
-  width: 700px;
-  height: 600px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  margin-left: 20px;
-}
-
-h1.container-title {
-  text-align: center;
-  height: 100px;
-  padding-left: 200px;
-  padding-top: 10px;
-}
-
-.list-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.list-table a {
-  text-decoration: none;
-  color: #000000;
-}
-
-.list-table th,
-.list-table td {
-  border-bottom: 1px solid #444444;
-  padding: 20px 5px;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.contents {
-  width: 700px;
-  height: 600px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  margin-left: 20px;
-}
-
-h1.container-title {
-  text-align: center;
-  height: 100px;
-  padding-left: 200px;
-  padding-top: 10px;
-}
-
-.list-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.list-table a {
-  text-decoration: none;
-  color: #000000;
-}
-
-.list-table th,
-.list-table td {
-  border-bottom: 1px solid #444444;
-  padding: 20px 5px;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.contents {
-  width: 700px;
-  height: 600px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  margin-left: 20px;
-}
-
-h1.container-title {
-  text-align: center;
-  height: 100px;
-  padding-left: 200px;
-  padding-top: 10px;
-}
-
-.list-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.list-table a {
-  text-decoration: none;
-  color: #000000;
-}
-
-.list-table th,
-.list-table td {
-  border-bottom: 1px solid #444444;
-  padding: 20px 5px;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.contents {
-  width: 700px;
-  height: 600px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  margin-left: 20px;
-}
-
-h1.container-title {
-  text-align: center;
-  height: 100px;
-  padding-left: 200px;
-  padding-top: 10px;
-}
-
-.list-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.list-table a {
-  text-decoration: none;
-  color: #000000;
-}
-
-.list-table th,
-.list-table td {
-  border-bottom: 1px solid #444444;
-  padding: 20px 5px;
-}
 .progress__text {
   color: #e50c0c;
 }

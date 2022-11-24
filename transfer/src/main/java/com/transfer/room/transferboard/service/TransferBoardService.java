@@ -18,4 +18,6 @@ public interface TransferBoardService {
     /* 수정 */
     boolean modifyTransferBoard(TransferBoardDto transferBoardDto, List<MultipartFile> boardFiles) throws Exception; //게시글 수정 메서드
     boolean modifyTransferBoardTransferee(int boardId, int transfereeId) throws Exception;
+
+    boolean modifyTransferBoardTransferStatus(int boardId) throws Exception;
 }
