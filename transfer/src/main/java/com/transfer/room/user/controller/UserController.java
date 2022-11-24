@@ -1,13 +1,16 @@
 package com.transfer.room.user.controller;
 
 import com.transfer.room.config.security.JwtTokenProvider;
+import com.transfer.room.user.dto.CustomUserDetails;
 import com.transfer.room.user.dto.LoginDto;
 import com.transfer.room.user.dto.UserDto;
 import com.transfer.room.user.service.UserService;
 import com.transfer.room.util.ApiResponse;
+import io.swagger.models.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -91,6 +94,28 @@ public class UserController {
         ApiResponse<UserDto> apiResponse = new ApiResponse<>();
         try{
             UserDto userDto = userService.findUserByUserId(userId);
+            apiResponse.setData(userDto);
+            return ResponseEntity.ok(apiResponse);
+        }
+        catch(Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    //토큰으로 유저정보 가져오기.
+    @GetMapping("/user")
+    public ResponseEntity<ApiResponse<UserDto>> getCurrentUserInfo(
+            @AuthenticationPrincipal CustomUserDetails loginUser
+    ){
+        ApiResponse<UserDto> apiResponse = new ApiResponse<>();
+
+        try{
+            UserDto userDto = new UserDto();
+            userDto.setUserId(loginUser.getUserId());
+            userDto.setUserName(loginUser.getUsername());
+            userDto.setUserEmail(loginUser.getUserEmail());
+
+
             apiResponse.setData(userDto);
             return ResponseEntity.ok(apiResponse);
         }
