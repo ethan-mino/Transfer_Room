@@ -37,10 +37,7 @@ const transferBoardStore = {
       await getTransferBoardList(
         dongCode,
         ({ data }) => {
-          console.log(JSON.stringify(data));
-          // data.forEach((t) => { 
-          //   console.log(t);
-          // })
+          console.log("info : " + data);
           console.log("dong code : " + dongCode);
           commit("SET_SEARCH_VALUE", data);
         },

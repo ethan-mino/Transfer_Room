@@ -36,7 +36,7 @@
                     <div style = "border-bottom: 1px solid lightgray; padding-bottom : 10px">
                         <!-- todo 작성자 id만 있어서 user 테이블 조인 필요. 또는 유저 테이블에 요청 필요 -->
                         <span class = "transferer">{{userName}}</span>,
-                        <span class = "create_time">{{contractEndTime}}</span>
+                        <span class = "create_time">{{boardInfo.contractEndTime}}</span>
                     </div>
                     
                     
@@ -88,10 +88,13 @@ export default {
                 console.log(error);
             }
         )
+        // if (this.boardInfo != null) { 
 
-        let splitTime = this.boardInfo.contractEndTime.split("-");
+        //     let splitTime = this.boardInfo.contractEndTime.split("-");
 
-        this.contractEndTime = splitTime[0] + "." + splitTime[1] + "." + splitTime[2];
+        //     this.contractEndTime = splitTime[0] + "." + splitTime[1] + "." + splitTime[2];
+        // }
+        
         //유저정보 조회
         await getUser(
             this.boardInfo.transfererId,

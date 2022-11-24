@@ -433,7 +433,7 @@ export default {
     interestAreaBtn: async function (dongCode) {
       this.setSelectDongCode(dongCode); //해당 동코드 저장.
       await this.getBoardInfo(); //게시글 다시 조회.
-
+      
       console.log("check data : " + this.transferBoardSearchValue);
 
       //게시글 조회 후 획인결과 게시글이 없다면 이전에 검색한 결과를 계속 지도에 찍음.
